@@ -12,5 +12,4 @@ git commit -a -m "added traefik"
 ```
 kubectl label node vader nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
-
 ```
