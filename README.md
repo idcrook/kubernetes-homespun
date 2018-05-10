@@ -11,9 +11,14 @@ Build a kubernetes cluster
  - [traefik](https://github.com/containous/traefik) v1.6 for ingress/load balancer
    - Uses Let's Encrypt for TLS certs
 
+ Apps deployed include:
+
+  - phant - IoT data server
+  - ~lighttpd - static webpage~
+
 
 ## Get it done
 
-  - [CLUSTER.md] - setup kubernetes cluster itself
-  - [BUILD.md](BUILD.md) for Ubuntu host setup (currently single machine with `kubeadm`)
+  - [Blog post](http://github.crookster.org/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`
+  - [BUILD.md](BUILD.md) - Ubuntu host setup (currently, single machine as master+node)
   - [RUN.md](RUN.md) - configure the deployments and services
