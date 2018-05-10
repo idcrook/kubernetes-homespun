@@ -149,4 +149,4 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 kubectl proxy
 ```
 
-![kubernetes 1.10 dashboard 1.8](/images/kubernetes-1.10-dashboard-09-May-2018.png)
+![kubernetes 1.10 dashboard 1.8](http://github.crookster.org/images/kubernetes-1.10-dashboard-09-May-2018.png)
