@@ -87,6 +87,8 @@ kubectl delete -f conf/phant/phantserver-pvc.yaml
 
 ## lighttpd static server
 
+https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
+
 ``` shell
 kubectl create -f conf/webstatic/lighttpd-pv.yaml
 kubectl create -f conf/webstatic/lighttpd-pvc.yaml

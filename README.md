@@ -3,9 +3,9 @@
 Build a kubernetes cluster
 
  - Ubuntu 18.04 LTS
- - kubernetes v1.10 (latest release)
+ - kubernetes v1.10
    - `kubeadm` for cluster setup
-   - RBAC
+   - using RBAC
    - NFS for Storage
  - [kubernetes dashboard](https://github.com/kubernetes/dashboard) v1.8
  - [traefik](https://github.com/containous/traefik) v1.6 for ingress/load balancer
@@ -14,7 +14,7 @@ Build a kubernetes cluster
  Apps deployed include:
 
   - phant - IoT data server
-  - ~lighttpd - static webpage~
+  - lighttpd - static webpage server
 
 
 ## Get it done
