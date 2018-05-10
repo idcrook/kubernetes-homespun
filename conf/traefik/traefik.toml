@@ -1,0 +1,41 @@
+# traefik.toml -*- toml -*-
+
+# See https://docs.traefik.io/v1.6/configuration/acme/#configuration
+
+# using ACME (via let's encrypt)
+defaultEntryPoints = ["http","https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+# Enable ACME (Let's Encrypt): automatic SSL
+#
+[acme]
+email = "david.crook@gmail.com"
+storage = "/acme/acme.json"
+entryPoint = "https"
+acmeLogging = true
+onDemand = true
+OnHostRule = true
+
+[acme.httpChallenge]
+    entryPoint = "http"
+
+# CA server to use
+# Uncomment the line to run on the staging let's encrypt server
+# Leave comment to go to prod
+#
+# Optional
+#
+#caServer = "https://acme-staging.api.letsencrypt.org/directory"
+
+[[acme.domains]]
+   main = "crookster.org"
+   sans = ["www.crookster.org", "data.crookster.org", "gitlab.crookster.org"]
+[[acme.domains]]
+   main = "www.idcrook.com"

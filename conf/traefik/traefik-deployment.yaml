@@ -14,7 +14,6 @@ metadata:
     k8s-app: traefik-ingress-lb
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
   selector:
     matchLabels:
       k8s-app: traefik-ingress-lb
@@ -29,12 +28,35 @@ spec:
       hostNetwork: true
       nodeSelector:
         nginx-controller: "traefik"
+      volumes:
+      - name: config
+        configMap:
+          name: traefik-config
+      - name: acme
+        hostPath:
+          type: FileOrCreate
+          path: /srv/configs/acme/acme.json
       containers:
-      - image: traefik
+      - image: traefik:v1.6
         name: traefik-ingress-lb
+        volumeMounts:
+          - mountPath: "/config"
+            name: "config"
+          - mountPath: "/acme/acme.json"
+            name: "acme"
         ports:
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
+        - name: admin
+          containerPort: 8081
         args:
-        - --api
+        - --configfile=/config/traefik.toml
+        - --web
+        - --web.address=:8081
         - --kubernetes
         - --logLevel=INFO
 ---
@@ -51,6 +73,6 @@ spec:
       port: 80
       name: web
     - protocol: TCP
-      port: 8080
+      port: 8081
       name: admin
   type: NodePort

@@ -12,4 +12,8 @@ git commit -a -m "added traefik"
 ```
 kubectl label node vader nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
+
+# traefik lets encrypt
+sudo mkdir -p /srv/configs/acme/
+sudo touch /srv/configs/acme/acme.json
 ```
