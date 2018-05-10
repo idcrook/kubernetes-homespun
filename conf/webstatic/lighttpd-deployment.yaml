@@ -1,0 +1,44 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lighttpd
+  labels:
+    app: lighttpd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lighttpd
+      task: server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lighttpd
+        task: server
+        version: v0.1.0
+    spec:
+      containers:
+      - name: lighttpd
+        image: dpcrook/alpine-lighttpd-static
+        #imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 50Mi
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - mountPath: /var/www/htdocs/
+          name: lighttpd-persistent-storage
+      restartPolicy: Always
+      volumes:
+      - name: lighttpd-persistent-storage
+        persistentVolumeClaim:
+          claimName: lighttpd-persistent-claim

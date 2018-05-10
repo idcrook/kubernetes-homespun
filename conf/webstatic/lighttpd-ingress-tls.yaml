@@ -1,0 +1,31 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: lighttpd
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: www.crookster.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: lighttpd
+          servicePort: http
+  - host: crookster.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: lighttpd
+          servicePort: http
+  - host: www.idcrook.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: lighttpd
+          servicePort: http
