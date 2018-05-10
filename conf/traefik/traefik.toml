@@ -6,12 +6,23 @@
 defaultEntryPoints = ["http","https"]
 [entryPoints]
   [entryPoints.http]
-  address = ":80"
+    address = ":80"
+    compress = true
     [entryPoints.http.redirect]
       entryPoint = "https"
   [entryPoints.https]
-  address = ":443"
+    address = ":443"
+    compress = true
     [entryPoints.https.tls]
+
+[api]
+      [api.statistics]
+        recentErrors = 10
+
+[accessLog]
+
+[ping]
+entryPoint = "http"
 
 # Enable ACME (Let's Encrypt): automatic SSL
 #

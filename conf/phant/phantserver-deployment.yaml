@@ -1,0 +1,53 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: phantserver
+  labels:
+    app: phant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phant
+      task: server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phant
+        task: server
+        version: v0.1.0
+    spec:
+      containers:
+      - name: phant
+        image: dpcrook/phant_server-docker:0.1.1
+        #imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 50Mi
+        env:
+        - name: PHANT_PORT
+          value: "8888"
+        - name: PHANT_TELNET_PORT
+          value: "8889"
+        args: [ "./.bin/serve" ]
+        ports:
+        - containerPort: 8888
+          name: phant-http
+        - containerPort: 8889
+          name: phant-telnet
+        volumeMounts:
+        - mountPath: /usr/src/app/phant_streams/
+          name: phantserver-persistent-storage
+        workingDir: /usr/src/app
+      restartPolicy: Always
+      volumes:
+      - name: phantserver-persistent-storage
+        persistentVolumeClaim:
+          claimName: phantserver-persistent-claim

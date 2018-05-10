@@ -1,15 +1,10 @@
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: traefik-ingress-controller
-  namespace: kube-system
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: traefik-ingress-controller
   namespace: kube-system
+kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
   labels:
     k8s-app: traefik-ingress-lb
 spec:
@@ -34,7 +29,7 @@ spec:
           name: traefik-config
       - name: acme
         hostPath:
-          type: FileOrCreate
+          type: File
           path: /srv/configs/acme/acme.json
       containers:
       - image: traefik:v1.6
@@ -55,6 +50,7 @@ spec:
           containerPort: 8081
         args:
         - --configfile=/config/traefik.toml
+        - --api
         - --web
         - --web.address=:8081
         - --kubernetes
