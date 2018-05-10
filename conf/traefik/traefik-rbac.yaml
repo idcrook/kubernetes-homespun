@@ -4,7 +4,6 @@ kind: ServiceAccount
 metadata:
   name: traefik-ingress-controller
   namespace: kube-system
-  # namespace: default
 
 ---
 kind: ClusterRole
