@@ -14,12 +14,18 @@ defaultEntryPoints = ["http","https"]
     address = ":443"
     compress = true
     [entryPoints.https.tls]
+  [entryPoints.dashboard]
+    address = ":8081"
 
 [api]
-      [api.statistics]
-        recentErrors = 10
+  dashboard = true
+  entryPoint = "dashboard"
+  [api.statistics]
+    recentErrors = 10
 
 [accessLog]
+
+[kubernetes]
 
 [ping]
 entryPoint = "http"

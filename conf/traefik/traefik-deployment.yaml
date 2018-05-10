@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: traefik-ingress-controller
   namespace: kube-system
-kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
   labels:
     k8s-app: traefik-ingress-lb
 spec:
@@ -50,10 +49,6 @@ spec:
           containerPort: 8081
         args:
         - --configfile=/config/traefik.toml
-        - --api
-        - --web
-        - --web.address=:8081
-        - --kubernetes
         - --logLevel=INFO
 ---
 kind: Service

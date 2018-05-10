@@ -18,10 +18,11 @@ kubectl --namespace=kube-system get cm
 kubectl apply -f conf/traefik/traefik-deployment.yaml
 ```
 
-DEBUG commands
+#### Debugging kubernetes and traefik helpers
 
 ```
 kubectl --namespace=kube-system get pods
+kubectl --namespace=kube-system get pods | grep traefik
 kubectl -n kube-system get services
 IP_ADDR=$(ip addr show eno1 | grep -Po 'inet \K[\d.]+')
 curl -i ${IP_ADDR}:8081
@@ -37,6 +38,9 @@ kubectl --namespace=kube-system get configmaps
 kubectl --namespace=kube-system delete configmaps traefik-config
 kubectl --namespace=kube-system create configmap traefik-config \
 	--from-file=conf/traefik/traefik.toml
+
+kubectl --namespace=kube-system get pods | grep traefik
+kubectl --namespace=kube-system	logs
  ```
 
 
