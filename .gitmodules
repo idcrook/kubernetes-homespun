@@ -1,4 +1,0 @@
-[submodule "external/traefik"]
-	path = external/traefik
-	url = https://github.com/containous/traefik.git
-	branch = master
