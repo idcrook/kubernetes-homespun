@@ -19,6 +19,6 @@ Build a kubernetes cluster
 
 ## Get it done
 
-  - [Blog post](http://github.crookster.org/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`
+  - [Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`
   - [BUILD.md](BUILD.md) - Ubuntu host setup (currently, single machine as master+node)
   - [RUN.md](RUN.md) - configure the deployments and services
