@@ -38,8 +38,8 @@ storage = "/acme/acme.json"
 entryPoint = "https"
 acmeLogging = true
 #onDemand = true
-#OnHostRule = true
-caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+OnHostRule = true
+#caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
 
 [acme.httpChallenge]
