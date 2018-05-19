@@ -53,6 +53,8 @@ OnHostRule = true
 
 [[acme.domains]]
    main = "crookster.org"
-   sans = ["www.crookster.org", "data.crookster.org", "gitlab.crookster.org"]
+   sans = ["www.crookster.org", "data.crookster.org"]
+#   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "api.crookster.org", "piwik.crookster.org", "gitlab.crookster.org"]
+#   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "api.crookster.org"]
 [[acme.domains]]
    main = "www.idcrook.com"
