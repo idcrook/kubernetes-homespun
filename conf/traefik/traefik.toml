@@ -38,7 +38,9 @@ storage = "/acme/acme.json"
 entryPoint = "https"
 acmeLogging = true
 #onDemand = true
-OnHostRule = true
+#OnHostRule = true
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
 
 [acme.httpChallenge]
     entryPoint = "http"
@@ -53,8 +55,9 @@ OnHostRule = true
 
 [[acme.domains]]
    main = "crookster.org"
-   sans = ["www.crookster.org", "data.crookster.org"]
+   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org"]
 #   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "api.crookster.org", "piwik.crookster.org", "gitlab.crookster.org"]
 #   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "api.crookster.org"]
 [[acme.domains]]
-   main = "www.idcrook.com"
+   main = "idcrook.com"
+   sans = ["www.idcrook.com", "api.idcrook.com"]
