@@ -7,7 +7,6 @@ Build a kubernetes cluster
    - `kubeadm` for cluster setup
    - using RBAC
    - NFS for Storage
- - [kubernetes dashboard](https://github.com/kubernetes/dashboard) v1.8
  - [traefik](https://github.com/containous/traefik) v1.6 for ingress/load balancer
    - Uses Let's Encrypt for TLS certs
 
@@ -16,6 +15,8 @@ Build a kubernetes cluster
   - phant - IoT data server
   - lighttpd - static webpage server
 
+ Optional:
+  - [kubernetes dashboard](https://github.com/kubernetes/dashboard) v1.8
 
 ## Get it done
 
