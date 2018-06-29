@@ -3,11 +3,11 @@
 Build a kubernetes cluster
 
  - Ubuntu 18.04 LTS
- - kubernetes v1.10
+ - kubernetes v1.11
    - `kubeadm` for cluster setup
    - using RBAC
    - NFS for Storage
- - [traefik](https://github.com/containous/traefik) v1.6 for ingress/load balancer
+ - [traefik](https://github.com/containous/traefik) v1.6.x for ingress/load balancer
    - Uses Let's Encrypt for TLS certs
 
  Apps deployed include:
