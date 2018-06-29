@@ -27,7 +27,8 @@ cat /proc/swaps
 # initialize kubernetes
 IP_ADDR=$(ip addr show eno1 | grep -Po 'inet \K[\d.]+')
 echo $IP_ADDR
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${IP_ADDR} --kubernetes-version stable-1.10
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 \
+    --apiserver-advertise-address=${IP_ADDR}
 ```
 
 
@@ -53,6 +54,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 # check that it is working
 kubectl get all --namespace=kube-system
 kubectl get all --namespace=kube-system -o wide
+kubectl get nodes --namespace=kube-system -o wide
 ```
 
 ## Run a container
