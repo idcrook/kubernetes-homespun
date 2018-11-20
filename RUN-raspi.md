@@ -114,11 +114,26 @@ kubectl create -f conf/webstatic/lighttpd-pv.yaml
 kubectl create -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
 
-kubectl apply -f conf/webstatic/lighttpd-deployment.yaml
+kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl get po,svc,ep,ing -o wide
 ```
+
+
+``` shell
+kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
+kubectl delete -f conf/webstatic/lighttpd-service.yaml
+kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
+kubectl get po,svc,ep,ing -o wide
+
+kubectl create -f conf/webstatic/lighttpd-pv.yaml
+kubectl create -f conf/webstatic/lighttpd-pvc.yaml
+kubectl get pv,pvc -o wide
+
+```
+
+
 
 #### Debugging
 
