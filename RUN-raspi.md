@@ -140,7 +140,7 @@ kubectl get pv,pvc -o wide
 Get a bash shell and look at logs
 
 ``` shell
-kubectl exec lighttpd-1047827349-68lv5 -it -- /bin/sh -i
+kubectl exec lighttpd-   -it -- /bin/sh -i
 cat /var/log/lighttpd/error.log
 tail -f /var/log/lighttpd/access.log
 # <Ctrl-C>
