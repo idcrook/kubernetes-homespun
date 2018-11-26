@@ -30,6 +30,7 @@ sudo apt install -y nfs-common
 
 ## traefik
 
+run on master (via `kubectl`)
 ```
 kubectl label node rpih3 nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
@@ -54,7 +55,7 @@ kubectl -n kube-system get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 IP_ADDR=10.0.1.103
 curl -i ${IP_ADDR}:8081
-# 404 page not found
+# 404 page not found / dashboard redirect
 
 kubectl --namespace=kube-system describe pods \
     traefik-ingress-controller-
@@ -90,6 +91,9 @@ kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-service.yaml
 kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
 kubectl get po,svc,ep,ing
+
+kubectl get pods
+kubectl describe pod phantserver-
 ```
 
 
@@ -118,6 +122,10 @@ kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl get po,svc,ep,ing -o wide
+
+kubectl get pods -o wide
+kubectl describe pod lighttpd-
+
 ```
 
 
