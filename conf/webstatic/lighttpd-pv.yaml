@@ -7,9 +7,9 @@ spec:
   capacity:
     storage: 100Mi
   accessModes:
-    - ReadOnlyMany
+  - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: slow
   nfs:
-    server: 10.0.1.10
+    server: 10.0.1.13
     path: /nfs_static_www
