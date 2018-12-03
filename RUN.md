@@ -80,8 +80,8 @@ kubectl delete -f conf/phant/phantserver-deployment.yaml
 kubectl get po,svc,ep,ing
 
 # if needed
-kubectl delete -f conf/phant/phantserver-pv.yaml
 kubectl delete -f conf/phant/phantserver-pvc.yaml
+kubectl delete -f conf/phant/phantserver-pv.yaml
 ```
 
 
@@ -98,6 +98,28 @@ kubectl apply -f conf/webstatic/lighttpd-deployment.yaml
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl get po,svc,ep,ing -o wide
+```
+
+```shell
+kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
+kubectl delete -f conf/webstatic/lighttpd-service.yaml
+kubectl delete -f conf/webstatic/lighttpd-deployment.yaml
+kubectl get po,svc,ep,ing -o wide
+
+kubectl delete -f conf/webstatic/lighttpd-pvc.yaml
+kubectl delete -f conf/webstatic/lighttpd-pv.yaml
+kubectl get pv,pvc -o wide
+```
+
+
+## delete cluster
+
+```
+kubectl delete -f conf/traefik/traefik-deployment.yaml
+kubectl get pv,pvc,po,svc,ep,ing -o wide --all-namespaces
+kubectl drain vader --delete-local-data --force --ignore-daemonsets
+kubectl delete node vader
+sudo kubeadm reset
 ```
 
 #### Debugging
