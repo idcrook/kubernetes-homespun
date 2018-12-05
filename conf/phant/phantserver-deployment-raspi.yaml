@@ -18,7 +18,7 @@ spec:
       labels:
         app: phant
         task: server
-        version: v0.1.0
+        version: v0.1.2
     spec:
       containers:
       - name: phant
