@@ -42,6 +42,7 @@ kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 kubectl --namespace=kube-system get cm
 
+grep 1.7  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
 
@@ -87,10 +88,11 @@ kubectl create -f conf/phant/phantserver-pv.yaml
 kubectl create -f conf/phant/phantserver-pvc.yaml
 kubectl get pv phantserver-persistent-volume
 kubectl get pvc phantserver-persistent-claim
+grep 0.1 conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-service.yaml
 kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
-kubectl get po,svc,ep,ing
+kubectl get po,svc,ep,ing -o wide
 
 kubectl get pods
 kubectl describe pod phantserver-
@@ -118,6 +120,7 @@ kubectl create -f conf/webstatic/lighttpd-pv.yaml
 kubectl create -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
 
+grep 0.1 conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
