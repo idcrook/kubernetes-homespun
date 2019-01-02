@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: "external-postgresql-service"
+  name: "postgresql-db"
 spec:
   # type: ClusterIP
   ports:
@@ -15,7 +15,7 @@ spec:
 kind: Endpoints
 apiVersion: v1
 metadata:
-  name: "external-postgresql-service"
+  name: "postgresql-db"
 subsets:
   - addresses:
     - ip: 10.0.1.49
