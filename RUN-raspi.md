@@ -122,6 +122,7 @@ kubectl get pv,pvc -o wide
 
 grep 0.1 conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
+
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl get po,svc,ep,ing -o wide
@@ -155,4 +156,17 @@ cat /var/log/lighttpd/error.log
 tail -f /var/log/lighttpd/access.log
 # <Ctrl-C>
 exit
+```
+
+
+## postgresql (external service)
+
+run on master (via `kubectl`)
+```
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/postgresql-service/postgresql-service.yaml
+
+kubectl get svc,ep
+
 ```
