@@ -168,5 +168,46 @@ cd ~/projects/kubernetes-homespun
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
 
 kubectl get svc,ep
+```
 
+## miniflux rss aggregator
+
+
+https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables
+
+
+```
+cd ~/projects/kubernetes-homespun
+
+cp conf/miniflux/miniflux-secret.example conf/miniflux/miniflux-secret.yaml
+
+$EDITOR conf/miniflux/miniflux-secret.yaml
+
+kubectl create -f conf/miniflux/miniflux-secret.yaml
+kubectl apply -f conf/miniflux/miniflux-deployment-raspi.yaml
+kubectl apply -f conf/miniflux/miniflux-service.yaml
+kubectl apply -f conf/miniflux/miniflux-ingress-tls.yaml
+
+# debugging
+kubectl describe pod miniflux-
+kubectl logs miniflux-
+kubectl --namespace=kube-system logs traefik-ingress-controller-
+
+kubectl get svc,ep
+kubectl get po,svc,deploy,ing,ep,secret
+```
+
+### break down miniflux
+
+
+```
+cd ~/projects/kubernetes-homespun
+
+kubectl delete -f conf/miniflux/miniflux-deployment-raspi.yaml
+kubectl delete -f conf/miniflux/miniflux-ingress-tls.yaml
+kubectl delete -f conf/miniflux/miniflux-service.yaml
+kubectl delete -f conf/miniflux/miniflux-secret.yaml
+
+kubectl get svc,ep
+kubectl get po,svc,deploy,ing,ep,secret
 ```

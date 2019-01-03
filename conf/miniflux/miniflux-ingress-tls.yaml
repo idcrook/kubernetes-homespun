@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: miniflux
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: miniflux.crookster.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: miniflux
+          servicePort: http

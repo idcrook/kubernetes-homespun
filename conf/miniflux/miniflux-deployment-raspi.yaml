@@ -1,0 +1,37 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: miniflux
+  labels:
+    app: miniflux
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miniflux
+      task: server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: miniflux
+        task: server
+        version: v0.1.0
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: miniflux-secret
+              key: DATABASE_URL
+        # - name: RUN_MIGRATIONS
+        #   value: "1"
+        name: miniflux
+        image: miniflux/miniflux:arm32v6-2.0.13
+        ports:
+        - containerPort: 8080
+          name: http
+      restartPolicy: Always
