@@ -106,9 +106,9 @@ kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl get po,svc,ep,ing
 
 # if needed
-kubectl delete -f conf/phant/phantserver-pv.yaml
 kubectl delete -f conf/phant/phantserver-pvc.yaml
-```
+kubectl delete -f conf/phant/phantserver-pv.yaml
+``
 
 
 ## lighttpd static server
