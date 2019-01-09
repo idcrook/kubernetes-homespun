@@ -10,12 +10,20 @@ Build a kubernetes cluster for home network
  - [traefik](https://github.com/containous/traefik) v1.7.x for ingress
    - including Let's Encrypt (TLS certificates)
 
- Apps deployed include:
+Apps deployed include:
 
-  - phant - IoT data server
-  - lighttpd - Static webpage server
-  - miniflux - RSS Feed aggregator and syncing
+  - [phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
+  - [lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
+  - [miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
     - uses postgres db
+
+Hardware:
+
+ - Raspberry Pi Model 3 B+ : kubernetes master
+   - also ssh gateway, apt-cacher-ng (USB thumb drive for its storage), gitolite
+ - Two (2) Raspberry Pi Model 3 B : kubernetes workers
+ - Raspberry Pi Model 3 B : postgresql DB (USB thumb drive for its storage)
+
 
 ## Get it done
 
