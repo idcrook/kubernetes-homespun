@@ -84,8 +84,8 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 https://hub.docker.com/r/dpcrook/phant_server-docker/
 
 ```shell
-kubectl create -f conf/phant/phantserver-pv.yaml
-kubectl create -f conf/phant/phantserver-pvc.yaml
+kubectl create --save-config -f conf/phant/phantserver-pv.yaml
+kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
 kubectl get pv phantserver-persistent-volume
 kubectl get pvc phantserver-persistent-claim
 grep 0.1 conf/phant/phantserver-deployment-raspi.yaml
@@ -116,8 +116,8 @@ kubectl delete -f conf/phant/phantserver-pv.yaml
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
 
 ``` shell
-kubectl create -f conf/webstatic/lighttpd-pv.yaml
-kubectl create -f conf/webstatic/lighttpd-pvc.yaml
+kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
+kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
 
 grep 0.1 conf/webstatic/lighttpd-deployment-raspi.yaml
