@@ -31,7 +31,7 @@ spec:
           type: File
           path: /srv/configs/acme/acme.json
       containers:
-      - image: traefik:v1.7.7
+      - image: arm32v6/traefik:v1.7.8
         name: traefik-ingress-lb
         volumeMounts:
           - mountPath: "/config"
