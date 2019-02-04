@@ -34,4 +34,10 @@ spec:
         ports:
         - containerPort: 8080
           name: http
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http
+          initialDelaySeconds: 20
+          periodSeconds: 10
       restartPolicy: Always
