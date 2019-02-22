@@ -168,6 +168,9 @@ cd ~/projects/kubernetes-homespun
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
 
 kubectl get svc,ep
+
+kubectl delete -f conf/postgresql-service/postgresql-service.yaml
+
 ```
 
 ## miniflux rss aggregator
@@ -206,7 +209,7 @@ cd ~/projects/kubernetes-homespun
 kubectl delete -f conf/miniflux/miniflux-deployment-raspi.yaml
 kubectl delete -f conf/miniflux/miniflux-ingress-tls.yaml
 kubectl delete -f conf/miniflux/miniflux-service.yaml
-kubectl delete -f conf/miniflux/miniflux-secret.yaml
+# kubectl delete -f conf/miniflux/miniflux-secret.yaml
 
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
