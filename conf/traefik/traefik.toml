@@ -1,8 +1,10 @@
 # traefik.toml -*- toml -*-
 
-# See https://docs.traefik.io/v1.6/configuration/acme/#configuration
+# See https://docs.traefik.io/configuration/acme/
+#     https://docs.traefik.io/user-guide/kubernetes/
+#     https://docs.traefik.io/configuration/entrypoints/
 
-# using ACME (via let's encrypt)
+# using ACME (via Let's Encrypt)
 defaultEntryPoints = ["http","https"]
 [entryPoints]
   [entryPoints.http]
@@ -40,22 +42,32 @@ acmeLogging = true
 #onDemand = true
 OnHostRule = true
 #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-
-
-[acme.httpChallenge]
-    entryPoint = "http"
-
 # CA server to use
 # Uncomment the line to run on the staging let's encrypt server
 # Leave comment to go to prod
 #
-# Optional
-#
-#caServer = "https://acme-staging.api.letsencrypt.org/directory"
+[acme.httpChallenge]
+    entryPoint = "http"
 
+# placeholder toward DNS challenge (and wilcards)
+# needs envariables to be executed for each provider
+# [acme.dnsChallenge]
+#     entryPoint = "https"
+#     provider = "namecheap"
+#     delayBeforeCheck = 0
+
+
+# HTTP challenge
 [[acme.domains]]
    main = "crookster.org"
-   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "miniflux.crookster.org", "feeds.crookster.org", "rss.crookster.org" ]
+   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "miniflux.crookster.org" ]
 [[acme.domains]]
    main = "idcrook.com"
-   sans = ["www.idcrook.com", "api.idcrook.com"]
+   sans = ["www.idcrook.com"]
+[[acme.domains]]
+   main = "idcrook.dev"
+   sans = ["www.idcrook.dev", "github.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
+
+# Only DNS challenge with wildcards supports this
+# [[acme.domains]]
+#    main = "*.idcrook.dev"
