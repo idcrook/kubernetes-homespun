@@ -46,6 +46,16 @@ grep 1.7  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
 
+update configmap
+
+```
+kubectl --namespace=kube-system create configmap traefik-config \
+    --from-file=conf/traefik/traefik.toml -o yaml --dry-run \
+    | kubectl replace -f -
+
+kubectl --namespace=kube-system get cm traefik-config -o yaml
+```
+
 #### Debugging kubernetes and traefik helpers
 
 ```
