@@ -68,7 +68,7 @@ OnHostRule = true
 # .dev domain is in Chrome's HSTS Preload List
 [[acme.domains]]
    main = "idcrook.dev"
-   sans = ["www.idcrook.dev", "github.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
+   sans = ["www.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
 
 # Only DNS challenge with wildcards supports this
 # [[acme.domains]]
