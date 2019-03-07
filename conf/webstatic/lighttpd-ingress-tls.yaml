@@ -36,3 +36,17 @@ spec:
         backend:
           serviceName: lighttpd
           servicePort: http
+  - host: www.idcrook.dev
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: lighttpd
+          servicePort: http
+  - host: idcrook.dev
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: lighttpd
+          servicePort: http
