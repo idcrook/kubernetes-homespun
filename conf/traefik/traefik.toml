@@ -57,23 +57,20 @@ OnHostRule = true
    main = "idcrook.com"
    sans = ["www.idcrook.com"]
 
-# # .dev domain is in Chrome's HSTS Preload List
-# [[acme.domains]]
-#    main = "idcrook.dev"
-#    sans = ["www.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
-
-
-# DNS challenge (supports wildcards)
-# needs envariables to be executed for each provider
-[acme.dnsChallenge]
-    entryPoint = "https"
-    provider = "namecheap"
-    delayBeforeCheck = 0
-
-
-
-
-# Only DNS-01 challenge supports wildcards
+# .dev domain is in Chrome's HSTS Preload List
 [[acme.domains]]
-   main = "*.idcrook.dev"
-   sans = ["idcrook.dev"]
+   main = "idcrook.dev"
+   sans = ["www.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
+
+
+# # DNS challenge (supports wildcards)
+# # needs envariables to be executed for each provider
+# [acme.dnsChallenge]
+#     entryPoint = "https"
+#     provider = "namecheap"
+#     delayBeforeCheck = 0
+
+# # Only DNS-01 challenge supports wildcards
+# [[acme.domains]]
+#    main = "*.idcrook.dev"
+#    sans = ["idcrook.dev"]
