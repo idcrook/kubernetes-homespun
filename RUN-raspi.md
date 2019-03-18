@@ -28,10 +28,17 @@ sudo apt install -y nfs-common
 
 # deploy
 
+https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables
+
 ## traefik
 
 run on master (via `kubectl`)
 ```
+# customize the DNS provider credentials (stored as secrets and passed as envariables)
+cp conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
+$EDITOR conf/traefik/traefik-envariable-secret.yaml
+
+
 kubectl label node rpih3 nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
 cd ~/projects/kubernetes-homespun
@@ -41,6 +48,8 @@ kubectl apply -f conf/traefik/traefik-rbac.yaml
 kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 kubectl --namespace=kube-system get cm
+
+kubectl --namespace=kube-system create -f conf/traefik/traefik-envariable-secret.yaml
 
 grep 1.7  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
@@ -79,6 +88,11 @@ kubectl --namespace=kube-system delete configmaps traefik-config
 kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 
+kubectl --namespace=kube-system get secret | grep traefik
+kubectl --namespace=kube-system get secret traefik-envariable-secret -o yaml
+kubectl --namespace=kube-system get secret traefik-envariable-secret -o json |\
+    jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
+
 kubectl --namespace=kube-system get pods | grep traefik
 kubectl --namespace=kube-system logs traefik-
 ```
@@ -86,6 +100,9 @@ kubectl --namespace=kube-system logs traefik-
 ```
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
+
+# kubectl --namespace=kube-system delete -f conf/traefik/traefik-envariable-secret.yaml
+
 ```
 
 
@@ -186,7 +203,6 @@ kubectl delete -f conf/postgresql-service/postgresql-service.yaml
 ## miniflux rss aggregator
 
 
-https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables
 
 
 ```

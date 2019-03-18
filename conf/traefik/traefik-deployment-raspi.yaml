@@ -47,6 +47,17 @@ spec:
           hostPort: 443
         - name: admin
           containerPort: 8081
+        env:
+        - name: NAMECHEAP_API_USER
+          valueFrom:
+            secretKeyRef:
+              name: traefik-envariable-secret
+              key: NAMECHEAP_API_USER
+        - name: NAMECHEAP_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: traefik-envariable-secret
+              key: NAMECHEAP_API_KEY
         args:
         - --configfile=/config/traefik.toml
         - --logLevel=INFO
