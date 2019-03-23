@@ -30,7 +30,7 @@ spec:
         - name: RUN_MIGRATIONS
           value: "1"
         name: miniflux
-        image: miniflux/miniflux:arm32v6-2.0.15
+        image: miniflux/miniflux:arm32v6-2.0.14
         ports:
         - containerPort: 8080
           name: http
