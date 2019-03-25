@@ -51,6 +51,13 @@ kubectl --namespace=kube-system get cm
 
 kubectl --namespace=kube-system create -f conf/traefik/traefik-envariable-secret.yaml
 
+# inspect
+kubectl --namespace=kube-system get secret | grep traefik
+  kubectl --namespace=kube-system get secret traefik-envariable-secret -o yaml
+  kubectl --namespace=kube-system get secret traefik-envariable-secret -o json |\
+    jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
+
+
 grep 1.7  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
@@ -82,27 +89,23 @@ kubectl --namespace=kube-system describe pods \
 kubectl --namespace=kube-system logs \
     traefik-ingress-controller-
 
-# update config file after changing
+# update config file after changing (see above for "in-place")
 kubectl --namespace=kube-system get configmaps
 kubectl --namespace=kube-system delete configmaps traefik-config
 kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 
-kubectl --namespace=kube-system get secret | grep traefik
-kubectl --namespace=kube-system get secret traefik-envariable-secret -o yaml
-kubectl --namespace=kube-system get secret traefik-envariable-secret -o json |\
-    jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
-
 kubectl --namespace=kube-system get pods | grep traefik
 kubectl --namespace=kube-system logs traefik-
 ```
+
+Delete deployment and restart
 
 ```
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
 # kubectl --namespace=kube-system delete -f conf/traefik/traefik-envariable-secret.yaml
-
 ```
 
 
