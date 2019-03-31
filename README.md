@@ -3,7 +3,7 @@
 Build a kubernetes cluster for home network
 
  - Raspbian on Raspberry Pi Model 3 B/B+s
- - kubernetes v1.13
+ - kubernetes v1.14
    - `kubeadm` for cluster setup, now using RBAC
    - NFS for Storage
    - "external" postgresql database
