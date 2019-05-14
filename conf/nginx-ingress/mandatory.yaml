@@ -209,6 +209,8 @@ spec:
         prometheus.io/scrape: "true"
     spec:
       serviceAccountName: nginx-ingress-serviceaccount
+      nodeSelector:
+        kubernetes.io/arch: arm
       containers:
         - name: nginx-ingress-controller
           #image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.24.1

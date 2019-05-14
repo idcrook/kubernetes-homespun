@@ -22,6 +22,7 @@ spec:
       hostNetwork: true
       nodeSelector:
         nginx-controller: "traefik"
+        kubernetes.io/arch: arm
       volumes:
       - name: config
         configMap:

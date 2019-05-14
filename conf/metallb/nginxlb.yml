@@ -11,6 +11,8 @@ spec:
       labels:
         app: nginx
     spec:
+      nodeSelector:
+        kubernetes.io/arch: arm
       containers:
       - name: nginx
         image: nginx:1

@@ -140,6 +140,8 @@ spec:
       serviceAccountName: speaker
       terminationGracePeriodSeconds: 0
       hostNetwork: true
+      nodeSelector:
+        kubernetes.io/arch: arm
       containers:
       - name: speaker
         image: metallb/speaker:v0.7.3
@@ -159,7 +161,7 @@ spec:
           limits:
             cpu: 100m
             memory: 100Mi
-          
+
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -212,7 +214,7 @@ spec:
           limits:
             cpu: 100m
             memory: 100Mi
-          
+
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -221,5 +223,3 @@ spec:
           readOnlyRootFilesystem: true
 
 ---
-
-
