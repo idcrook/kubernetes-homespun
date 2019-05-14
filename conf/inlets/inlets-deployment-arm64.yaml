@@ -14,16 +14,25 @@ spec:
         kubernetes.io/arch: arm64
       containers:
       - name: inlets
-        image: alexellis2/inlets:2.0.2-arm64
+        #image: alexellis2/inlets:2.0.2-arm64
+        image: dpcrook/inlets:latest
         imagePullPolicy: Always
         command: ["inlets"]
         args:
         - "client"
         - "--upstream=http://gateway.openfaas:8080,http://endpoint.openfaas:9090"
-        - "--remote=$(INLETS_SERVER_PUBLIC_IP)"
+        - "--remote=$(INLETS_SERVER_PROTOCOL)://$(INLETS_SERVER_IP_ADDR)"
+        - "--token=$(INLETS_TOKEN)"
         env:
-        - name: INLETS_SERVER_PUBLIC_IP
+        - name: INLETS_SERVER_PROTOCOL
+          value: wss
+        - name: INLETS_SERVER_IP_ADDR
           valueFrom:
             secretKeyRef:
               name: inlets-secret
-              key: INLETS_SERVER_PUBLIC_IP
+              key: INLETS_SERVER_IP_ADDR
+        - name: INLETS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: inlets-secret
+              key: INLETS_TOKEN

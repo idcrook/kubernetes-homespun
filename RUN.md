@@ -267,7 +267,9 @@ inspect the secret (requires `jq`)
 
 ```
   kubectl get secret inlets-secret -o json |\
-    jq -r '.data.INLETS_SERVER_PUBLIC_IP' | base64 --decode
+    jq -r '.data.INLETS_SERVER_IP_ADDR' | base64 --decode
+  kubectl get secret inlets-secret -o json |\
+    jq -r '.data.INLETS_TOKEN' | base64 --decode
 
 ```
 
