@@ -29,6 +29,6 @@ Hardware:
 
 Refer to https://github.com/alexellis/k8s-on-raspbian for setting up kubernetes cluster on Raspberry Pi's, including [GUIDE.md](https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md)
 
-  - [RUN-raspi.md](RUN-raspi.md) - Configure the deployments and services
+  - [RUN.md](RUN.md) - Configure the deployments and services
 
   - [Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](Archive/CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`

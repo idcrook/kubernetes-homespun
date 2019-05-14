@@ -243,3 +243,37 @@ kubectl delete -f conf/miniflux/miniflux-service.yaml
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
+
+
+## inlets - for exposing openfaas on VPS
+
+### setup secret
+
+```shell
+cp conf/inlets/inlets-secret.example \
+   conf/inlets/inlets-secret.yaml
+
+$EDITOR conf/inlets/inlets-secret.yaml
+```
+
+### bring up
+
+```
+kubectl create -f conf/inlets/inlets-secret.yaml
+kubectl apply -f conf/inlets/inlets-deployment-arm64.yaml
+```
+
+inspect the secret (requires `jq`)
+
+```
+  kubectl get secret inlets-secret -o json |\
+    jq -r '.data.INLETS_SERVER_PUBLIC_IP' | base64 --decode
+
+```
+
+### breaking down
+
+```shell
+kubectl delete -f conf/inlets/inlets-deployment-arm64.yaml
+kubectl delete -f conf/inlets/inlets-secret.yaml
+```

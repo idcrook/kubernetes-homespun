@@ -20,6 +20,8 @@ spec:
         task: server
         version: v0.1.0
     spec:
+      nodeSelector:
+        kubernetes.io/arch: arm
       containers:
       - env:
         - name: DATABASE_URL

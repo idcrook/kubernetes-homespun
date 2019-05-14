@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: inlets
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: inlets
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: arm
+      containers:
+      - name: inlets
+        image: alexellis2/inlets:2.0.2-armhf
+        imagePullPolicy: Always
+        command: ["inlets"]
+        args:
+        - "client"
+        - "--upstream=http://gateway.openfaas:8080,http://endpoint.openfaas:9090"
+        - "--remote=$(INLETS_SERVER_PUBLIC_IP)"
+        env:
+        - name: INLETS_SERVER_PUBLIC_IP
+          valueFrom:
+            secretKeyRef:
+              name: inlets-secret
+              key: INLETS_SERVER_PUBLIC_IP
