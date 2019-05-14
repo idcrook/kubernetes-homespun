@@ -279,3 +279,6 @@ inspect the secret (requires `jq`)
 kubectl delete -f conf/inlets/inlets-deployment-arm64.yaml
 kubectl delete -f conf/inlets/inlets-secret.yaml
 ```
+
+
+## openfaas (raspberry pi)

@@ -20,7 +20,7 @@ spec:
         command: ["inlets"]
         args:
         - "client"
-        - "--upstream=http://gateway.openfaas:8080,http://endpoint.openfaas:9090"
+        - "--upstream=http://gateway.openfaas:8080"
         - "--remote=$(INLETS_SERVER_PROTOCOL)://$(INLETS_SERVER_IP_ADDR)"
         - "--token=$(INLETS_TOKEN)"
         env:
