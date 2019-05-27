@@ -19,7 +19,7 @@ spec:
       labels:
         app: lighttpd
         task: server
-        version: v0.1.5
+        version: v0.1.6
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
