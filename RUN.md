@@ -1,8 +1,8 @@
 Bring up applications on kubernetes
 ===================================
 
--	traefik - for ingress and load-balancer management
--	phant - IoT server
+-	traefik - k8s ingress with Lets Encrypt support
+-	phant - IoT datalogging (node.js)
 -	lighthttpd - Static webserving
 -	miniflux - feed reader
 	-	external postgresql
