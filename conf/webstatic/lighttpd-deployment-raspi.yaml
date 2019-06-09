@@ -19,13 +19,13 @@ spec:
       labels:
         app: lighttpd
         task: server
-        version: v0.1.6
+        version: v0.1.7
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
       containers:
       - name: lighttpd
-        image: dpcrook/alpine-lighttpd-static:0.1.6-arm32v7
+        image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
         imagePullPolicy: Always
         resources:
           requests:
