@@ -1,15 +1,17 @@
+Bring up applications on kubernetes
+===================================
 
-# Bring up applications on kubernetes
+-	traefik - for ingress and load-balancer management
+-	phant - IoT server
+-	lighthttpd - Static webserving
+-	miniflux - feed reader
+	-	external postgresql
 
- - traefik - for ingress and load-balancer management
- - phant - IoT server
- - lighthttpd - Static webserving
+setup
+=====
 
-
-# setup
-
-
-## traefik
+traefik
+-------
 
 ssh to rpih3 (which will be our ingress)
 
@@ -26,13 +28,16 @@ NFS (nfs-common) was already installed on raspbian stretch lite
 sudo apt install -y nfs-common
 ```
 
-# deploy
+deploy
+======
 
 https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables
 
-## traefik
+traefik
+-------
 
-run on master (via `kubectl`)
+run on master (via `kubectl`\)
+
 ```
 # customize the DNS provider credentials (stored as secrets and passed as envariables)
 cp conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
@@ -108,8 +113,8 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 # kubectl --namespace=kube-system delete -f conf/traefik/traefik-envariable-secret.yaml
 ```
 
-
-## phant
+phant
+-----
 
 https://hub.docker.com/r/dpcrook/phant_server-docker/
 
@@ -128,7 +133,6 @@ kubectl get pods
 kubectl describe pod phantserver-
 ```
 
-
 ```shell
 kubectl delete -f conf/phant/phantserver-ingress-tls.yaml
 kubectl delete -f conf/phant/phantserver-service.yaml
@@ -140,12 +144,12 @@ kubectl delete -f conf/phant/phantserver-pvc.yaml
 kubectl delete -f conf/phant/phantserver-pv.yaml
 ```
 
-
-## lighttpd static server
+lighttpd static server
+----------------------
 
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
 
-``` shell
+```shell
 kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
@@ -162,8 +166,7 @@ kubectl describe pod lighttpd-
 
 ```
 
-
-``` shell
+```shell
 kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl delete -f conf/webstatic/lighttpd-service.yaml
 kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
@@ -174,13 +177,11 @@ kubectl delete -f conf/webstatic/lighttpd-pv.yaml
 kubectl get pv,pvc -o wide
 ```
 
-
-
 #### Debugging
 
 Get a bash shell and look at logs
 
-``` shell
+```shell
 kubectl exec lighttpd-   -it -- /bin/sh -i
 cat /var/log/lighttpd/error.log
 tail -f /var/log/lighttpd/access.log
@@ -188,10 +189,11 @@ tail -f /var/log/lighttpd/access.log
 exit
 ```
 
+postgresql (external service)
+-----------------------------
 
-## postgresql (external service)
+run on master (via `kubectl`\)
 
-run on master (via `kubectl`)
 ```
 cd ~/projects/kubernetes-homespun
 
@@ -203,10 +205,8 @@ kubectl delete -f conf/postgresql-service/postgresql-service.yaml
 
 ```
 
-## miniflux rss aggregator
-
-
-
+miniflux rss aggregator
+-----------------------
 
 ```
 cd ~/projects/kubernetes-homespun
@@ -231,7 +231,6 @@ kubectl get po,svc,deploy,ing,ep,secret
 
 ### break down miniflux
 
-
 ```
 cd ~/projects/kubernetes-homespun
 
@@ -244,8 +243,8 @@ kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
-
-## inlets - for exposing openfaas on VPS
+inlets - for exposing openfaas on VPS
+-------------------------------------
 
 ### setup secret
 
@@ -263,7 +262,7 @@ kubectl create -f conf/inlets/inlets-secret.yaml
 kubectl apply -f conf/inlets/inlets-deployment-arm64.yaml
 ```
 
-inspect the secret (requires `jq`)
+inspect the secret (requires `jq`\)
 
 ```
   kubectl get secret inlets-secret -o json |\
@@ -280,5 +279,5 @@ kubectl delete -f conf/inlets/inlets-deployment-arm64.yaml
 kubectl delete -f conf/inlets/inlets-secret.yaml
 ```
 
-
-## openfaas (raspberry pi)
+openfaas (raspberry pi)
+-----------------------
