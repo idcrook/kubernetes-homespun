@@ -13,7 +13,7 @@ setup
 traefik
 -------
 
-ssh to rpih3 (which will be our ingress)
+ssh to p64-01 (which will be our ingress)
 
 ```
 # traefik lets encrypt
@@ -44,7 +44,7 @@ cp conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariabl
 $EDITOR conf/traefik/traefik-envariable-secret.yaml
 
 
-kubectl label node rpih3 nginx-controller=traefik
+kubectl label node p64-01 nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
 cd ~/projects/kubernetes-homespun
 

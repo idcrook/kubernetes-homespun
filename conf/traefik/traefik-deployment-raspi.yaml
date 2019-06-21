@@ -22,7 +22,7 @@ spec:
       hostNetwork: true
       nodeSelector:
         nginx-controller: "traefik"
-        kubernetes.io/arch: arm
+        # kubernetes.io/arch: arm
       volumes:
       - name: config
         configMap:
@@ -32,7 +32,7 @@ spec:
           type: File
           path: /srv/configs/acme/acme.json
       containers:
-      - image: arm32v6/traefik:v1.7.12-alpine
+      - image: traefik:v1.7.12-alpine
         name: traefik-ingress-lb
         volumeMounts:
           - mountPath: "/config"
