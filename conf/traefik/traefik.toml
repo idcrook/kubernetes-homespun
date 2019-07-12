@@ -56,6 +56,9 @@ OnHostRule = true
 [[acme.domains]]
    main = "idcrook.com"
    sans = ["www.idcrook.com"]
+[[acme.domains]]
+   main = "crookiecrook.com"
+   sans = ["www.crookiecrook.com"]
 
 # .dev domain is in Chrome's HSTS Preload List
 [[acme.domains]]
