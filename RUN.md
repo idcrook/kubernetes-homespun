@@ -85,7 +85,7 @@ kubectl --namespace=kube-system  describe pod traefik-ingress-controller
 kubectl --namespace=kube-system get pods
 kubectl -n kube-system get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
-IP_ADDR=10.0.1.103
+IP_ADDR=10.0.1.64
 curl -i ${IP_ADDR}:8081
 # 404 page not found / dashboard redirect
 
