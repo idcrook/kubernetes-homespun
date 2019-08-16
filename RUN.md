@@ -22,7 +22,7 @@ sudo touch /srv/configs/acme/acme.json
 sudo chmod 600 /srv/configs/acme/acme.json
 ```
 
-NFS (nfs-common) was already installed on raspbian stretch lite
+NFS (nfs-common) was already installed on raspbian stretch lite/buster lite
 
 ```
 sudo apt install -y nfs-common
@@ -242,42 +242,3 @@ kubectl delete -f conf/miniflux/miniflux-service.yaml
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
-
-inlets - for exposing openfaas on VPS
--------------------------------------
-
-### setup secret
-
-```shell
-cp conf/inlets/inlets-secret.example \
-   conf/inlets/inlets-secret.yaml
-
-$EDITOR conf/inlets/inlets-secret.yaml
-```
-
-### bring up
-
-```
-kubectl create -f conf/inlets/inlets-secret.yaml
-kubectl apply -f conf/inlets/inlets-deployment-arm64.yaml
-```
-
-inspect the secret (requires `jq`\)
-
-```
-  kubectl get secret inlets-secret -o json |\
-    jq -r '.data.INLETS_SERVER_IP_ADDR' | base64 --decode
-  kubectl get secret inlets-secret -o json |\
-    jq -r '.data.INLETS_TOKEN' | base64 --decode
-
-```
-
-### breaking down
-
-```shell
-kubectl delete -f conf/inlets/inlets-deployment-arm64.yaml
-kubectl delete -f conf/inlets/inlets-secret.yaml
-```
-
-openfaas (raspberry pi)
------------------------
