@@ -228,7 +228,14 @@ kubectl describe pod miniflux-
 kubectl logs miniflux-
 kubectl --namespace=kube-system logs traefik-ingress-controller-
 
-kubectl get svc,ep
+# inspect
+kubectl get secret | grep miniflux
+  kubectl get secret miniflux-secret -o yaml
+  kubectl get secret miniflux-secret -o json |\
+    jq -r '.data.DATABASE_URL' | base64 --decode
+
+
+kubectl get svc,ep,ing
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
