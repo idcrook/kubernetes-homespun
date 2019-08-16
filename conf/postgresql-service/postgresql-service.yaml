@@ -11,14 +11,3 @@ spec:
     port: 5432
     targetPort: 5432
     nodePort: 0
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-  name: "postgresql-db"
-subsets:
-  - addresses:
-    - ip: 10.0.1.49
-    ports:
-    - port: 5432
-      name: "postgresql"

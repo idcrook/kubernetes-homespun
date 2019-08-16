@@ -13,7 +13,7 @@ setup
 traefik
 -------
 
-ssh to p64-01 (which will be our ingress)
+ssh to `rpif1` (which will be our ingress)
 
 ```
 # traefik lets encrypt
@@ -39,12 +39,13 @@ traefik
 run on master (via `kubectl`\)
 
 ```
+sudo apt install -y jq
 # customize the DNS provider credentials (stored as secrets and passed as envariables)
 cp conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
 $EDITOR conf/traefik/traefik-envariable-secret.yaml
 
 
-kubectl label node p64-01 nginx-controller=traefik
+kubectl label node rpif1 nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
 cd ~/projects/kubernetes-homespun
 
@@ -85,7 +86,7 @@ kubectl --namespace=kube-system  describe pod traefik-ingress-controller
 kubectl --namespace=kube-system get pods
 kubectl -n kube-system get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
-IP_ADDR=10.0.1.64
+IP_ADDR=10.0.1.94
 curl -i ${IP_ADDR}:8081
 # 404 page not found / dashboard redirect
 
@@ -198,9 +199,11 @@ run on master (via `kubectl`\)
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
+kubectl apply -f conf/postgresql-service/postgresql-endpoint.yaml
 
 kubectl get svc,ep
 
+kubectl delete -f conf/postgresql-service/postgresql-endpoint.yaml
 kubectl delete -f conf/postgresql-service/postgresql-service.yaml
 
 ```
