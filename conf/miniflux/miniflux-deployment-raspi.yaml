@@ -31,6 +31,10 @@ spec:
               key: DATABASE_URL
         - name: RUN_MIGRATIONS
           value: "1"
+        # - name: DEBUG
+        #   value: "1"
+        # - name: LOG_DATE_TIME
+        #   value: "1"
         name: miniflux
         image: miniflux/miniflux:arm32v6-2.0.17
         ports:
