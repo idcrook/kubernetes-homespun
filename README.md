@@ -3,10 +3,9 @@ kubernetes-homespun
 
 Build a kubernetes cluster for home network
 
--	Raspbian on Raspberry Pi Model 3 B/B+s
--	DietPi on Pine64 A64+
--	kubernetes v1.15
-	-	`kubeadm` for cluster setup, now using RBAC
+-	Raspbian on Raspberry Pi Model 3 B+/4
+-	kubernetes v1.15.2
+	-	`kubeadm` for cluster setup
 	-	NFS for Storage
 	-	"external" postgresql database
 -	[traefik](https://github.com/containous/traefik) v1.7.x for ingress
@@ -21,10 +20,8 @@ Apps deployed include:
 
 Hardware:
 
--	Raspberry Pi Model 3 B+ : kubernetes master
-	-	also ssh gateway, apt-cacher-ng (USB thumb drive for its storage), gitolite
--	Two (2) Raspberry Pi Model 3 B : kubernetes workers
--	Two (2) Pine64 A64+ : kubernetes workers
+-	Raspberry Pi Model 3 B+ : kubernetes control plane node
+-	One (1) Raspberry Pi Model 4 B (4GB) : kubernetes worker node
 -	Raspberry Pi Model 3 B : postgresql DB (USB thumb drive for its storage)
 
 Get it done
