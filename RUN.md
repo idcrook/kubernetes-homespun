@@ -41,7 +41,7 @@ run on master (via `kubectl`\)
 ```
 sudo apt install -y jq
 # customize the DNS provider credentials (stored as secrets and passed as envariables)
-cp conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
+cp -i conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
 $EDITOR conf/traefik/traefik-envariable-secret.yaml
 
 
@@ -214,7 +214,7 @@ miniflux rss aggregator
 ```
 cd ~/projects/kubernetes-homespun
 
-cp conf/miniflux/miniflux-secret.example conf/miniflux/miniflux-secret.yaml
+cp -i conf/miniflux/miniflux-secret.example conf/miniflux/miniflux-secret.yaml
 
 $EDITOR conf/miniflux/miniflux-secret.yaml
 
