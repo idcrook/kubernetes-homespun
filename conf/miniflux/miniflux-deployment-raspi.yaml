@@ -1,49 +1,49 @@
 ---
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
+  namespace: default
   name: miniflux
   labels:
     app: miniflux
+
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: miniflux
-      task: server
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: miniflux
-        task: server
         version: v0.1.0
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
       containers:
-      - env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: miniflux-secret
-              key: DATABASE_URL
-        - name: RUN_MIGRATIONS
-          value: "1"
-        # - name: DEBUG
-        #   value: "1"
-        # - name: LOG_DATE_TIME
-        #   value: "1"
-        name: miniflux
-        image: miniflux/miniflux:arm32v7-2.0.18
-        ports:
-        - containerPort: 8080
-          name: http
-        livenessProbe:
-          httpGet:
-            path: /healthcheck
-            port: http
-          initialDelaySeconds: 20
-          periodSeconds: 10
-      restartPolicy: Always
+        - env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: miniflux-secret
+                key: DATABASE_URL
+          - name: RUN_MIGRATIONS
+            value: "1"
+          # - name: DEBUG
+          #   value: "1"
+          # - name: LOG_DATE_TIME
+          #   value: "1"
+          name: miniflux
+          image: miniflux/miniflux:arm32v7-2.0.18
+          ports:
+            - containerPort: 8080
+              name: miniflux-http
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: miniflux-http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+        restartPolicy: Always
