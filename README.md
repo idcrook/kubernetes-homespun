@@ -31,4 +31,4 @@ Refer to https://github.com/teamserverless/k8s-on-raspbian for setting up kubern
 
 -	[RUN.md](RUN.md) - Configure the deployments and services
 
--	[Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](Archive/CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`
+-	[Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](.archive/CLUSTER.md) - setup kubernetes cluster itself; uses `kubeadm`
