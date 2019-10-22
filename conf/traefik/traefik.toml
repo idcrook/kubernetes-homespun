@@ -1,6 +1,6 @@
 [global]
   checkNewVersion = true
-  # sendAnonymousUsage = true
+  sendAnonymousUsage = true
 
 [entryPoints]
   [entryPoints.web]
