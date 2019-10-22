@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       nodeSelector:
-        nginx-controller: "traefik"
+        kubernetes.io/hostname: "rpif1"
         # kubernetes.io/arch: arm
       containers:
         - image: traefik:v2.0.2

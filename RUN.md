@@ -44,18 +44,6 @@ sudo apt install -y jq
 cp -i conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
 $EDITOR conf/traefik/traefik-envariable-secret.yaml
 
-
-kubectl label node rpif1 nginx-controller=traefik
-kubectl get nodes -o wide --show-labels=true
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
-kubectl apply -f conf/traefik/traefik-middleware.yaml
-
-kubectl create configmap traefik-config \
-    --from-file=conf/traefik/traefik.toml
-kubectl get cm
-
 kubectl create -f conf/traefik/traefik-envariable-secret.yaml
 
 # inspect
@@ -64,12 +52,19 @@ kubectl  get secret | grep traefik
   kubectl get secret traefik-envariable-secret -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
+kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
+kubectl apply -f conf/traefik/traefik-middleware.yaml
+
+kubectl create configmap traefik-config \
+    --from-file=conf/traefik/traefik.toml
+kubectl get cm
+
 kubectl apply -f conf/traefik/traefik-service.yaml
 grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
 
-update configmap
+inplace update configmap
 
 ```
 kubectl create configmap traefik-config \
@@ -87,6 +82,7 @@ kubectl describe pod traefik
 kubectl get pods
 kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
+# LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 IP_ADDR=10.0.1.94
 curl -i ${IP_ADDR}:80
 # 404 page not found
