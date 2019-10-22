@@ -2,14 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: lighttpd
   name: lighttpd
+
 spec:
   ports:
-  - name: http
+  - name: lighttpd-http
+    protocol: TCP
     port: 80
-    targetPort: 80
   selector:
     app: lighttpd
-    task: server

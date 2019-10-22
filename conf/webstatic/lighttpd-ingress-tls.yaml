@@ -1,52 +1,91 @@
 ---
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: lighttpd
-  namespace: default
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
 spec:
-  rules:
-  - host: www.crookster.org
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
-  - host: crookster.org
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
-  - host: www.idcrook.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
-  - host: idcrook.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
-  - host: www.idcrook.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
-  - host: idcrook.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lighttpd
-          servicePort: http
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`www.crookster.org`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`crookster.org`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`www.idcrook.com`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`idcrook.com`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`www.idcrook.dev`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`idcrook.dev`) && PathPrefix(`/`)
+      middlewares:
+        - redirect-to-https
+      services:
+        - name: lighttpd
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: lighttpd
+spec:
+  entryPoints:
+    - web-secure
+  routes:
+    - kind: Rule
+      match: Host(`www.crookster.org`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`crookster.org`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`www.idcrook.com`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`idcrook.com`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`www.idcrook.dev`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+    - kind: Rule
+      match: Host(`idcrook.dev`) && PathPrefix(`/`)
+      services:
+        - name: lighttpd
+          port: 80
+  tls: {}

@@ -1,79 +1,34 @@
-# traefik.toml -*- toml -*-
+[global]
+  checkNewVersion = true
+  # sendAnonymousUsage = true
 
-# See https://docs.traefik.io/configuration/acme/
-#     https://docs.traefik.io/user-guide/kubernetes/
-#     https://docs.traefik.io/configuration/entrypoints/
-
-# using ACME (via Let's Encrypt)
-defaultEntryPoints = ["http","https"]
 [entryPoints]
-  [entryPoints.http]
+  [entryPoints.web]
     address = ":80"
-    compress = true
-    [entryPoints.http.redirect]
-      entryPoint = "https"
-  [entryPoints.https]
+  [entryPoints.web-secure]
     address = ":443"
-    compress = true
-    [entryPoints.https.tls]
-  [entryPoints.dashboard]
-    address = ":8081"
 
-[api]
-  dashboard = true
-  entryPoint = "dashboard"
-  [api.statistics]
-    recentErrors = 10
+[providers]
+  [providers.kubernetesCRD]
 
-[accessLog]
-
-[kubernetes]
+# [api]
+#   insecure = true
 
 [ping]
-entryPoint = "http"
+  entryPoint = "http"
 
-# Enable ACME (Let's Encrypt): automatic SSL
-#
-[acme]
-email = "david.crook@gmail.com"
-storage = "/acme/acme.json"
-entryPoint = "https"
-acmeLogging = true
-#onDemand = true
-OnHostRule = true
-#caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-# CA server to use
-# Uncomment the line to run on the staging let's encrypt server
-# Leave comment to go to prod
-#
-[acme.httpChallenge]
-    entryPoint = "http"
+[log]
+#   level = "DEBUG"
 
-# HTTP challenge
-[[acme.domains]]
-   main = "crookster.org"
-   sans = ["www.crookster.org", "data.crookster.org", "mqtt.crookster.org", "miniflux.crookster.org" ]
-[[acme.domains]]
-   main = "idcrook.com"
-   sans = ["www.idcrook.com"]
-[[acme.domains]]
-   main = "crookiecrook.com"
-   sans = ["www.crookiecrook.com"]
+[accessLog]
+  bufferingSize = 0
 
-# .dev domain is in Chrome's HSTS Preload List
-[[acme.domains]]
-   main = "idcrook.dev"
-   sans = ["www.idcrook.dev", "data.idcrook.dev", "miniflux.idcrook.dev", "api-v1.idcrook.dev"]
-
-
-# # DNS challenge (supports wildcards)
-# # needs envariables to be executed for each provider
-# [acme.dnsChallenge]
-#     entryPoint = "https"
-#     provider = "namecheap"
-#     delayBeforeCheck = 0
-
-# # Only DNS-01 challenge supports wildcards
-# [[acme.domains]]
-#    main = "*.idcrook.dev"
-#    sans = ["idcrook.dev"]
+[certificatesResolvers]
+  [certificatesResolvers.default]
+    [certificatesResolvers.default.acme]
+      email = "david.crook@gmail.com"
+      storage = "/acme/acme.json"
+      # staging server
+      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [certificatesResolvers.default.acme.httpChallenge]
+        entryPoint = "web"

@@ -1,8 +1,8 @@
 ---
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: lighttpd
   labels:
     app: lighttpd
@@ -11,37 +11,35 @@ spec:
   selector:
     matchLabels:
       app: lighttpd
-      task: server
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: lighttpd
-        task: server
         version: v0.1.7
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
       containers:
-      - name: lighttpd
-        image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 50Mi
-          limits:
-            cpu: 100m
-            memory: 50Mi
-        ports:
-        - containerPort: 80
-          name: http
-        volumeMounts:
-        - mountPath: /var/www/htdocs/
-          name: lighttpd-persistent-storage
+        - name: lighttpd
+          image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 50Mi
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /var/www/htdocs/
+              name: lighttpd-persistent-storage
       restartPolicy: Always
       volumes:
-      - name: lighttpd-persistent-storage
-        persistentVolumeClaim:
-          claimName: lighttpd-persistent-claim
+        - name: lighttpd-persistent-storage
+          persistentVolumeClaim:
+            claimName: lighttpd-persistent-claim
