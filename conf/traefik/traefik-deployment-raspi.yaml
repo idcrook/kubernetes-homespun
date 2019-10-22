@@ -1,11 +1,4 @@
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  namespace: default
-  name: traefik-ingress-controller
-
----
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -55,7 +48,6 @@ spec:
                   key: NAMECHEAP_API_KEY
           args:
             - --configfile=/config/traefik.toml
-            - --logLevel=INFO
       volumes:
         - name: config
           configMap:
@@ -64,19 +56,3 @@ spec:
           hostPath:
             type: File
             path: /srv/configs/acme/acme.json
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: traefik-ingress-service
-  namespace: default
-spec:
-  selector:
-    app: traefik
-  ports:
-    - protocol: TCP
-      port: 80
-      name: web
-    - protocol: TCP
-      port: 443
-      name: web-secure

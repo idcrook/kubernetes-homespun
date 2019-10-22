@@ -64,7 +64,7 @@ kubectl  get secret | grep traefik
   kubectl get secret traefik-envariable-secret -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
-
+kubectl apply -f conf/traefik/traefik-service.yaml
 grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
@@ -88,8 +88,8 @@ kubectl get pods
 kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 IP_ADDR=10.0.1.94
-curl -i ${IP_ADDR}:8081
-# 404 page not found / dashboard redirect
+curl -i ${IP_ADDR}:80
+# 404 page not found
 
 kubectl describe pods \
     traefik-
