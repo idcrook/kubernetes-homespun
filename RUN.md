@@ -49,7 +49,8 @@ kubectl label node rpif1 nginx-controller=traefik
 kubectl get nodes -o wide --show-labels=true
 cd ~/projects/kubernetes-homespun
 
-kubectl apply -f conf/traefik/traefik-rbac.yaml
+kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
+kubectl apply -f conf/traefik/traefik-middlewares.yaml
 
 kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
