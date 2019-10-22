@@ -50,60 +50,60 @@ kubectl get nodes -o wide --show-labels=true
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
-kubectl apply -f conf/traefik/traefik-middlewares.yaml
+kubectl apply -f conf/traefik/traefik-middleware.yaml
 
-kubectl --namespace=kube-system create configmap traefik-config \
+kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
-kubectl --namespace=kube-system get cm
+kubectl get cm
 
-kubectl --namespace=kube-system create -f conf/traefik/traefik-envariable-secret.yaml
+kubectl create -f conf/traefik/traefik-envariable-secret.yaml
 
 # inspect
-kubectl --namespace=kube-system get secret | grep traefik
-  kubectl --namespace=kube-system get secret traefik-envariable-secret -o yaml
-  kubectl --namespace=kube-system get secret traefik-envariable-secret -o json |\
+kubectl  get secret | grep traefik
+  kubectl get secret traefik-envariable-secret -o yaml
+  kubectl get secret traefik-envariable-secret -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
 
-grep 1.7  conf/traefik/traefik-deployment-raspi.yaml
+grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
 
 update configmap
 
 ```
-kubectl --namespace=kube-system create configmap traefik-config \
+kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml -o yaml --dry-run \
     | kubectl replace -f -
 
-kubectl --namespace=kube-system get cm traefik-config -o yaml
+kubectl get cm traefik-config -o yaml
 ```
 
 #### Debugging kubernetes and traefik helpers
 
 ```
-kubectl --namespace=kube-system get pods | grep traefik
-kubectl --namespace=kube-system  describe pod traefik-ingress-controller
-kubectl --namespace=kube-system get pods
-kubectl -n kube-system get services
+kubectl get pods | grep traefik
+kubectl describe pod traefik
+kubectl get pods
+kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 IP_ADDR=10.0.1.94
 curl -i ${IP_ADDR}:8081
 # 404 page not found / dashboard redirect
 
-kubectl --namespace=kube-system describe pods \
-    traefik-ingress-controller-
-kubectl --namespace=kube-system logs \
-    traefik-ingress-controller-
+kubectl describe pods \
+    traefik-
+kubectl logs \
+    traefik-
 
 # update config file after changing (see above for "in-place")
-kubectl --namespace=kube-system get configmaps
-kubectl --namespace=kube-system delete configmaps traefik-config
-kubectl --namespace=kube-system create configmap traefik-config \
+kubectl get configmaps
+kubectl delete configmaps traefik-config
+kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 
-kubectl --namespace=kube-system get pods | grep traefik
-kubectl --namespace=kube-system logs traefik-
+kubectl get pods | grep traefik
+kubectl logs traefik-
 ```
 
 Delete deployment and restart
@@ -112,7 +112,7 @@ Delete deployment and restart
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
-# kubectl --namespace=kube-system delete -f conf/traefik/traefik-envariable-secret.yaml
+# kubectl delete -f conf/traefik/traefik-envariable-secret.yaml
 ```
 
 phant

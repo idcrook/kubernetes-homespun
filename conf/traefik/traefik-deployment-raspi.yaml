@@ -63,7 +63,7 @@ spec:
         - name: acme
           hostPath:
             type: File
-          path: /srv/configs/acme/acme.json
+            path: /srv/configs/acme/acme.json
 ---
 kind: Service
 apiVersion: v1

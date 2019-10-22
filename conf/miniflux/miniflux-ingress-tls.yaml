@@ -11,7 +11,7 @@ spec:
     - kind: Rule
       match: Host(`miniflux.crookster.org`)
       services:
-        - name: miniflux-http
+        - name: miniflux
           port: 8080
       middlewares:
         - name: redirect-to-https
@@ -29,6 +29,6 @@ spec:
     - kind: Rule
       match: Host(`miniflux.crookster.org`)
       services:
-        - name: miniflux-http
+        - name: miniflux
           port: 8080
   tls: {}

@@ -9,7 +9,7 @@
     address = ":443"
 
 [providers]
-  [providers.kubernetescrd]
+  [providers.kubernetesCRD]
 
 # [api]
 #   insecure = true
@@ -18,7 +18,7 @@
   entryPoint = "http"
 
 [log]
-#  level = "DEBUG"
+#   level = "DEBUG"
 
 [accessLog]
   bufferingSize = 0
@@ -29,6 +29,6 @@
       email = "david.crook@gmail.com"
       storage = "/acme/acme.json"
       # staging server
-      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [certificatesResolvers.default.acme.httpChallenge]
         entryPoint = "web"
