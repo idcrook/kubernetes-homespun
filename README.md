@@ -4,11 +4,11 @@ kubernetes-homespun
 Build a kubernetes cluster for home network
 
 -	Raspbian on Raspberry Pi Model 3 B+/4
--	kubernetes v1.15.2
+-	kubernetes v1.16.2
 	-	`kubeadm` for cluster setup
-	-	NFS for Storage
+	-	"external" NFS for persistent storage
 	-	"external" postgresql database
--	[traefik](https://github.com/containous/traefik) v1.7.x for ingress
+-	[traefik](https://github.com/containous/traefik) v2.x for ingress
 	-	including Let's Encrypt (TLS certificates)
 
 Apps deployed include:
@@ -27,7 +27,7 @@ Hardware:
 Get it done
 -----------
 
-Refer to https://github.com/alexellis/k8s-on-raspbian for setting up kubernetes cluster on Raspberry Pi's, including [GUIDE.md](https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md)
+Refer to https://github.com/teamserverless/k8s-on-raspbian for setting up kubernetes cluster on Raspberry Pi's, including [GUIDE.md](https://github.com/teamserverless/k8s-on-raspbian/blob/master/GUIDE.md)
 
 -	[RUN.md](RUN.md) - Configure the deployments and services
 

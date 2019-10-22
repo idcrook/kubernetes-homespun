@@ -1,6 +1,8 @@
-# performed on each node host
+performed on each node host
+===========================
 
-## traefik
+traefik
+-------
 
 on the designated traefik host
 
@@ -11,9 +13,12 @@ sudo touch /srv/configs/acme/acme.json
 sudo chmod 600 /srv/configs/acme/acme.json
 ```
 
-## NFS
+NFS
+---
 
 this seems to already be available on Ubuntu 18.04 server
+
+this seems to already be available on Raspbian `buster`
 
 ```
 sudo apt install -y nfs-common
