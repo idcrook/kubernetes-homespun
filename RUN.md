@@ -105,6 +105,7 @@ kubectl logs traefik-
 Delete deployment and restart
 
 ```
+cd ~/projects/kubernetes-homespun/
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
