@@ -81,9 +81,11 @@ kubectl get pods | grep traefik
 kubectl describe pod traefik
 kubectl get pods
 kubectl get services
+
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
-IP_ADDR=10.0.1.94
+
+IP_ADDR=192.168.50.8
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
