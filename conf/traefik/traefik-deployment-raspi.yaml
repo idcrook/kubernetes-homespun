@@ -24,7 +24,6 @@ spec:
         # kubernetes.io/arch: arm
       containers:
         - image: traefik:v2.0.5
-        # - image: traefik:v2.1
           name: traefik
           volumeMounts:
             - mountPath: "/config"

@@ -18,10 +18,10 @@ spec:
     metadata:
       labels:
         app: miniflux
-        version: v0.1.0
+        version: v0.1.1
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm
+      # nodeSelector:
+      #   kubernetes.io/arch: arm
       containers:
         - env:
           - name: DATABASE_URL
@@ -36,7 +36,7 @@ spec:
           # - name: LOG_DATE_TIME
           #   value: "1"
           name: miniflux
-          image: miniflux/miniflux:arm32v7-2.0.18
+          image: miniflux/miniflux:2.0.18
           ports:
             - containerPort: 8080
               name: miniflux-http

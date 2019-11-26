@@ -18,8 +18,8 @@
   entryPoint = "http"
 
 [log]
-  level = "DEBUG"
-  # level = "INFO"
+  # level = "DEBUG"
+  level = "INFO"
 
 [accessLog]
   bufferingSize = 0
