@@ -19,8 +19,8 @@ spec:
         app: lighttpd
         version: v0.1.7
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm
+      # nodeSelector:
+      #   kubernetes.io/arch: arm
       containers:
         - name: lighttpd
           image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7

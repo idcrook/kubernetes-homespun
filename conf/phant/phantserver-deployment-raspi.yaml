@@ -20,8 +20,8 @@ spec:
         app: phant
         version: v0.1.3
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm
+      # nodeSelector:
+      #   kubernetes.io/arch: arm
       containers:
         - name: phant
           image: dpcrook/phant_server-docker:0.1.3-arm32v7

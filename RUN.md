@@ -17,15 +17,10 @@ ssh to `rpif1` (which will be our ingress)
 
 ```
 # traefik lets encrypt
-sudo mkdir -p /srv/configs/acme/
-sudo touch /srv/configs/acme/acme.json
-sudo chmod 600 /srv/configs/acme/acme.json
-```
-
-NFS (nfs-common) was already installed on raspbian stretch lite/buster lite
-
-```
-sudo apt install -y nfs-common
+export MICROK8S_STORAGE_ROOT=/
+sudo mkdir -p "${MICROK8S_STORAGE_ROOT}"/srv/configs/acme/
+sudo touch "${MICROK8S_STORAGE_ROOT}"/srv/configs/acme/acme.json
+sudo chmod 600 "${MICROK8S_STORAGE_ROOT}"/srv/configs/acme/acme.json
 ```
 
 deploy
@@ -39,17 +34,19 @@ traefik
 run on master (via `kubectl`\)
 
 ```
-sudo apt install -y jq
-# customize the DNS provider credentials (stored as secrets and passed as envariables)
-cp -i conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
-$EDITOR conf/traefik/traefik-envariable-secret.yaml
+cd ~/projects/kubernetes-homespun
 
-kubectl create -f conf/traefik/traefik-envariable-secret.yaml
+# customize the DNS provider credentials (stored as secrets and passed as envariables)
+# cp -i conf/traefik/traefik-envariable-example.yaml \
+        conf/traefik/traefik-envariable-secrets.yaml
+$EDITOR conf/traefik/traefik-envariable-secrets.yaml
+
+kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
 
 # inspect
 kubectl  get secret | grep traefik
-  kubectl get secret traefik-envariable-secret -o yaml
-  kubectl get secret traefik-envariable-secret -o json |\
+  kubectl get secret traefik-envariable-secrets -o yaml
+  kubectl get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
 kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
@@ -111,7 +108,7 @@ cd ~/projects/kubernetes-homespun/
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
-# kubectl delete -f conf/traefik/traefik-envariable-secret.yaml
+# kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
 
 phant

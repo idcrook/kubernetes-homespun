@@ -23,7 +23,8 @@ spec:
         kubernetes.io/hostname: "rpif1"
         # kubernetes.io/arch: arm
       containers:
-        - image: traefik:v2.0.4
+        - image: traefik:v2.0.5
+        # - image: traefik:v2.1
           name: traefik
           volumeMounts:
             - mountPath: "/config"
@@ -39,12 +40,12 @@ spec:
             - name: NAMECHEAP_API_USER
               valueFrom:
                 secretKeyRef:
-                  name: traefik-envariable-secret
+                  name: traefik-envariable-secrets
                   key: NAMECHEAP_API_USER
             - name: NAMECHEAP_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: traefik-envariable-secret
+                  name: traefik-envariable-secrets
                   key: NAMECHEAP_API_KEY
           args:
             - --configfile=/config/traefik.toml
