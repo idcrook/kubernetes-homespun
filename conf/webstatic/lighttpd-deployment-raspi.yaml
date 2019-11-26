@@ -25,13 +25,13 @@ spec:
         - name: lighttpd
           image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
           imagePullPolicy: Always
-          resources:
-            requests:
-              cpu: 100m
-              memory: 50Mi
-            limits:
-              cpu: 100m
-              memory: 50Mi
+          #resources:
+          #  requests:
+          #    cpu: 100m
+          #    memory: 50Mi
+          #  limits:
+          #    cpu: 100m
+          #    memory: 50Mi
           ports:
             - containerPort: 80
               name: http
