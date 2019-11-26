@@ -2,89 +2,30 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: lighttpd
+  name: http-redirect-lighttpd
 spec:
   entryPoints:
     - web
   routes:
     - kind: Rule
-      match: Host(`www.crookster.org`) && PathPrefix(`/`)
-      middlewares:
-        - redirect-to-https
+      match: Host(`www.crookster.org`, `crookster.org`, `www.idcrook.com`, `idcrook.com`, `www.idcrook.dev`, `idcrook.dev`)
       services:
         - name: lighttpd
           port: 80
-    - kind: Rule
-      match: Host(`crookster.org`) && PathPrefix(`/`)
       middlewares:
-        - redirect-to-https
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`www.idcrook.com`) && PathPrefix(`/`)
-      middlewares:
-        - redirect-to-https
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`idcrook.com`) && PathPrefix(`/`)
-      middlewares:
-        - redirect-to-https
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`www.idcrook.dev`) && PathPrefix(`/`)
-      middlewares:
-        - redirect-to-https
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`idcrook.dev`) && PathPrefix(`/`)
-      middlewares:
-        - redirect-to-https
-      services:
-        - name: lighttpd
-          port: 80
+        - name: redirect-to-https
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: lighttpd
+  name: https-lighttpd
+
 spec:
   entryPoints:
     - web-secure
   routes:
     - kind: Rule
-      match: Host(`www.crookster.org`) && PathPrefix(`/`)
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`crookster.org`) && PathPrefix(`/`)
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`www.idcrook.com`) && PathPrefix(`/`)
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`idcrook.com`) && PathPrefix(`/`)
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`www.idcrook.dev`) && PathPrefix(`/`)
-      services:
-        - name: lighttpd
-          port: 80
-    - kind: Rule
-      match: Host(`idcrook.dev`) && PathPrefix(`/`)
+      match: Host(`www.crookster.org`, `crookster.org`, `www.idcrook.com`, `idcrook.com`, `www.idcrook.dev`, `idcrook.dev`)
       services:
         - name: lighttpd
           port: 80

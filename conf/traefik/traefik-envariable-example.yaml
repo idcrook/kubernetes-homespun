@@ -1,9 +1,9 @@
 ---  # -*- yaml -*-
-# local git .git/info/exclude - /conf/traefik/traefik-envariable-secret.yaml
+# echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
 apiVersion: v1
 kind: Secret
 metadata:
-  name: traefik-envariable-secret
+  name: traefik-envariable-secrets
 data:
   # echo -n "$NAMECHEAP_API_USER" | base64
   NAMECHEAP_API_USER: |

@@ -16,9 +16,17 @@ cluster
 -------
 
 ```
-# install without the traefik
+# install role=master without the traefik
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy=traefik" sh -
 #  TODO: use the in-built traefik for my own config
+
+# get info for other nodes
+K3S_TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
+IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+K3S_URL=https://"$IP_ADDR":6443
+
+# run the command OUTPUT HERE on other nodes
+echo curl -sfL https://get.k3s.io \| K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 ```
 
 traefik
@@ -87,7 +95,7 @@ kubectl get cm traefik-config -o yaml
 ```
 kubectl get pods | grep traefik
 kubectl describe pod traefik
-kubectl get pods
+kubectl get pods -o wide
 kubectl get services
 
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
@@ -137,9 +145,9 @@ grep 0.1 conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-service.yaml
 kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
-kubectl get po,svc,ep,ing -o wide
+kubectl get po,svc,ep,ingressroutes -o wide
 
-kubectl get pods
+kubectl get pods -o wide
 kubectl describe pod phantserver-
 ```
 
@@ -147,7 +155,7 @@ kubectl describe pod phantserver-
 kubectl delete -f conf/phant/phantserver-ingress-tls.yaml
 kubectl delete -f conf/phant/phantserver-service.yaml
 kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
-kubectl get po,svc,ep,ing
+kubectl get po,svc,ep,ingressroutes
 
 # if needed
 kubectl delete -f conf/phant/phantserver-pvc.yaml
@@ -169,7 +177,7 @@ kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
-kubectl get po,svc,ep,ing -o wide
+kubectl get po,svc,ep,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod lighttpd-
@@ -180,7 +188,7 @@ kubectl describe pod lighttpd-
 kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl delete -f conf/webstatic/lighttpd-service.yaml
 kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
-kubectl get po,svc,ep,ing -o wide
+kubectl get po,svc,ep,ingressroutes -o wide
 
 kubectl delete -f conf/webstatic/lighttpd-pvc.yaml
 kubectl delete -f conf/webstatic/lighttpd-pv.yaml
@@ -223,8 +231,8 @@ miniflux rss aggregator
 ```
 cd ~/projects/kubernetes-homespun
 
-#cp -i conf/miniflux/miniflux-secret.example \
-#      conf/miniflux/miniflux-secret.yaml
+#cp -i conf/miniflux/miniflux-example.yaml \
+#      conf/miniflux/miniflux-secrets.yaml
 
 $EDITOR conf/miniflux/miniflux-secrets.yaml
 echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
@@ -246,8 +254,8 @@ kubectl get secret | grep miniflux
     jq -r '.data.DATABASE_URL' | base64 --decode
 
 
-kubectl get svc,ep,ing
-kubectl get po,svc,deploy,ing,ep,secret
+kubectl get svc,ep,ingressroutes
+kubectl get po,svc,deploy,ingressroutes,ep,secret
 ```
 
 ### break down miniflux
