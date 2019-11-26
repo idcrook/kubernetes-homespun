@@ -1,7 +1,9 @@
 Bring up applications on kubernetes
 ===================================
 
--	traefik - k8s ingress with Lets Encrypt support
+`k3s` for kubernetes implementation
+
+-	traefik - ingress with Lets Encrypt support
 -	phant - IoT datalogging (node.js)
 -	lighthttpd - Static webserving
 -	miniflux - feed reader
@@ -10,22 +12,25 @@ Bring up applications on kubernetes
 setup
 =====
 
+cluster
+-------
+
+```
+# install without the traefik
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy=traefik" sh -
+#  TODO: use the in-built traefik for my own config
+```
+
 traefik
 -------
 
 ssh to `rpif1` (which will be our ingress)
 
 ```
-# traefik lets encrypt
+# traefik lets encrypt storage
 sudo mkdir -p /srv/configs/acme/
-sudo touch /srv/configs/acme/acme.json
+sudo touch     /srv/configs/acme/acme.json
 sudo chmod 600 /srv/configs/acme/acme.json
-```
-
-NFS (nfs-common) was already installed on raspbian stretch lite/buster lite
-
-```
-sudo apt install -y nfs-common
 ```
 
 deploy
@@ -39,17 +44,20 @@ traefik
 run on master (via `kubectl`\)
 
 ```
-sudo apt install -y jq
-# customize the DNS provider credentials (stored as secrets and passed as envariables)
-cp -i conf/traefik/traefik-envariable-secret.example conf/traefik/traefik-envariable-secret.yaml
-$EDITOR conf/traefik/traefik-envariable-secret.yaml
+cd ~/projects/kubernetes-homespun
 
-kubectl create -f conf/traefik/traefik-envariable-secret.yaml
+# customize the DNS provider credentials (stored as secrets and passed as envariables)
+# cp -i conf/traefik/traefik-envariable-example.yaml \
+        conf/traefik/traefik-envariable-secrets.yaml
+$EDITOR conf/traefik/traefik-envariable-secrets.yaml
+echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
+
+kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
 
 # inspect
 kubectl  get secret | grep traefik
-  kubectl get secret traefik-envariable-secret -o yaml
-  kubectl get secret traefik-envariable-secret -o json |\
+  kubectl get secret traefik-envariable-secrets -o yaml
+  kubectl get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
 kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
@@ -111,7 +119,7 @@ cd ~/projects/kubernetes-homespun/
 kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
-# kubectl delete -f conf/traefik/traefik-envariable-secret.yaml
+# kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
 
 phant
@@ -120,6 +128,7 @@ phant
 https://hub.docker.com/r/dpcrook/phant_server-docker/
 
 ```shell
+cd ~/projects/kubernetes-homespun/
 kubectl create --save-config -f conf/phant/phantserver-pv.yaml
 kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
 kubectl get pv phantserver-persistent-volume
@@ -214,11 +223,13 @@ miniflux rss aggregator
 ```
 cd ~/projects/kubernetes-homespun
 
-cp -i conf/miniflux/miniflux-secret.example conf/miniflux/miniflux-secret.yaml
+#cp -i conf/miniflux/miniflux-secret.example \
+#      conf/miniflux/miniflux-secret.yaml
 
-$EDITOR conf/miniflux/miniflux-secret.yaml
+$EDITOR conf/miniflux/miniflux-secrets.yaml
+echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
 
-kubectl create -f conf/miniflux/miniflux-secret.yaml
+kubectl create -f conf/miniflux/miniflux-secrets.yaml
 kubectl apply -f conf/miniflux/miniflux-deployment-raspi.yaml
 kubectl apply -f conf/miniflux/miniflux-service.yaml
 kubectl apply -f conf/miniflux/miniflux-ingress-tls.yaml
@@ -226,7 +237,7 @@ kubectl apply -f conf/miniflux/miniflux-ingress-tls.yaml
 # debugging
 kubectl describe pod miniflux-
 kubectl logs miniflux-
-kubectl --namespace=kube-system logs traefik-ingress-controller-
+kubectl logs traefik-
 
 # inspect
 kubectl get secret | grep miniflux
