@@ -23,7 +23,8 @@ spec:
       #   kubernetes.io/arch: arm
       containers:
         - name: lighttpd
-          image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
+          # image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
+          image: dpcrook/alpine-lighttpd-static:0.1.7-arm64v8
           imagePullPolicy: Always
           #resources:
           #  requests:
