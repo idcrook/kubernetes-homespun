@@ -80,7 +80,7 @@ grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 ```
 
-inplace update configmap
+in-place update configmap
 
 ```
 kubectl create configmap traefik-config \
