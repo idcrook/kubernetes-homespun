@@ -4,7 +4,7 @@ kubernetes-homespun
 Build a kubernetes cluster in home network (serving externally)
 
 -	Raspberry Pi-s
--	kubernetes v1.17.3 via k3s v1.17.3+k3s1
+-	kubernetes v1.17.4 via k3s v1.17.4+k3s1
 	-	"external" NFS for persistent storage
 	-	"external" postgresql database
 -	[traefik](https://github.com/containous/traefik) v2.x for ingress
