@@ -19,4 +19,4 @@ spec:
       name: web
     - protocol: TCP
       port: 443
-      name: web-secure
+      name: websecure

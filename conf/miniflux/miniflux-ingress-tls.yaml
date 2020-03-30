@@ -24,7 +24,7 @@ metadata:
 
 spec:
   entryPoints:
-    - web-secure
+    - websecure
   routes:
     - kind: Rule
       match: Host(`miniflux.crookster.org`)

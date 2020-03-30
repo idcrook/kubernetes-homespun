@@ -22,7 +22,7 @@ metadata:
 
 spec:
   entryPoints:
-    - web-secure
+    - websecure
   routes:
     - kind: Rule
       match: Host(`www.crookster.org`, `crookster.org`, `www.idcrook.com`, `idcrook.com`, `www.idcrook.dev`, `idcrook.dev`)

@@ -23,7 +23,7 @@ metadata:
 
 spec:
   entryPoints:
-    - web-secure
+    - websecure
   routes:
     - match: Host(`data.crookster.org`)
       kind: Rule

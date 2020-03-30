@@ -3,13 +3,18 @@
   sendAnonymousUsage = true
 
 [entryPoints]
-  [entryPoints.web]
+
+[entryPoints.web]
     address = ":80"
-  [entryPoints.web-secure]
-    address = ":443"
+
+[entryPoints.websecure]
+  address = ":443"
+  [entryPoints.websecure.http]
+    [entryPoints.websecure.http.tls]
 
 [providers]
   [providers.kubernetesCRD]
+  [providers.kubernetesIngress]
 
 # [api]
 #   insecure = true

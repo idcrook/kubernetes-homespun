@@ -23,7 +23,7 @@ spec:
         kubernetes.io/hostname: "rpif1"
         # kubernetes.io/arch: arm
       containers:
-        - image: traefik:v2.1.9
+        - image: traefik:v2.2.0
           name: traefik
           volumeMounts:
             - mountPath: "/config"
@@ -33,7 +33,7 @@ spec:
           ports:
             - name: web
               containerPort: 80
-            - name: web-secure
+            - name: websecure
               containerPort: 443
           env:
             - name: NAMECHEAP_API_USER
