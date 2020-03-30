@@ -27,6 +27,9 @@ K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
 echo curl -sfL https://get.k3s.io \| K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+
+# once cluster up, may taint the control node so things don't get scheduled onto it
+kubectl taint node rpihp2 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
 traefik
