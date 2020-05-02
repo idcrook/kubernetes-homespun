@@ -29,4 +29,5 @@ spec:
       services:
         - name: lighttpd
           port: 80
-  tls: {}
+  tls:
+    certResolver: myresolver
