@@ -59,7 +59,7 @@ cd ~/projects/kubernetes-homespun
 
 # customize the DNS provider credentials (stored as secrets and passed as envariables)
 # cp -i conf/traefik/traefik-envariable-example.yaml \
-        conf/traefik/traefik-envariable-secrets.yaml
+conf/traefik/traefik-envariable-secrets.yaml
 $EDITOR conf/traefik/traefik-envariable-secrets.yaml
 echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
 
@@ -87,8 +87,8 @@ in-place update configmap
 
 ```
 kubectl create configmap traefik-config \
-    --from-file=conf/traefik/traefik.toml -o yaml --dry-run \
-    | kubectl replace -f -
+--from-file=conf/traefik/traefik.toml -o yaml --dry-run \
+| kubectl replace -f -
 
 kubectl get cm traefik-config -o yaml
 ```
@@ -109,7 +109,7 @@ curl -i ${IP_ADDR}:80
 # 404 page not found
 
 kubectl describe pods \
-    traefik-
+traefik-
 kubectl logs \
     traefik-
 
@@ -275,8 +275,8 @@ kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
-## NFS client provisioner
-
+NFS client provisioner
+----------------------
 
 ```
 kubectl create -f conf/nfs-client/rbac.yaml
@@ -294,9 +294,14 @@ kubectl create -f conf/nfs-client/test-claim.yaml -f conf/nfs-client/test-pod.ya
 
 now check server for file `SUCCESS`
 
-
 ```
 kubectl delete -f conf/nfs-client/test-pod.yaml -f conf/nfs-client/test-claim.yaml
 ```
 
 now check file `SUCCESS` is deleted
+
+```
+kubectl create -f conf/nfs-client/rbac.yaml
+kubectl delete  -f conf/nfs-client/deployment-arm.yaml
+kubectl delete  -f conf/nfs-client/class.yaml
+```
