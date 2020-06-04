@@ -8,7 +8,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`www.crookster.org`, `crookster.org`, `www.idcrook.com`, `idcrook.com`, `www.idcrook.dev`, `idcrook.dev`)
+      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`)
       services:
         - name: lighttpd
           port: 80
@@ -25,9 +25,13 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`www.crookster.org`, `crookster.org`, `www.idcrook.com`, `idcrook.com`, `www.idcrook.dev`, `idcrook.dev`)
+      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`) || HostRegexp(`idcrook.dev`, `{subdomain:[-a-z0-9]+}.idcrook.dev`)
       services:
         - name: lighttpd
           port: 80
   tls:
     certResolver: myresolver
+    domains:
+      - main: idcrook.dev
+        sans:
+          -  "*.idcrook.dev"

@@ -36,5 +36,10 @@
       storage = "/acme/acme.json"
       # staging server
       #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
       [certificatesResolvers.myresolver.acme.httpChallenge]
         entryPoint = "web"
+
+      [certificatesResolvers.myresolver.acme.dnsChallenge]
+        provider = "namecheap"
+        delayBeforeCheck = 0
