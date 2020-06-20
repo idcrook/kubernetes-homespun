@@ -12,9 +12,9 @@ Build a kubernetes cluster in home network (serving externally)
 
 Hardware:
 
--	4GB Raspberry Pi 4 B : ubuntu 19.10 (arm64) : k3s worker node
--	Raspberry Pi 3 B+ : raspbian buster : k3s control plane node
--	Raspberry Pi 3 B : raspbian buster : postgresql DB (USB thumb drive for db storage)
+-	4GB Raspberry Pi 4 B : Ubuntu 20.04 (arm64) : k3s worker node
+-	Raspberry Pi 3 B+ : Raspbian Buster : k3s control plane node
+-	Raspberry Pi 3 B : Raspbian Buster : postgresql DB (USB thumb drive for db storage)
 
 Apps deployed:
 
