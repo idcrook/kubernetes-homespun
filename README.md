@@ -8,7 +8,7 @@ Build a kubernetes cluster in home network (serving externally)
 	-	"external" NFS for persistent storage
 	-	"external" postgresql database
 -	[traefik](https://github.com/containous/traefik) v2.2 for ingress
-	-	includes Let's Encrypt (TLS certificates)
+	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
 Hardware:
 

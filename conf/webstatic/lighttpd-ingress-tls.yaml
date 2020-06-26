@@ -8,6 +8,7 @@ spec:
     - web
   routes:
     - kind: Rule
+      # .dev domains are now pre-loaded HSTS in most browsers so no redirect is done
       match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`)
       services:
         - name: lighttpd
@@ -25,12 +26,30 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`) || HostRegexp(`idcrook.dev`, `{subdomain:[-a-z0-9]+}.idcrook.dev`)
+      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`) 
       services:
         - name: lighttpd
           port: 80
   tls:
     certResolver: myresolver
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-dev-lighttpd
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: HostRegexp(`idcrook.dev`, `{subdomain:[-a-z0-9]+}.idcrook.dev`)
+      services:
+        - name: lighttpd
+          port: 80
+  tls:
+    certResolver: wildcardresolver
     domains:
       - main: idcrook.dev
         sans:

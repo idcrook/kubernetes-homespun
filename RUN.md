@@ -87,7 +87,7 @@ in-place update configmap
 
 ```
 kubectl create configmap traefik-config \
---from-file=conf/traefik/traefik.toml -o yaml --dry-run \
+    --from-file=conf/traefik/traefik.toml -o yaml --dry-run=client \
 | kubectl replace -f -
 
 kubectl get cm traefik-config -o yaml

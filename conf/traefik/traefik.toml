@@ -32,14 +32,21 @@
 [certificatesResolvers]
   [certificatesResolvers.myresolver]
     [certificatesResolvers.myresolver.acme]
-      email = "david.crook@gmail.com"
-      storage = "/acme/acme.json"
-      # staging server
-      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    email = "david.crook@gmail.com"
+    storage = "/acme/acme.json"
+    # staging server
+    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
-      [certificatesResolvers.myresolver.acme.httpChallenge]
-        entryPoint = "web"
+    [certificatesResolvers.myresolver.acme.httpChallenge]
+      entryPoint = "web"
 
-      [certificatesResolvers.myresolver.acme.dnsChallenge]
-        provider = "namecheap"
-        delayBeforeCheck = 0
+  [certificatesResolvers.wildcardresolver]
+    [certificatesResolvers.wildcardresolver.acme]
+    email = "david.crook@gmail.com"
+    storage = "/acme/acme.json"
+    # staging server
+    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
+    [certificatesResolvers.wilcardresolver.acme.dnsChallenge]
+      provider = "namecheap"
+      delayBeforeCheck = 0
