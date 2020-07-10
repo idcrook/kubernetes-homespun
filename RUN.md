@@ -42,6 +42,8 @@ ssh to `rpif1` (which will be our ingress)
 sudo mkdir -p /srv/configs/acme/
 sudo touch     /srv/configs/acme/acme.json
 sudo chmod 600 /srv/configs/acme/acme.json
+sudo touch     /srv/configs/acme/acme-wc.json
+sudo chmod 600 /srv/configs/acme/acme-wc.json
 ```
 
 deploy
