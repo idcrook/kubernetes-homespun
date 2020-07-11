@@ -23,13 +23,15 @@ spec:
         kubernetes.io/hostname: "rpif1"
         # kubernetes.io/arch: arm
       containers:
-        - image: traefik:v2.2.2
+        - image: traefik:v2.2.4
           name: traefik
           volumeMounts:
             - mountPath: "/config"
               name: "config"
             - mountPath: "/acme/acme.json"
               name: "acme"
+            - mountPath: "/acme/acme-wc.json"
+              name: "acme-wc"
           ports:
             - name: web
               containerPort: 80
@@ -56,3 +58,8 @@ spec:
           hostPath:
             type: File
             path: /srv/configs/acme/acme.json
+        - name: acme-wc
+          hostPath:
+            type: File
+            path: /srv/configs/acme/acme-wc.json
+

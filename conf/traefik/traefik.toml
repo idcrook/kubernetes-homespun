@@ -35,14 +35,14 @@
     email = "david.crook@gmail.com"
     storage = "/acme/acme.json"
 
-    [certificatesResolvers.myresolver.acme.httpChallenge]
-      entryPoint = "web"
+      [certificatesResolvers.myresolver.acme.httpChallenge]
+        entryPoint = "web"
 
   [certificatesResolvers.wildcardresolver]
     [certificatesResolvers.wildcardresolver.acme]
     email = "david.crook@gmail.com"
     storage = "/acme/acme-wc.json"
 
-    [certificatesResolvers.wilcardresolver.acme.dnsChallenge]
-      provider = "namecheap"
-      delayBeforeCheck = 0
+      [certificatesResolvers.wildcardresolver.acme.dnsChallenge]
+        provider = "namecheap"
+        delayBeforeCheck = 0
