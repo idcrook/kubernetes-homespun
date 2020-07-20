@@ -1,5 +1,5 @@
 ---  # -*- yaml -*-
-# local git .git/info/exclude - /conf/miniflux/miniflux-secrets.yaml
+# echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
 apiVersion: v1
 kind: Secret
 metadata:

@@ -17,7 +17,7 @@ cluster
 
 ```
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.188 INSTALL_K3S_EXEC="--disable=traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.18 INSTALL_K3S_EXEC="--disable=traefik" sh -
 #  TODO: use the in-built traefik for my own config
 
 # get info for other nodes
@@ -29,7 +29,7 @@ K3S_URL=https://"$IP_ADDR":6443
 echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.18 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
-kubectl taint node rpihp2 node-role.kubernetes.io/master=effect:NoSchedule
+kubectl taint node rpif2 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
 traefik
@@ -306,4 +306,22 @@ now check file `SUCCESS` is deleted
 kubectl create -f conf/nfs-client/rbac.yaml
 kubectl delete  -f conf/nfs-client/deployment-arm.yaml
 kubectl delete  -f conf/nfs-client/class.yaml
+```
+
+## copying secrets
+
+on donor
+
+```shell
+cd ~/projects/kubernetes-homespun/conf
+scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
+scp miniflux/miniflux-secrets.yaml rpif2:projects/kubernetes-homespun/conf/miniflux/
+```
+
+on control plane node
+
+```shell
+cd ~/projects/kubernetes-homespun/
+echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
+echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
 ```
