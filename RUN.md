@@ -223,7 +223,8 @@ cd ~/projects/kubernetes-homespun
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
 kubectl apply -f conf/postgresql-service/postgresql-endpoint.yaml
 
-kubectl get svc,ep
+kubectl get svc,ep 
+kubectl get svc,ep | grep postgres
 
 kubectl delete -f conf/postgresql-service/postgresql-endpoint.yaml
 kubectl delete -f conf/postgresql-service/postgresql-service.yaml
