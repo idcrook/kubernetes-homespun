@@ -14,8 +14,8 @@ Hardware:
 
 -	4GB Raspberry Pi 4 B : Ubuntu 20.04 (arm64) : k3s worker node
 -	Raspberry Pi 3 B+ : Raspbian Buster : k3s control plane node
--	Raspberry Pi 3 B : Raspbian Buster : postgresql DB 
-	- USB thumb drive for db storage
+-	Raspberry Pi 3 B : Raspbian Buster : postgresql DB
+	-	USB thumb drive for db storage
 
 Apps and services deployed via kubernetes:
 
