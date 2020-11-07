@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: build2020-persistent-volume
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: slow
+  nfs:
+    server: 192.168.50.12
+    path: /nfs_build2020

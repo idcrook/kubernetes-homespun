@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: build2020
+  labels:
+    app: build2020
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: build2020
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: build2020
+        version: v0.1.1
+    spec:
+      containers:
+        - name: lighttpd
+          image: dpcrook/alpine-lighttpd-static:0.1.12-arm64v8
+          imagePullPolicy: Always
+          #resources:
+          #  requests:
+          #    cpu: 100m
+          #    memory: 50Mi
+          #  limits:
+          #    cpu: 100m
+          #    memory: 50Mi
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /var/www/htdocs/
+              name: build2020-persistent-storage
+      restartPolicy: Always
+      volumes:
+        - name: build2020-persistent-storage
+          persistentVolumeClaim:
+            claimName: build2020-persistent-claim
