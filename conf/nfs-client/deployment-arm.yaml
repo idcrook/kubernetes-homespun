@@ -29,11 +29,11 @@ spec:
             - name: PROVISIONER_NAME
               value: fuseim.pri/ifs
             - name: NFS_SERVER
-              value: 192.168.50.12
+              value: 192.168.50.13
             - name: NFS_PATH
               value: /nfs_k8s_client
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.50.12
+            server: 192.168.50.13
             path: /nfs_k8s_client
