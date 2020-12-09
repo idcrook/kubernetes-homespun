@@ -162,9 +162,14 @@ kubectl delete -f conf/phant/phantserver-service.yaml
 kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl get po,svc,ep,ingressroutes
 
-# if needed
+# if NFS server changes
+kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl delete -f conf/phant/phantserver-pvc.yaml
 kubectl delete -f conf/phant/phantserver-pv.yaml
+
+kubectl create --save-config -f conf/phant/phantserver-pv.yaml
+kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
+kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 ```
 
 lighttpd static server
@@ -195,9 +200,15 @@ kubectl delete -f conf/webstatic/lighttpd-service.yaml
 kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl get po,svc,ep,ingressroutes -o wide
 
+# if NFS server changes
+kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl delete -f conf/webstatic/lighttpd-pvc.yaml
 kubectl delete -f conf/webstatic/lighttpd-pv.yaml
 kubectl get pv,pvc -o wide
+
+kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
+kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
+kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 ```
 ##### build2020
 
@@ -215,6 +226,14 @@ kubectl get po,svc,ep,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod build2020-
+
+# if NFS server changes, e.g.
+kubectl delete -f conf/build2020/build2020-deployment-raspi.yaml
+kubectl delete -f conf/build2020/build2020-pvc.yaml
+kubectl delete -f conf/build2020/build2020-pv.yaml
+kubectl create --save-config -f conf/build2020/build2020-pv.yaml
+kubectl create --save-config -f conf/build2020/build2020-pvc.yaml
+kubectl apply -f conf/build2020/build2020-deployment-raspi.yaml
 ```
 
 
