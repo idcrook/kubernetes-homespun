@@ -311,7 +311,7 @@ cd ~/projects/kubernetes-homespun
 kubectl delete -f conf/miniflux/miniflux-deployment-raspi.yaml
 kubectl delete -f conf/miniflux/miniflux-ingress-tls.yaml
 kubectl delete -f conf/miniflux/miniflux-service.yaml
-# kubectl delete -f conf/miniflux/miniflux-secret.yaml
+# kubectl delete -f conf/miniflux/miniflux-secrets.yaml
 
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
