@@ -22,7 +22,9 @@ Apps and services deployed via kubernetes:
 -	[phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
-	-	uses `postgresql` db
+	-	uses "external" `postgresql` db
+-	[hedgedoc](https://github.com/hedgedoc/container) - markdown writing and sharing
+	-	uses "external" `postgresql` db
 
 Get it done
 -----------

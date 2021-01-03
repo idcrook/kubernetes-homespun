@@ -1,0 +1,73 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: hedgedoc
+  labels:
+    app: hedgedoc
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hedgedoc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hedgedoc
+        version: 1.7.1
+    spec:
+      # nodeSelector:
+      #   kubernetes.io/arch: arm
+      containers:
+        - env:
+          # https://github.com/hedgedoc/hedgedoc/blob/master/docs/configuration.md
+          - name: CMD_DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: hedgedoc-secret
+                key: CMD_DB_URL
+          - name: CMD_EMAIL
+            value: "true"                
+          - name: CMD_ALLOW_EMAIL_REGISTER
+            value: "false"
+          - name: CMD_IMAGE_UPLOAD_TYPE
+            value: "filesystem"                                 
+          # - name: CMD_LOGLEVEL
+          #   value: "debug"
+          - name: CMD_DOMAIN
+            value: "hedgedoc.crookster.org"
+          - name: CMD_PROTOCOL_USESSL
+            value: "true"
+          # - name: CMD_SESSION_SECRET
+          #   value: "secret"                    
+          name: hedgedoc
+          # https://github.com/hedgedoc/container
+          # image: quay.io/hedgedoc/hedgedoc:1.7.1-alpine
+          # https://github.com/linuxserver/docker-hedgedoc/
+          # image: ghcr.io/linuxserver/hedgedoc:arm64v8-latest # https://github.community/t/cant-make-internal-ghcr-images-public/151900
+          # https://hub.docker.com/r/linuxserver/hedgedoc
+          # image: linuxserver/hedgedoc:1.7.1-ls1
+          image: linuxserver/hedgedoc:arm64v8-1.7.1-ls1
+          ports:
+            - containerPort: 3000
+              name: hedgedoc-http
+          volumeMounts:
+            # - mountPath: /hedgedoc/public/uploads
+            - mountPath: /opt/hedgedoc/public/uploads
+              name: hedgedoc-persistent-storage
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: hedgedoc-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      restartPolicy: Always
+      volumes:
+        - name: hedgedoc-persistent-storage
+          persistentVolumeClaim:
+            claimName: hedgedoc-persistent-claim                            
+

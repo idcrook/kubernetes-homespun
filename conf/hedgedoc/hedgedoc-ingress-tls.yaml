@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-hedgedoc
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`hedgedoc.crookster.org`)
+      services:
+        - name: hedgedoc
+          port: 3000
+      middlewares:
+        - name: redirect-to-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-hedgedoc
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`hedgedoc.crookster.org`)
+      services:
+        - name: hedgedoc
+          port: 3000
+  tls:
+    certResolver: myresolver

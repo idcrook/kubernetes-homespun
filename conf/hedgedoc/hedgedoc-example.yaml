@@ -1,0 +1,12 @@
+---  # -*- yaml -*-
+# echo    conf/hedgedoc/hedgedoc-secrets.yaml >> .git/info/exclude
+# https://github.com/hedgedoc/hedgedoc/blob/master/docs/configuration.md
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hedgedoc-secret
+data:
+  # CMD_DB_URL=postgres://hedgedoc:PASSWORD@postgresql-db/hedgedoc
+  # echo -n "$CMD_DB_URL" | base64
+  CMD_DB_URL: |
+    cG9zdGdyZXM6Ly9oZWRnZWRvYzpQQVNTV09SREBwb3N0Z3Jlc3FsLWRiL2hlZGdlZG9j

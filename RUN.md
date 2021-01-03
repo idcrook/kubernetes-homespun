@@ -5,8 +5,10 @@ Bring up applications on kubernetes
 
 -	traefik - ingress with Lets Encrypt support
 -	phant - IoT datalogging (node.js)
--	lighthttpd - Static webserving
+-	lighttpd - Static webserving
 -	miniflux - feed reader
+	-	external postgresql
+-	hedgedoc - markdown writing and sharing
 	-	external postgresql
 
 setup
@@ -315,36 +317,73 @@ kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
-NFS client provisioner
-----------------------
+hedgedoc markdown wiki
+-----------------------
 
-```
-kubectl create -f conf/nfs-client/rbac.yaml
-kubectl apply  -f conf/nfs-client/deployment-arm.yaml
-kubectl apply  -f conf/nfs-client/class.yaml
+```shell
+cd ~/projects/kubernetes-homespun
+
+#cp -i conf/hedgedoc/hedgedoc-example.yaml \
+#      conf/hedgedoc/hedgedoc-secrets.yaml
+
+$EDITOR conf/hedgedoc/hedgedoc-secrets.yaml
+echo    conf/hedgedoc/hedgedoc-secrets.yaml >> .git/info/exclude
+
+kubectl create -f conf/hedgedoc/hedgedoc-secrets.yaml
+
+kubectl create --save-config -f conf/hedgedoc/hedgedoc-pv.yaml
+kubectl create --save-config -f conf/hedgedoc/hedgedoc-pvc.yaml
+kubectl get pv  hedgedoc-persistent-volume
+kubectl get pvc hedgedoc-persistent-claim
+
+kubectl apply -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
+kubectl apply -f conf/hedgedoc/hedgedoc-service.yaml
+kubectl apply -f conf/hedgedoc/hedgedoc-ingress-tls.yaml
+
+# debugging
+kubectl describe pod hedgedoc-
+kubectl logs hedgedoc-
+kubectl logs traefik-
+
+# inspect
+kubectl get secret | grep hedgedoc
+  kubectl get secret hedgedoc-secret -o json |\
+    jq -r '.data.CMD_DB_URL' | base64 --decode
+
+
+kubectl get svc,ep,ingressroutes
+kubectl get po,svc,deploy,ingressroutes,ep,secret
 ```
 
-sets storage class of `managed-nfs-storage` so PVC should have an annotation that matches
+#### debugging
 
-#### early testing
-
-```
-kubectl create -f conf/nfs-client/test-claim.yaml -f conf/nfs-client/test-pod.yaml
-```
-
-now check server for file `SUCCESS`
-
-```
-kubectl delete -f conf/nfs-client/test-pod.yaml -f conf/nfs-client/test-claim.yaml
+```shell
+kubectl exec hedgedoc-   -it -- /bin/sh -i
+ls /opt/hedgedoc/public
+# <Ctrl-C>
+exit
 ```
 
-now check file `SUCCESS` is deleted
+### break down hedgedoc
 
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl delete -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
+kubectl delete -f conf/hedgedoc/hedgedoc-ingress-tls.yaml
+kubectl delete -f conf/hedgedoc/hedgedoc-service.yaml
+# kubectl delete -f conf/hedgedoc/hedgedoc-secrets.yaml
+
+# if NFS server changes
+kubectl delete -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
+kubectl delete -f conf/hedgedoc/hedgedoc-pvc.yaml
+kubectl delete -f conf/hedgedoc/hedgedoc-pv.yaml
+
+kubectl get svc,ep
+kubectl get po,svc,deploy,ing,ep,secret
 ```
-kubectl create -f conf/nfs-client/rbac.yaml
-kubectl delete  -f conf/nfs-client/deployment-arm.yaml
-kubectl delete  -f conf/nfs-client/class.yaml
-```
+
+
 
 ## copying secrets
 
@@ -354,6 +393,7 @@ on donor
 cd ~/projects/kubernetes-homespun/conf
 scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
 scp miniflux/miniflux-secrets.yaml rpif2:projects/kubernetes-homespun/conf/miniflux/
+scp miniflux/hedgedoc-secrets.yaml rpif2:projects/kubernetes-homespun/conf/hedgedoc/
 ```
 
 on control plane node
@@ -361,5 +401,6 @@ on control plane node
 ```shell
 cd ~/projects/kubernetes-homespun/
 echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
+echo    conf/hedgedoc/hedgedoc-secrets.yaml >> .git/info/exclude
 echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
 ```
