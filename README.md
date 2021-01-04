@@ -20,11 +20,18 @@ Hardware:
 Apps and services deployed via kubernetes:
 
 -	[phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
+	-	https://data.crookster.org
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
+	-	https://www.crookster.org https://buildbarkbetter.com
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
-	-	uses "external" `postgresql` db
--	[hedgedoc](https://github.com/hedgedoc/container) - markdown writing and sharing
-	-	uses "external" `postgresql` db
+	-	https://miniflux.crookster.org
+-	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A modern, lightweight and powerful wiki app built on NodeJS
+	-	https://wiki.idcrook.dev
+
+Use "external" `postgresql` db:
+
+-	miniflux
+-	Wiki.js
 
 Get it done
 -----------
