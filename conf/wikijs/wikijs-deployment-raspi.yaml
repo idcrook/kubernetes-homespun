@@ -1,0 +1,57 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: wikijs
+  labels:
+    app: wikijs
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wikijs
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wikijs
+        version: 0.0.1
+    spec:
+      containers:
+        # https://docs.requarks.io/install/config
+        - env:
+          - name: DB_TYPE
+            value: postgres
+          - name: DB_HOST
+            value: postgresql-db
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: wikijs
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: wikijs-secret
+                key: DB_PASS
+          - name: DB_NAME
+            value: wiki
+          - name: LOGLEVEL
+            value: info
+          name: wikijs
+          # https://github.com/linuxserver/docker-wikijs
+          # https://hub.docker.com/r/requarks/wiki
+          # https://docs.requarks.io/install/docker
+          image: requarks/wiki:2
+          ports:
+            - containerPort: 3000
+              name: wikijs-http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: wikijs-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      restartPolicy: Always

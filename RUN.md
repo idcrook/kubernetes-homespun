@@ -188,7 +188,7 @@ grep 0.1 conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
-kubectl apply -f  conf/webstatic/lighttpd-ingress-tls.yaml
+kubectl apply -f conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl get po,svc,ep,ingressroutes -o wide
 
 kubectl get pods -o wide
@@ -317,38 +317,33 @@ kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
-hedgedoc markdown wiki
+wikijs markdown wiki
 -----------------------
 
 ```shell
 cd ~/projects/kubernetes-homespun
 
-#cp -i conf/hedgedoc/hedgedoc-example.yaml \
-#      conf/hedgedoc/hedgedoc-secrets.yaml
+# cp -i conf/wikijs/wikijs-example.yaml \
+#       conf/wikijs/wikijs-secrets.yaml
 
-$EDITOR conf/hedgedoc/hedgedoc-secrets.yaml
-echo    conf/hedgedoc/hedgedoc-secrets.yaml >> .git/info/exclude
+$EDITOR conf/wikijs/wikijs-secrets.yaml
+echo    conf/wikijs/wikijs-secrets.yaml >> .git/info/exclude
 
-kubectl create -f conf/hedgedoc/hedgedoc-secrets.yaml
+kubectl create -f conf/wikijs/wikijs-secrets.yaml
 
-kubectl create --save-config -f conf/hedgedoc/hedgedoc-pv.yaml
-kubectl create --save-config -f conf/hedgedoc/hedgedoc-pvc.yaml
-kubectl get pv  hedgedoc-persistent-volume
-kubectl get pvc hedgedoc-persistent-claim
-
-kubectl apply -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
-kubectl apply -f conf/hedgedoc/hedgedoc-service.yaml
-kubectl apply -f conf/hedgedoc/hedgedoc-ingress-tls.yaml
+kubectl apply -f conf/wikijs/wikijs-deployment-raspi.yaml
+kubectl apply -f conf/wikijs/wikijs-service.yaml
+kubectl apply -f conf/wikijs/wikijs-ingress-tls.yaml
 
 # debugging
-kubectl describe pod hedgedoc-
-kubectl logs hedgedoc-
+kubectl describe pod wikijs-
+kubectl logs wikijs-
 kubectl logs traefik-
 
 # inspect
-kubectl get secret | grep hedgedoc
-  kubectl get secret hedgedoc-secret -o json |\
-    jq -r '.data.CMD_DB_URL' | base64 --decode
+kubectl get secret | grep wikijs
+  kubectl get secret wikijs-secret -o json |\
+    jq -r '.data.DB_PASS' | base64 --decode
 
 
 kubectl get svc,ep,ingressroutes
@@ -358,26 +353,20 @@ kubectl get po,svc,deploy,ingressroutes,ep,secret
 #### debugging
 
 ```shell
-kubectl exec hedgedoc-   -it -- /bin/sh -i
-ls /opt/hedgedoc/public
+kubectl exec wikijs-   -it -- /bin/sh -i
 # <Ctrl-C>
 exit
 ```
 
-### break down hedgedoc
+### break down wikijs
 
 ```shell
 cd ~/projects/kubernetes-homespun
 
-kubectl delete -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
-kubectl delete -f conf/hedgedoc/hedgedoc-ingress-tls.yaml
-kubectl delete -f conf/hedgedoc/hedgedoc-service.yaml
-# kubectl delete -f conf/hedgedoc/hedgedoc-secrets.yaml
-
-# if NFS server changes
-kubectl delete -f conf/hedgedoc/hedgedoc-deployment-raspi.yaml
-kubectl delete -f conf/hedgedoc/hedgedoc-pvc.yaml
-kubectl delete -f conf/hedgedoc/hedgedoc-pv.yaml
+kubectl delete -f conf/wikijs/wikijs-deployment-raspi.yaml
+kubectl delete -f conf/wikijs/wikijs-ingress-tls.yaml
+kubectl delete -f conf/wikijs/wikijs-service.yaml
+# kubectl delete -f conf/wikijs/wikijs-secrets.yaml
 
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
@@ -393,7 +382,7 @@ on donor
 cd ~/projects/kubernetes-homespun/conf
 scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
 scp miniflux/miniflux-secrets.yaml rpif2:projects/kubernetes-homespun/conf/miniflux/
-scp miniflux/hedgedoc-secrets.yaml rpif2:projects/kubernetes-homespun/conf/hedgedoc/
+scp wikijs/wikijs-secrets.yaml rpif2:projects/kubernetes-homespun/conf/wikijs/
 ```
 
 on control plane node
@@ -401,6 +390,6 @@ on control plane node
 ```shell
 cd ~/projects/kubernetes-homespun/
 echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
-echo    conf/hedgedoc/hedgedoc-secrets.yaml >> .git/info/exclude
+echo    conf/wikijs/wikijs-secrets.yaml >> .git/info/exclude
 echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
 ```

@@ -44,7 +44,8 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: HostRegexp(`idcrook.dev`, `{subdomain:[-a-z0-9]+}.idcrook.dev`)
+      # match: HostRegexp(`idcrook.dev`, `{subdomain:[-a-z0-9]+}\.idcrook\.dev`)
+      match: Host(`idcrook.dev`, `www.idcrook.dev`)
       services:
         - name: lighttpd
           port: 80

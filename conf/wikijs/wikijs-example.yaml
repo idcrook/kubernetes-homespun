@@ -1,0 +1,12 @@
+---  # -*- yaml -*-
+# echo    conf/wikijs/wikijs-secrets.yaml >> .git/info/exclude
+# https://docs.requarks.io/install/config
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wikijs-secret
+data:
+  # DB_PASS=PASSWORD
+  # echo -n "$DB_PASS" | base64
+  DB_PASS: |
+    UEFTU1dPUkQ=
