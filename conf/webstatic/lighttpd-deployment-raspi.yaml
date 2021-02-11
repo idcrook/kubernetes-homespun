@@ -17,14 +17,14 @@ spec:
     metadata:
       labels:
         app: lighttpd
-        version: v0.1.13
+        version: v0.1.14
     spec:
       # nodeSelector:
       #   kubernetes.io/arch: arm
       containers:
         - name: lighttpd
           # image: dpcrook/alpine-lighttpd-static:0.1.7-arm32v7
-          image: dpcrook/alpine-lighttpd-static:0.1.13-arm64v8
+          image: dpcrook/alpine-lighttpd-static:0.1.14-arm64v8
           imagePullPolicy: Always
           #resources:
           #  requests:
