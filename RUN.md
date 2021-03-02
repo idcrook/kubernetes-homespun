@@ -212,6 +212,7 @@ kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 ```
+
 ##### build2020
 
 ```shell
@@ -238,7 +239,6 @@ kubectl create --save-config -f conf/build2020/build2020-pvc.yaml
 kubectl apply -f conf/build2020/build2020-deployment-raspi.yaml
 ```
 
-
 #### Debugging
 
 Get a bash shell and look at logs
@@ -262,7 +262,7 @@ cd ~/projects/kubernetes-homespun
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
 kubectl apply -f conf/postgresql-service/postgresql-endpoint.yaml
 
-kubectl get svc,ep 
+kubectl get svc,ep
 kubectl get svc,ep | grep postgres
 
 kubectl delete -f conf/postgresql-service/postgresql-endpoint.yaml
@@ -318,7 +318,7 @@ kubectl get po,svc,deploy,ing,ep,secret
 ```
 
 wikijs markdown wiki
------------------------
+--------------------
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -372,9 +372,8 @@ kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
 ```
 
-
-
-## copying secrets
+copying secrets
+---------------
 
 on donor
 
