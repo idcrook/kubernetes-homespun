@@ -17,7 +17,7 @@ setup
 cluster
 -------
 
-```
+```shell
 # install role=master without the traefik
 curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.19 INSTALL_K3S_EXEC="--disable=traefik" sh -
 #  TODO: use the in-built traefik for my own config
@@ -58,14 +58,13 @@ traefik
 
 run on control plane node (via `kubectl`\)
 
-```
+```shell
 cd ~/projects/kubernetes-homespun
 
 # customize the DNS provider credentials (stored as secrets and passed as envariables)
-# cp -i conf/traefik/traefik-envariable-example.yaml \
-conf/traefik/traefik-envariable-secrets.yaml
-$EDITOR conf/traefik/traefik-envariable-secrets.yaml
-echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
+# cp -i conf/traefik/traefik-envariable-secrets.example.yaml \
+#       conf/traefik/traefik-envariable-secrets.yaml
+# $EDITOR conf/traefik/traefik-envariable-secrets.yaml
 
 kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
 
@@ -89,7 +88,7 @@ kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 
 in-place update configmap
 
-```
+```shell
 kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml -o yaml --dry-run=client \
 | kubectl replace -f -
@@ -99,7 +98,7 @@ kubectl get cm traefik-config -o yaml
 
 #### Debugging kubernetes and traefik helpers
 
-```
+```shell
 kubectl get pods | grep traefik
 kubectl describe pod traefik
 kubectl get pods -o wide
@@ -158,6 +157,8 @@ kubectl get pods -o wide
 kubectl describe pod phantserver-
 ```
 
+Delete
+
 ```shell
 kubectl delete -f conf/phant/phantserver-ingress-tls.yaml
 kubectl delete -f conf/phant/phantserver-service.yaml
@@ -195,6 +196,8 @@ kubectl get pods -o wide
 kubectl describe pod lighttpd-
 
 ```
+
+Delete
 
 ```shell
 kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
@@ -256,7 +259,7 @@ postgresql (external service)
 
 run on master (via `kubectl`\)
 
-```
+```shell
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/postgresql-service/postgresql-service.yaml
@@ -273,14 +276,12 @@ kubectl delete -f conf/postgresql-service/postgresql-service.yaml
 miniflux rss aggregator
 -----------------------
 
-```
+```shell
 cd ~/projects/kubernetes-homespun
 
-#cp -i conf/miniflux/miniflux-example.yaml \
-#      conf/miniflux/miniflux-secrets.yaml
-
-$EDITOR conf/miniflux/miniflux-secrets.yaml
-echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
+# cp -i conf/miniflux/miniflux-secrets.example.yaml \
+#       conf/miniflux/miniflux-secrets.yaml
+# $EDITOR conf/miniflux/miniflux-secrets.yaml
 
 kubectl create -f conf/miniflux/miniflux-secrets.yaml
 kubectl apply -f conf/miniflux/miniflux-deployment-raspi.yaml
@@ -303,15 +304,60 @@ kubectl get svc,ep,ingressroutes
 kubectl get po,svc,deploy,ingressroutes,ep,secret
 ```
 
-### break down miniflux
+break down miniflux
 
-```
+```shell
 cd ~/projects/kubernetes-homespun
 
 kubectl delete -f conf/miniflux/miniflux-deployment-raspi.yaml
 kubectl delete -f conf/miniflux/miniflux-ingress-tls.yaml
 kubectl delete -f conf/miniflux/miniflux-service.yaml
 # kubectl delete -f conf/miniflux/miniflux-secrets.yaml
+
+kubectl get svc,ep
+kubectl get po,svc,deploy,ing,ep,secret
+```
+
+freshrss rss aggregator
+-----------------------
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+# cp -i conf/freshrss/freshrss-secrets.example.yaml \
+#       conf/freshrss/freshrss-secrets.yaml
+# $EDITOR conf/freshrss/freshrss-secrets.yaml
+
+kubectl create -f conf/freshrss/freshrss-secrets.yaml
+kubectl apply -f conf/freshrss/freshrss-deployment-raspi.yaml
+kubectl apply -f conf/freshrss/freshrss-service.yaml
+kubectl apply -f conf/freshrss/freshrss-ingress-tls.yaml
+
+# debugging
+kubectl describe pod freshrss-
+kubectl logs freshrss-
+kubectl logs traefik-
+
+# inspect
+kubectl get secret | grep freshrss
+  kubectl get secret freshrss-secret -o yaml
+  kubectl get secret freshrss-secret -o json |\
+    jq -r '.data.DATABASE_URL' | base64 --decode
+
+
+kubectl get svc,ep,ingressroutes
+kubectl get po,svc,deploy,ingressroutes,ep,secret
+```
+
+break down freshrss
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl delete -f conf/freshrss/freshrss-deployment-raspi.yaml
+kubectl delete -f conf/freshrss/freshrss-ingress-tls.yaml
+kubectl delete -f conf/freshrss/freshrss-service.yaml
+# kubectl delete -f conf/freshrss/freshrss-secrets.yaml
 
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret
@@ -325,9 +371,7 @@ cd ~/projects/kubernetes-homespun
 
 # cp -i conf/wikijs/wikijs-example.yaml \
 #       conf/wikijs/wikijs-secrets.yaml
-
-$EDITOR conf/wikijs/wikijs-secrets.yaml
-echo    conf/wikijs/wikijs-secrets.yaml >> .git/info/exclude
+# $EDITOR conf/wikijs/wikijs-secrets.yaml
 
 kubectl create -f conf/wikijs/wikijs-secrets.yaml
 
@@ -380,15 +424,7 @@ on donor
 ```shell
 cd ~/projects/kubernetes-homespun/conf
 scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
-scp miniflux/miniflux-secrets.yaml rpif2:projects/kubernetes-homespun/conf/miniflux/
-scp wikijs/wikijs-secrets.yaml rpif2:projects/kubernetes-homespun/conf/wikijs/
-```
-
-on control plane node
-
-```shell
-cd ~/projects/kubernetes-homespun/
-echo    conf/miniflux/miniflux-secrets.yaml >> .git/info/exclude
-echo    conf/wikijs/wikijs-secrets.yaml >> .git/info/exclude
-echo    conf/traefik/traefik-envariable-secrets.yaml >> .git/info/exclude
+scp miniflux/miniflux-secrets.yaml          rpif2:projects/kubernetes-homespun/conf/miniflux/
+scp wikijs/wikijs-secrets.yaml              rpif2:projects/kubernetes-homespun/conf/wikijs/
+scp freshrss/freshrss-secrets.yaml          rpif2:projects/kubernetes-homespun/conf/freshrss/
 ```
