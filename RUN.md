@@ -327,8 +327,12 @@ cd ~/projects/kubernetes-homespun
 # cp -i conf/freshrss/freshrss-secrets.example.yaml \
 #       conf/freshrss/freshrss-secrets.yaml
 # $EDITOR conf/freshrss/freshrss-secrets.yaml
+# NOT USED # kubectl create -f conf/freshrss/freshrss-secrets.yaml
 
-kubectl create -f conf/freshrss/freshrss-secrets.yaml
+kubectl create --save-config -f conf/freshrss/freshrss-pv.yaml
+kubectl create --save-config -f conf/freshrss/freshrss-pvc.yaml
+kubectl get pv,pvc -o wide
+
 kubectl apply -f conf/freshrss/freshrss-deployment-raspi.yaml
 kubectl apply -f conf/freshrss/freshrss-service.yaml
 kubectl apply -f conf/freshrss/freshrss-ingress-tls.yaml
@@ -357,7 +361,9 @@ cd ~/projects/kubernetes-homespun
 kubectl delete -f conf/freshrss/freshrss-deployment-raspi.yaml
 kubectl delete -f conf/freshrss/freshrss-ingress-tls.yaml
 kubectl delete -f conf/freshrss/freshrss-service.yaml
-# kubectl delete -f conf/freshrss/freshrss-secrets.yaml
+kubectl delete -f  conf/freshrss/freshrss-pv.yaml
+kubectl delete -f  conf/freshrss/freshrss-pvc.yaml
+# NOT USED # kubectl delete -f conf/freshrss/freshrss-secrets.yaml
 
 kubectl get svc,ep
 kubectl get po,svc,deploy,ing,ep,secret

@@ -1,0 +1,68 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: freshrss
+  labels:
+    app: freshrss
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freshrss
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: freshrss
+        version: v1.18.0
+    spec:
+      containers:
+        - env:
+          # These are specified in Initial configuration wizard
+          # - name: POSTGRES_USER
+          #   value: freshrss
+          # - name: POSTGRES_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: freshrss-secrets
+          #       key: POSTGRES_PASSWORD
+          # - name: POSTGRES_DB
+          #   value: freshrss
+          # - name: POSTGRES_HOST
+          #   value: postgresql-db
+          # every 20 minutes
+          - name: CRON_MIN
+            value: "*/20"
+          - name: TZ
+            value: "America/Denver"
+          # - name: DEBUG
+          #   value: "1"
+          # - name: LOG_DATE_TIME
+          #   value: "1"
+          name: freshrss-app
+          image: freshrss/freshrss:1.18.0-arm
+          volumeMounts:
+            - mountPath: /var/www/FreshRSS/data
+              subPath: data
+              name: freshrss-data
+            - mountPath: /var/www/FreshRSS/extensions
+              subPath: extensions
+              name: freshrss-data 
+          ports:
+            - containerPort: 80
+              name: freshrss-http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: freshrss-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      volumes:
+        - name: freshrss-data
+          persistentVolumeClaim:
+            claimName: freshrss-persistent-claim    
+      restartPolicy: Always
