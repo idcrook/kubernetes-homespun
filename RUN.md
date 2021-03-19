@@ -6,8 +6,8 @@ Bring up applications on kubernetes
 -	traefik - ingress with Lets Encrypt support
 -	phant - IoT datalogging (node.js)
 -	lighttpd - Static webserving
-  - webstatic
-  - build2020
+	-	webstatic
+	-	build2020
 -	miniflux - feed reader
 	-	external postgresql
 -	freshrss - feed reader
@@ -184,6 +184,8 @@ lighttpd static server
 
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
 
+### webstatic
+
 ```shell
 kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
@@ -220,7 +222,7 @@ kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 ```
 
-##### build2020
+### build2020
 
 ```shell
 kubectl create --save-config -f conf/build2020/build2020-pv.yaml
@@ -246,7 +248,7 @@ kubectl create --save-config -f conf/build2020/build2020-pvc.yaml
 kubectl apply -f conf/build2020/build2020-deployment-raspi.yaml
 ```
 
-#### Debugging
+### Debugging
 
 Get a bash shell and look at logs
 
@@ -261,7 +263,7 @@ exit
 postgresql (external service)
 -----------------------------
 
-run on master (via `kubectl`\)
+below is run on control node (via `kubectl`\)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -279,6 +281,8 @@ kubectl delete -f conf/postgresql-service/postgresql-service.yaml
 
 miniflux rss aggregator
 -----------------------
+
+https://hub.docker.com/r/miniflux/miniflux
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -324,6 +328,8 @@ kubectl get po,svc,deploy,ing,ep,secret
 
 freshrss rss aggregator
 -----------------------
+
+https://hub.docker.com/r/freshrss/freshrss
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -427,8 +433,8 @@ on donor
 
 ```shell
 cd ~/projects/kubernetes-homespun/conf
+
 scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
 scp miniflux/miniflux-secrets.yaml          rpif2:projects/kubernetes-homespun/conf/miniflux/
 scp wikijs/wikijs-secrets.yaml              rpif2:projects/kubernetes-homespun/conf/wikijs/
-scp freshrss/freshrss-secrets.yaml          rpif2:projects/kubernetes-homespun/conf/freshrss/
 ```
