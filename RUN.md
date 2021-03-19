@@ -6,9 +6,13 @@ Bring up applications on kubernetes
 -	traefik - ingress with Lets Encrypt support
 -	phant - IoT datalogging (node.js)
 -	lighttpd - Static webserving
+  - webstatic
+  - build2020
 -	miniflux - feed reader
 	-	external postgresql
--	hedgedoc - markdown writing and sharing
+-	freshrss - feed reader
+	-	external postgresql
+-	wikijs - markdown writing and sharing
 	-	external postgresql
 
 setup
