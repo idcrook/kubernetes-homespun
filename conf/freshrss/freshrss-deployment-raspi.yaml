@@ -22,27 +22,11 @@ spec:
     spec:
       containers:
         - env:
-          # These are specified in Initial configuration wizard
-          # - name: POSTGRES_USER
-          #   value: freshrss
-          # - name: POSTGRES_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: freshrss-secrets
-          #       key: POSTGRES_PASSWORD
-          # - name: POSTGRES_DB
-          #   value: freshrss
-          # - name: POSTGRES_HOST
-          #   value: postgresql-db
           # every 20 minutes
           - name: CRON_MIN
             value: "*/20"
           - name: TZ
             value: "America/Denver"
-          # - name: DEBUG
-          #   value: "1"
-          # - name: LOG_DATE_TIME
-          #   value: "1"
           name: freshrss-app
           image: freshrss/freshrss:1.18.0-arm
           volumeMounts:

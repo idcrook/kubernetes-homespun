@@ -25,6 +25,8 @@ Apps and services deployed via kubernetes:
 	-	https://www.crookster.org https://buildbarkbetter.com
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
+-	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
+	-	https://freshrss.crookster.org
 -	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A modern, lightweight and powerful wiki app built on NodeJS
 	-	https://wiki.idcrook.dev
 

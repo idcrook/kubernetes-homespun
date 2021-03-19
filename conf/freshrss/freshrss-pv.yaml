@@ -11,9 +11,6 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: slow
-  # mountOptions:
-  #   - hard
-  #   - nfsvers=4.1
   nfs:
     path: /nfs_freshrss_data
     server: 192.168.50.12
