@@ -1,7 +1,7 @@
 kubernetes-homespun
 ===================
 
-A kubernetes cluster in home network (serves to Internet)
+An in-home kubernetes cluster network (serves to Internet)
 
 -	Raspberry Pi-s
 -	kubernetes via [k3s](https://k3s.io)
@@ -12,10 +12,11 @@ A kubernetes cluster in home network (serves to Internet)
 
 Hardware:
 
--	4GB Raspberry Pi 4 B : Ubuntu 20.04 (arm64) : k3s worker node
--	Raspberry Pi 3 B+ : Raspbian Buster : k3s control plane node
--	Raspberry Pi 3 B : Raspbian Buster : postgresql DB
+-	Raspberry Pi 3 B+ : Raspberry Pi OS (buster) : k3s control plane node
+-	Raspberry Pi 4 B (4GB): Ubuntu 20.04 (arm64) : k3s worker node
+-	Raspberry Pi 3 B : Raspberry Pi OS (buster) : "external" postgresql DB
 	-	USB thumb drive for db storage
+-	NAS : "external" NFS server
 
 Apps and services deployed via kubernetes:
 
@@ -33,7 +34,8 @@ Apps and services deployed via kubernetes:
 Use "external" `postgresql` db:
 
 -	miniflux
--	Wiki.js
+-	freshrss
+-	wikijs
 
 Get it done
 -----------
@@ -43,4 +45,4 @@ Get it done
 	-	`traefik` is ingress router
 	-	Deployments and services have configuration files
 
--	[Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](.archive/CLUSTER.md) - old kubernetes cluster setup; used `kubeadm`
+-	circa 2018 [Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](.archive/CLUSTER.md) - previous kubernetes cluster setup used `kubeadm`
