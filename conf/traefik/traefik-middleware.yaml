@@ -1,4 +1,5 @@
 ---
+# Redirect to https
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -6,3 +7,4 @@ metadata:
 spec:
   redirectScheme:
     scheme: https
+    permanent: true
