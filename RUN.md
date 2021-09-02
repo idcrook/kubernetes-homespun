@@ -111,7 +111,7 @@ kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 
-IP_ADDR=192.168.50.8
+IP_ADDR=192.168.50.16
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
@@ -139,6 +139,56 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
 # kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
+
+
+dex - NOT YET IMPLEMENTED
+-------
+
+
+kubectl apply -f conf/dex/dex-ns.yaml
+kubectl apply -f conf/dex/dex-crd-rbac.yaml
+kubectl --namespace=dex create configmap dex-config \
+    --from-file=conf/dex/config.yaml
+kubectl --namespace=dex  get cm
+
+# customize the auth provider credentials (stored as secrets and passed as envariables)
+# cp -i conf/dex/dex-envariable-secrets.example.yaml \
+#       conf/dex/dex-envariable-secrets.yaml
+# $EDITOR conf/dex/dex-envariable-secrets.yaml
+
+# kubectl create -f conf/dex/dex-envariable-secrets.yaml
+
+<!-- # inspect
+kubectl  get secret | grep dex
+  kubectl get secret dex-envariable-secrets -o yaml
+  kubectl get secret dex-envariable-secrets -o json |\
+    jq -r '.data.GITHUB_CLIENT_ID' | base64 --decode -->
+
+kubectl apply -f conf/dex/dex-service.yaml
+kubectl apply -f conf/dex/dex-deployment-raspi.yaml
+kubectl apply -f conf/dex/dex-ingress-tls.yaml
+```
+
+in-place update configmap
+
+```shell
+kubectl --namespace=dex create configmap dex-config \
+    --from-file=conf/dex/config.yaml -o yaml --dry-run=client \
+| kubectl --namespace=dex replace -f -
+
+kubectl --namespace=dex get cm dex-config -o yaml
+```
+
+#### Debugging dex helpers
+
+```shell
+kubectl --namespace=dex  get pods
+kubectl --namespace=dex  describe pod dex
+kubectl --namespace=dex  get pods -o wide
+kubectl --namespace=dex  get services
+kubectl --namespace=dex  get ingressroute
+
+
 
 phant
 -----
@@ -434,7 +484,7 @@ on donor
 ```shell
 cd ~/projects/kubernetes-homespun/conf
 
-scp traefik/traefik-envariable-secrets.yaml rpif2:projects/kubernetes-homespun/conf/traefik/
-scp miniflux/miniflux-secrets.yaml          rpif2:projects/kubernetes-homespun/conf/miniflux/
-scp wikijs/wikijs-secrets.yaml              rpif2:projects/kubernetes-homespun/conf/wikijs/
+scp traefik/traefik-envariable-secrets.yaml rpif1:projects/kubernetes-homespun/conf/traefik/
+scp miniflux/miniflux-secrets.yaml          rpif1:projects/kubernetes-homespun/conf/miniflux/
+scp wikijs/wikijs-secrets.yaml              rpif1:projects/kubernetes-homespun/conf/wikijs/
 ```

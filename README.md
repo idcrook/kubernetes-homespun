@@ -7,14 +7,14 @@ An in-home kubernetes cluster network (serves to Internet)
 -	kubernetes via [k3s](https://k3s.io)
 	-	"external" NFS server for persistent storage
 	-	"external" postgresql server for database
--	[traefik](https://github.com/containous/traefik) v2.3 for ingress
+-	[traefik](https://github.com/containous/traefik) v2.4 for ingress
 	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
 Hardware:
 
 -	Raspberry Pi 3 B+ : Raspberry Pi OS (buster) : k3s control plane node
 -	Raspberry Pi 4 B (4GB): Ubuntu 20.04 (arm64) : k3s worker node
--	Raspberry Pi 3 B : Raspberry Pi OS (buster) : "external" postgresql DB
+-	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : "external" postgresql DB
 	-	USB thumb drive for db storage
 -	NAS : "external" NFS server
 
@@ -23,12 +23,13 @@ Apps and services deployed via kubernetes:
 -	[phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
 	-	https://data.crookster.org
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
-	-	https://www.crookster.org https://buildbarkbetter.com
+	-	https://www.crookster.org 
+	-   https://buildbarkbetter.com
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
 -	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
 	-	https://freshrss.crookster.org
--	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A modern, lightweight and powerful wiki app built on NodeJS
+-	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A wiki app built on NodeJS
 	-	https://wiki.idcrook.dev
 
 Use "external" `postgresql` db:

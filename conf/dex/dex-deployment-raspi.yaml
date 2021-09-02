@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dex
+  name: dex
+  namespace: dex
+spec:
+  # replicas: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dex
+  template:
+    metadata:
+      labels:
+        app: dex
+    spec:
+      serviceAccountName: dex # This is created below
+      containers:
+      - image: dexidp/dex:v2.30.0
+        name: dex
+        command: ["/usr/local/bin/dex", "serve", "/etc/dex/cfg/config.yaml"]
+
+        ports:
+        - name: https
+          containerPort: 5556
+
+        volumeMounts:
+        - name: config
+          mountPath: /etc/dex/cfg
+
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5556
+            # scheme: HTTPS
+            scheme: HTTP
+
+      volumes:
+      - name: config
+        configMap:
+          name: dex-config

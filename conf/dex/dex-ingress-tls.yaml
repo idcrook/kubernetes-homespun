@@ -1,0 +1,37 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-dex
+  namespace: dex
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`dex.idcrook.dev`)
+      services:
+        - name: dex
+          port: 5556
+      middlewares:
+        - name: redirect-to-https
+          namespace: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-dex
+  namespace: dex
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`dex.idcrook.dev`)
+      services:
+        - name: dex
+          port: 5556
+  tls:
+    certResolver: wildcardresolver
