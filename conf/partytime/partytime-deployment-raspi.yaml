@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: partytime
+  labels:
+    app: partytime
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: partytime
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: partytime
+        version: v0.1.4
+    spec:
+      containers:
+        - name: lighttpd
+          image: dpcrook/alpine-lighttpd-static:0.1.14-arm64v8
+          imagePullPolicy: Always
+          #resources:
+          #  requests:
+          #    cpu: 100m
+          #    memory: 50Mi
+          #  limits:
+          #    cpu: 100m
+          #    memory: 50Mi
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /var/www/htdocs/
+              name: partytime-persistent-storage
+      restartPolicy: Always
+      volumes:
+        - name: partytime-persistent-storage
+          persistentVolumeClaim:
+            claimName: partytime-persistent-claim
