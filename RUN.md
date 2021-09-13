@@ -145,7 +145,9 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 dex - NOT YET IMPLEMENTED
 -------
 
+for authentication 
 
+```shell
 kubectl apply -f conf/dex/dex-ns.yaml
 kubectl apply -f conf/dex/dex-crd-rbac.yaml
 kubectl --namespace=dex create configmap dex-config \
@@ -188,7 +190,7 @@ kubectl --namespace=dex  describe pod dex
 kubectl --namespace=dex  get pods -o wide
 kubectl --namespace=dex  get services
 kubectl --namespace=dex  get ingressroute
-
+```
 
 
 phant
