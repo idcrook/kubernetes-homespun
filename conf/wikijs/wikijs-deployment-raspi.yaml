@@ -45,6 +45,7 @@ spec:
           # https://hub.docker.com/r/requarks/wiki
           # https://docs.requarks.io/install/docker
           image: requarks/wiki:2
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
               name: wikijs-http
