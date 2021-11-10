@@ -23,7 +23,7 @@ spec:
         kubernetes.io/hostname: "rpif1"
         # kubernetes.io/arch: arm
       containers:
-        - image: traefik:v2.5.3
+        - image: traefik:v2.5.4
           name: traefik
           volumeMounts:
             - mountPath: "/config"
