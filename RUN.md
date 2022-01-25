@@ -24,7 +24,7 @@ k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.20 INSTALL_K3S_EXEC="--disable=traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.22 INSTALL_K3S_EXEC="--disable=traefik" sh -
 #  TODO: use the in-built traefik for my own config
 
 # get info for other nodes
@@ -33,7 +33,7 @@ IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.20 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.22 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
 kubectl taint node rpihp2 node-role.kubernetes.io/master=effect:NoSchedule
@@ -112,7 +112,7 @@ kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 
-IP_ADDR=192.168.50.16
+IP_ADDR=192.168.50.8
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
@@ -140,58 +140,6 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
 # kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
-
-
-dex - NOT YET IMPLEMENTED
--------
-
-for authentication 
-
-```shell
-kubectl apply -f conf/dex/dex-ns.yaml
-kubectl apply -f conf/dex/dex-crd-rbac.yaml
-kubectl --namespace=dex create configmap dex-config \
-    --from-file=conf/dex/config.yaml
-kubectl --namespace=dex  get cm
-
-# customize the auth provider credentials (stored as secrets and passed as envariables)
-# cp -i conf/dex/dex-envariable-secrets.example.yaml \
-#       conf/dex/dex-envariable-secrets.yaml
-# $EDITOR conf/dex/dex-envariable-secrets.yaml
-
-# kubectl create -f conf/dex/dex-envariable-secrets.yaml
-
-<!-- # inspect
-kubectl  get secret | grep dex
-  kubectl get secret dex-envariable-secrets -o yaml
-  kubectl get secret dex-envariable-secrets -o json |\
-    jq -r '.data.GITHUB_CLIENT_ID' | base64 --decode -->
-
-kubectl apply -f conf/dex/dex-service.yaml
-kubectl apply -f conf/dex/dex-deployment-raspi.yaml
-kubectl apply -f conf/dex/dex-ingress-tls.yaml
-```
-
-in-place update configmap
-
-```shell
-kubectl --namespace=dex create configmap dex-config \
-    --from-file=conf/dex/config.yaml -o yaml --dry-run=client \
-| kubectl --namespace=dex replace -f -
-
-kubectl --namespace=dex get cm dex-config -o yaml
-```
-
-#### Debugging dex helpers
-
-```shell
-kubectl --namespace=dex  get pods
-kubectl --namespace=dex  describe pod dex
-kubectl --namespace=dex  get pods -o wide
-kubectl --namespace=dex  get services
-kubectl --namespace=dex  get ingressroute
-```
-
 
 phant
 -----
