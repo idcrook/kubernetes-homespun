@@ -12,10 +12,11 @@ An in-home kubernetes cluster network (serves to Internet)
 
 Hardware:
 
--	Raspberry Pi 3 B+ : Raspberry Pi OS (buster) : k3s control plane node
--	Raspberry Pi 4 B (4GB): Ubuntu 20.04 (arm64) : k3s worker node
--	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : "external" postgresql DB
-	-	USB thumb drive for db storage
+-	PINE64 ROCK64 (1GB): Diet Pi (buster) : k3s control plane node
+-	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) 
+	- k3s worker node
+	- "external" postgresql DB
+		-	USB thumb drive for db storage
 -	NAS : "external" NFS server
 
 Apps and services deployed via kubernetes:
