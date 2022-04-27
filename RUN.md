@@ -36,13 +36,13 @@ K3S_URL=https://"$IP_ADDR":6443
 echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.22 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
-kubectl taint node rpihp2 node-role.kubernetes.io/master=effect:NoSchedule
+kubectl taint node r64-01 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
 traefik
 -------
 
-ssh to `rpif1` (which will be our ingress)
+ssh to `rpif2` (which will be our ingress)
 
 ```
 # traefik lets encrypt storage
@@ -112,14 +112,15 @@ kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 
-IP_ADDR=192.168.50.8
+IP_ADDR=192.168.50.9
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
 kubectl describe pods \
-traefik-
+  traefik-
+
 kubectl logs \
-    traefik-
+  traefik-
 
 # update config file after changing (see above for "in-place")
 kubectl get configmaps
@@ -463,7 +464,7 @@ on donor
 ```shell
 cd ~/projects/kubernetes-homespun/conf
 
-scp traefik/traefik-envariable-secrets.yaml rpif1:projects/kubernetes-homespun/conf/traefik/
-scp miniflux/miniflux-secrets.yaml          rpif1:projects/kubernetes-homespun/conf/miniflux/
-scp wikijs/wikijs-secrets.yaml              rpif1:projects/kubernetes-homespun/conf/wikijs/
+scp traefik/traefik-envariable-secrets.yaml r64-01:projects/kubernetes-homespun/conf/traefik/
+scp miniflux/miniflux-secrets.yaml          r64-01:projects/kubernetes-homespun/conf/miniflux/
+scp wikijs/wikijs-secrets.yaml              r64-01:projects/kubernetes-homespun/conf/wikijs/
 ```
