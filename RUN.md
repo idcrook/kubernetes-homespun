@@ -24,7 +24,7 @@ k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.22 INSTALL_K3S_EXEC="--disable=traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.23 INSTALL_K3S_EXEC="--disable=traefik" sh -
 #  TODO: use the in-built traefik for my own config
 
 # get info for other nodes
@@ -33,7 +33,7 @@ IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.22 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.23 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
 kubectl taint node r64-01 node-role.kubernetes.io/master=effect:NoSchedule
