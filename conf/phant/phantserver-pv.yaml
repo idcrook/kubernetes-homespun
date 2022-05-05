@@ -16,4 +16,4 @@ spec:
   #   - nfsvers=4.1
   nfs:
     path: /nfs_phant_data
-    server: 192.168.50.12
+    server: 192.168.50.13
