@@ -15,6 +15,7 @@ Bring up applications on kubernetes
 	-	external postgresql
 -	wikijs - markdown writing and sharing
 	-	external postgresql
+- BirdNET Pi - record and analyze bird song
 
 setup
 =====
@@ -296,16 +297,36 @@ below is run on control node (via `kubectl`\)
 ```shell
 cd ~/projects/kubernetes-homespun
 
-kubectl apply -f conf/postgresql-service/postgresql-service.yaml
-kubectl apply -f conf/postgresql-service/postgresql-endpoint.yaml
+kubectl apply -f conf/external-services/postgresql-service.yaml
+kubectl apply -f conf/external-services/postgresql-endpoint.yaml
 
 kubectl get svc,ep
 kubectl get svc,ep | grep postgres
 
-kubectl delete -f conf/postgresql-service/postgresql-endpoint.yaml
-kubectl delete -f conf/postgresql-service/postgresql-service.yaml
+kubectl delete -f conf/external-services/postgresql-endpoint.yaml
+kubectl delete -f conf/external-services/postgresql-service.yaml
 
 ```
+
+BirdNET Pi (external service)
+-----------------------------
+
+below is run on control node (via `kubectl`\)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/birdnetpi-service.yaml
+kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
+
+kubectl get svc,ep
+kubectl get svc,ep | grep birdnetpi
+
+kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
+kubectl delete -f conf/external-services/birdnetpi-service.yaml
+
+```
+
 
 miniflux rss aggregator
 -----------------------

@@ -1,0 +1,41 @@
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: http-redirect-birdnetpi-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - kind: Rule
+#       # .dev domains are now pre-loaded HSTS in most browsers so no redirect is done
+#       match: Host(`birdnetpi.idcrook.dev`)
+#       services:
+#         - name: birdnetpi-http
+#           port: 80
+#       middlewares:
+#         - name: redirect-to-https
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-birdnetpi-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`birdnetpi.idcrook.dev`) 
+      services:
+        - name: birdnetpi-http
+          port: 80
+  tls: {}
+  # tls:
+  #   certResolver: myresolver
+  # tls:
+  #   certResolver: wildcardresolver
+  #   domains:
+  #     - main: idcrook.dev
+  #       sans:
+  #         -  "*.idcrook.dev"
