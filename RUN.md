@@ -194,7 +194,7 @@ kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
 
-grep 0.1 conf/webstatic/lighttpd-deployment-raspi.yaml
+grep image conf/webstatic/lighttpd-deployment-raspi.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
@@ -318,13 +318,14 @@ cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/external-services/birdnetpi-service.yaml
 kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
+kubectl apply -f conf/external-services/birdnetpi-ingress-tls.yaml
 
 kubectl get svc,ep
-kubectl get svc,ep | grep birdnetpi
+kubectl get svc,ep,ingressroute | grep birdnetpi
 
 kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
 kubectl delete -f conf/external-services/birdnetpi-service.yaml
-
+kubectl delete -f conf/external-services/birdnetpi-ingress-tls.yaml
 ```
 
 
@@ -344,6 +345,7 @@ cd ~/projects/kubernetes-homespun
 
 kubectl create -f conf/miniflux/miniflux-secrets.yaml
 kubectl apply -f conf/miniflux/miniflux-deployment-raspi.yaml
+grep image       conf/miniflux/miniflux-deployment-raspi.yaml
 kubectl apply -f conf/miniflux/miniflux-service.yaml
 kubectl apply -f conf/miniflux/miniflux-ingress-tls.yaml
 
