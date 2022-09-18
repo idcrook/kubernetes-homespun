@@ -17,11 +17,11 @@ spec:
     metadata:
       labels:
         app: build2020
-        version: v14.66.0
+        version: v14.67.0
     spec:
       containers:
         - name: lighttpd
-          image: dpcrook/alpine-lighttpd-static:14.66.0-arm64v8
+          image: dpcrook/alpine-lighttpd-static:14.67.0-arm64v8
           imagePullPolicy: Always
           #resources:
           #  requests:
