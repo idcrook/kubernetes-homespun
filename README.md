@@ -7,7 +7,7 @@ An in-home kubernetes cluster network (serves to Internet)
 -	kubernetes via [k3s](https://k3s.io)
 	-	"external" NFS server for persistent storage
 	-	"external" postgresql server for database
--	[traefik](https://github.com/containous/traefik) v2.6 for ingress
+-	[traefik](https://github.com/containous/traefik) v2.8 for ingress
 	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
 Hardware:
