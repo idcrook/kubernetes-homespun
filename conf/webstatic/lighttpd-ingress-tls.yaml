@@ -9,7 +9,8 @@ spec:
   routes:
     - kind: Rule
       # .dev domains are now pre-loaded HSTS in most browsers so no redirect is done
-      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`)
+      ##match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`)
+      match: Host(`crookster.org`, `www.crookster.org`)
       services:
         - name: lighttpd
           port: 80
@@ -26,7 +27,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`crookster.org`, `www.crookster.org`) || Host(`idcrook.com`, `www.idcrook.com`) 
+      match: Host(`crookster.org`, `www.crookster.org`)
       services:
         - name: lighttpd
           port: 80

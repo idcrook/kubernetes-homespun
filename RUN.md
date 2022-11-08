@@ -7,15 +7,14 @@ Bring up applications on kubernetes
 -	phant - IoT datalogging (node.js)
 -	lighttpd - Static webserving
 	-	webstatic
-	-	build2020
-	-	partytime
+	-	(_offline_) partytime 
 -	miniflux - feed reader
 	-	external postgresql
--	freshrss - feed reader
+-	(_offline_) freshrss - feed reader
 	-	external postgresql
--	wikijs - markdown writing and sharing
+-	(_offline_) wikijs - markdown writing and sharing
 	-	external postgresql
-- BirdNET Pi - record and analyze bird song
+- (_offline_) BirdNET Pi - record and analyze bird song
 
 setup
 =====
@@ -25,7 +24,7 @@ k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.24 INSTALL_K3S_EXEC="--disable=traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.25 INSTALL_K3S_EXEC="--disable=traefik" sh -
 #  TODO: use the in-built traefik for my own config
 
 # get info for other nodes
@@ -34,7 +33,7 @@ IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.24 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.25 K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
 kubectl taint node r64-01 node-role.kubernetes.io/master=effect:NoSchedule
@@ -223,32 +222,6 @@ kubectl get pv,pvc -o wide
 kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
-```
-
-### build2020
-
-```shell
-kubectl create --save-config -f conf/build2020/build2020-pv.yaml
-kubectl create --save-config -f conf/build2020/build2020-pvc.yaml
-kubectl get pv,pvc -o wide
-
-grep 0.1 conf/build2020/build2020-deployment-raspi.yaml
-kubectl apply -f conf/build2020/build2020-deployment-raspi.yaml
-
-kubectl apply -f conf/build2020/build2020-service.yaml
-kubectl apply -f conf/build2020/build2020-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
-
-kubectl get pods -o wide
-kubectl describe pod build2020-
-
-# if NFS server changes, e.g.
-kubectl delete -f conf/build2020/build2020-deployment-raspi.yaml
-kubectl delete -f conf/build2020/build2020-pvc.yaml
-kubectl delete -f conf/build2020/build2020-pv.yaml
-kubectl create --save-config -f conf/build2020/build2020-pv.yaml
-kubectl create --save-config -f conf/build2020/build2020-pvc.yaml
-kubectl apply -f conf/build2020/build2020-deployment-raspi.yaml
 ```
 
 ### partytime

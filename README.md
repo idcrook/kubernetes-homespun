@@ -7,7 +7,7 @@ An in-home kubernetes cluster network (serves to Internet)
 -	kubernetes via [k3s](https://k3s.io)
 	-	"external" NFS server for persistent storage
 	-	"external" postgresql server for database
--	[traefik](https://github.com/containous/traefik) v2.8 for ingress
+-	[traefik](https://github.com/containous/traefik) v2.9 for ingress
 	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
 Hardware:
@@ -25,13 +25,17 @@ Apps and services deployed via kubernetes:
 	-	https://data.crookster.org
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
 	-	https://www.crookster.org
-	-   https://buildbarkbetter.com
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
--	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
-	-	https://freshrss.crookster.org
+
+Offline services
+
 -	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A wiki app built on NodeJS
 	-	https://wiki.idcrook.dev
+-	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
+	-	https://freshrss.crookster.org
+-   Bird Net Pi 
+	-   FIXME: 
 
 Use "external" `postgresql` db:
 
