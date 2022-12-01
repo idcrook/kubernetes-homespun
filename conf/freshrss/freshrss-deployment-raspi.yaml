@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: freshrss
-        version: v1.19.2
+        version: v1.20.1
     spec:
       containers:
         - env:
@@ -28,7 +28,7 @@ spec:
           - name: TZ
             value: "America/Denver"
           name: freshrss-app
-          image: freshrss/freshrss:1.19.2-arm
+          image: freshrss/freshrss:1.20.1-arm
           volumeMounts:
             - mountPath: /var/www/FreshRSS/data
               subPath: data
