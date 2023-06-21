@@ -1,54 +1,54 @@
-kubernetes-homespun
-===================
-
 An in-home kubernetes cluster network (serves to Internet)
 
--	Raspberry Pi-s
--	kubernetes via [k3s](https://k3s.io)
-	-	"external" NFS server for persistent storage
-	-	"external" postgresql server for database
--	[traefik](https://github.com/containous/traefik) v2.9 for ingress
-	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
-
-Hardware:
-
--	PINE64 ROCK64 (1GB): Diet Pi (buster) : k3s control plane node
--	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) 
-	- k3s worker node
-	- "external" postgresql DB
-		-	USB thumb drive for db storage
--	NAS : "external" NFS server
-
-Apps and services deployed via kubernetes:
+## Apps and services deployed via kubernetes:
 
 -	[phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
 	-	https://data.crookster.org
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
 	-	https://www.crookster.org
+	-   https://party.crookster.org
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
+-   [Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
+	-   https://birdnetpi.idcrook.dev
 
-Offline services
+## High-level
 
--	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A wiki app built on NodeJS
-	-	https://wiki.idcrook.dev
--	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
-	-	https://freshrss.crookster.org
--   Bird Net Pi 
-	-   FIXME: 
+-	Raspberry Pi-s
+-	kubernetes via [k3s](https://k3s.io)
+	-	"external" NFS server for persistent storage
+	-	"external" postgresql server for database
+-	[traefik](https://github.com/containous/traefik) v2.10 for ingress
+	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
-Use "external" `postgresql` db:
+### Hardware:
+
+-	PINE64 ROCK64 (1GB): Diet Pi (buster) : k3s control plane node
+-	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : k3s worker node
+	- "external" postgresql DB, **USB thumb drive** for db storage
+-	NAS : "external" NFS server
+-   Raspberry Pi 4 B (4GB): Running BirdNET.Pi on PoE connection
+
+#### Use "external" `postgresql` db
 
 -	miniflux
 -	freshrss
 -	wikijs
 
+
+### Offline services (there may be others)
+
+-	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A wiki app built on NodeJS
+	-	https://wiki.idcrook.dev
+-	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
+	-	https://freshrss.crookster.org
+
+
+-----
+
 Get it done
 -----------
 
--	[RUN.md](RUN.md) - Start kubernetes by installing `k3s`.
-
-	-	`traefik` is ingress router
-	-	Deployments and services have configuration files
+-	[BUILD.md](BUILD.md), [RUN.md](RUN.md) - Start kubernetes by installing `k3s`...
 
 -	circa 2018 [Original Blog post](https://idcrook.github.io/Kubernetes-Ubuntu-18.04-Bare-Metal-Single-Host/) and [CLUSTER.md](.archive/CLUSTER.md) - previous kubernetes cluster setup used `kubeadm`
