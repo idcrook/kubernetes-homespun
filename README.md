@@ -1,18 +1,20 @@
 An in-home kubernetes cluster network (serves to Internet)
 
-## Apps and services deployed via kubernetes:
+Apps and services deployed via kubernetes:
+------------------------------------------
 
 -	[phant](https://hub.docker.com/r/dpcrook/phant_server-docker) - IoT data logging
 	-	https://data.crookster.org
 -	[lighttpd](https://hub.docker.com/r/dpcrook/alpine-lighttpd-static) - Static webpage server
 	-	https://www.crookster.org
-	-   https://party.crookster.org
+	-	https://party.crookster.org
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
--   [Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
-	-   https://birdnetpi.idcrook.dev
+-	[Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
+	-	https://birdnetpi.idcrook.dev
 
-## High-level
+High-level
+----------
 
 -	Raspberry Pi-s
 -	kubernetes via [k3s](https://k3s.io)
@@ -25,16 +27,15 @@ An in-home kubernetes cluster network (serves to Internet)
 
 -	PINE64 ROCK64 (1GB): Diet Pi (buster) : k3s control plane node
 -	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : k3s worker node
-	- "external" postgresql DB, **USB thumb drive** for db storage
+	-	"external" postgresql DB, **USB thumb drive** for db storage
 -	NAS : "external" NFS server
--   Raspberry Pi 4 B (4GB): Running BirdNET.Pi on PoE connection
+-	Raspberry Pi 4 B (4GB): Running BirdNET.Pi on PoE connection
 
 #### Use "external" `postgresql` db
 
 -	miniflux
 -	freshrss
 -	wikijs
-
 
 ### Offline services (there may be others)
 
@@ -43,8 +44,7 @@ An in-home kubernetes cluster network (serves to Internet)
 -	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
 	-	https://freshrss.crookster.org
 
-
------
+---
 
 Get it done
 -----------
