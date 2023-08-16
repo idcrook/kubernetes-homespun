@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: miniflux
-        version: v2.0.45
+        version: v2.0.46
     spec:
       # nodeSelector:
       #   kubernetes.io/arch: arm
