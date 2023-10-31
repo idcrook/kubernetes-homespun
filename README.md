@@ -10,8 +10,6 @@ Apps and services deployed via kubernetes:
 	-	https://party.crookster.org
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
--	[Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
-	-	https://birdnetpi.idcrook.dev
 
 High-level
 ----------
@@ -43,6 +41,8 @@ High-level
 	-	https://wiki.idcrook.dev
 -	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
 	-	https://freshrss.crookster.org
+-	[Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
+	-	https://birdnetpi.idcrook.dev
 
 ---
 
