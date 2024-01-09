@@ -308,6 +308,27 @@ kubectl delete -f conf/external-services/birdnetpi-service.yaml
 kubectl delete -f conf/external-services/birdnetpi-ingress-tls.yaml
 ```
 
+Home Assistant (external service)
+-----------------------------
+
+below is run on control node (via `kubectl`\)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/homeassistant-service.yaml
+kubectl apply -f conf/external-services/homeassistant-endpoint.yaml
+kubectl apply -f conf/external-services/homeassistant-ingress-tls.yaml
+
+kubectl get svc,ep
+kubectl get svc,ep,ingressroute | grep homeassistant
+
+kubectl delete -f conf/external-services/homeassistant-endpoint.yaml
+kubectl delete -f conf/external-services/homeassistant-service.yaml
+kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
+```
+
+
 
 miniflux rss aggregator
 -----------------------

@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-homeassistant-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`ha.idcrook.dev`) 
+      services:
+        - name: homeassistant-http
+          port: 8123
+  tls: {}
+
