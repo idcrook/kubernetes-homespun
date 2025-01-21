@@ -24,14 +24,7 @@ k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.30 INSTALL_K3S_EXEC="--disable=traefik" sh -
-#  TODO: use the in-built traefik for my own config
-### $ grep K3S /DietPi/dietpi.txt
-### SOFTWARE_K3S_EXEC=server --disable=traefik  --disable-cloud-controller
-### $ grep K3S /boot/dietpi.txt
-### SOFTWARE_K3S_EXEC=server --disable=traefik  --disable-cloud-controller
-# TODO: move to /boot/dietpi-k3s.yaml
-# https://dietpi.com/docs/software/system_stats/#k3s
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.31 INSTALL_K3S_EXEC="--disable=traefik" sh -
 
 
 # get info for other nodes
@@ -40,10 +33,10 @@ IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.30  K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.31  K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
-kubectl taint node r64-01 node-role.kubernetes.io/master=effect:NoSchedule
+kubectl taint node rpif4 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
 traefik
