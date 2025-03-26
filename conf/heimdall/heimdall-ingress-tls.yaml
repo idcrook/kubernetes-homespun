@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-heimdall
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`hl.idcrook.dev`)
+      services:
+        - name: heimdall
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-heimdall
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`hl.idcrook.dev`)
+      services:
+        - name: heimdall
+          port: 80
+  tls:
+    certResolver: wildcardresolver

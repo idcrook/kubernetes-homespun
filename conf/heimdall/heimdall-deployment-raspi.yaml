@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: heimdall
+  labels:
+    app: heimdall
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: heimdall
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: heimdall
+        version: v2.6.3
+    spec:
+      containers:
+        - name: heimdall
+          image:  lscr.io/linuxserver/heimdall:2.6.3       
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Denver"   
+          ports:
+            - containerPort: 80
+              name: heimdall-http
+          volumeMounts:
+            - mountPath: /config/
+              name: heimdall-persistent-storage          
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: heimdall-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      restartPolicy: Always
+      volumes:
+        - name: heimdall-persistent-storage
+          persistentVolumeClaim:
+            claimName: heimdall-persistent-claim
