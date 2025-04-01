@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: spoolman
+  labels:
+    app: spoolman
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spoolman
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: spoolman
+        version: v0.22.1
+    spec:
+      containers:
+        - name: spoolman
+          image:  ghcr.io/donkie/spoolman:0.22.1
+          env:
+            - name: TZ
+              value: "America/Denver"
+          ports:
+            - containerPort: 8000
+              name: spoolman-http
+          volumeMounts:
+            - mountPath: /home/app/.local/share/spoolman/
+              name: spoolman-persistent-storage
+      restartPolicy: Always
+      volumes:
+        - name: spoolman-persistent-storage
+          persistentVolumeClaim:
+            claimName: spoolman-persistent-claim

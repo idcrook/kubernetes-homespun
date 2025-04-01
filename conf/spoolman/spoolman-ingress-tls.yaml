@@ -1,0 +1,47 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: spoolman-auth-middleware
+spec:
+  basicAuth:
+    removeHeader: true
+    secret: spoolman-auth-secret
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-spoolman
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`spoolman.idcrook.dev`)
+      services:
+        - name: spoolman-svc
+          port: 8000
+      middlewares:
+        - name: redirect-to-https
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-spoolman
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`spoolman.idcrook.dev`)
+      services:
+        - name: spoolman-svc
+          port: 8000
+      middlewares:
+        - name: spoolman-auth-middleware
+
+  tls:
+    certResolver: wildcardresolver

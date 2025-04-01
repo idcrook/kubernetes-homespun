@@ -276,6 +276,39 @@ kubectl create --save-config -f conf/heimdall/heimdall-pvc.yaml
 kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 ```
 
+### spoolman
+
+see [spoolman README](conf/spoolman/README.md)
+
+```shell
+
+kubectl create secret generic spoolman-auth-secret --from-file conf/spoolman/spoolman-auth-secret
+
+kubectl  get secret | grep spoolman
+
+kubectl create --save-config -f conf/spoolman/spoolman-pv.yaml
+kubectl create --save-config -f conf/spoolman/spoolman-pvc.yaml
+kubectl get pv,pvc -o wide
+
+grep v0 conf/spoolman/spoolman-deployment-raspi.yaml
+kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
+
+kubectl apply -f conf/spoolman/spoolman-service.yaml
+kubectl apply -f conf/spoolman/spoolman-ingress-tls.yaml
+kubectl get po,svc,ep,ingressroutes -o wide
+
+kubectl get pods -o wide
+kubectl describe pod spoolman-
+
+# if NFS server changes, e.g.
+kubectl delete -f conf/spoolman/spoolman-deployment-raspi.yaml
+kubectl delete -f conf/spoolman/spoolman-pvc.yaml
+kubectl delete -f conf/spoolman/spoolman-pv.yaml
+kubectl create --save-config -f conf/spoolman/spoolman-pv.yaml
+kubectl create --save-config -f conf/spoolman/spoolman-pvc.yaml
+kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
+```
+
 ### Debugging
 
 Get a bash shell and look at logs
