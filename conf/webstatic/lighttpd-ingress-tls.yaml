@@ -31,6 +31,8 @@ spec:
       services:
         - name: lighttpd
           port: 80
+      middlewares:
+        - name: my-fail2ban
   tls:
     certResolver: myresolver
 

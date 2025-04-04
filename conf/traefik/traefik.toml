@@ -17,6 +17,10 @@
     allowCrossNamespace = true
   [providers.kubernetesIngress]
 
+[experimental.plugins.fail2ban]
+  moduleName = "github.com/tomMoulard/fail2ban"
+  version = "v0.8.3"
+
 # [api]
 #   insecure = true
 

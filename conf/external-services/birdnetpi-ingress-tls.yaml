@@ -30,6 +30,8 @@ spec:
       services:
         - name: birdnetpi-http
           port: 80
+      middlewares:
+        - name: my-fail2ban          
   tls: {}
   # tls:
   #   certResolver: myresolver

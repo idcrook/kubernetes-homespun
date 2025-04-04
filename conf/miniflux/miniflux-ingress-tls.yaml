@@ -15,7 +15,6 @@ spec:
           port: 8080
       middlewares:
         - name: redirect-to-https
-
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -31,5 +30,7 @@ spec:
       services:
         - name: miniflux
           port: 8080
+      middlewares:
+        - name: my-fail2ban          
   tls:
     certResolver: myresolver

@@ -8,3 +8,23 @@ spec:
   redirectScheme:
     scheme: https
     permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+    name: my-fail2ban
+#    namespace: my-namespace
+spec:
+    plugin:
+        fail2ban:
+            allowlist:
+                ip:
+                  - "::1"
+                  - "127.0.0.1"
+                  - "192.168.50.0/24"
+            rules:
+                bantime: 3h
+                enabled: "true"
+                findtime: 10m
+                maxretry: "4"
+                statuscode: 400,401,403-499

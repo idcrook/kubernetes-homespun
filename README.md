@@ -18,12 +18,12 @@ High-level
 -	kubernetes via [k3s](https://k3s.io)
 	-	"external" NFS server for persistent storage
 	-	"external" postgresql server for database
--	[traefik](https://github.com/containous/traefik) v2.10 for ingress
+-	[traefik](https://github.com/containous/traefik) v2.x for ingress
 	-	includes Let's Encrypt (TLS certificates) and wildcard DNS support
 
 ### Hardware:
 
--	PINE64 ROCK64 (1GB): Diet Pi (buster) : k3s control plane node
+-	Raspberry Pi 4 B (4GB): Raspberry Pi OS (bookworm) : k3s control plane node
 -	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : k3s worker node
 	-	"external" postgresql DB, **USB thumb drive** for db storage
 -	NAS : "external" NFS server
@@ -33,14 +33,9 @@ High-level
 
 -	miniflux
 -	freshrss
--	wikijs
 
 ### Offline services (there may be others)
 
--	[Wiki.js](https://hub.docker.com/r/requarks/wiki) - A wiki app built on NodeJS
-	-	https://wiki.idcrook.dev
--	[FreshRSS](https://hub.docker.com/r/freshrss/freshrss) - Another RSS Feed aggregator and syncing
-	-	https://freshrss.crookster.org
 -	[Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
 	-	https://birdnetpi.idcrook.dev
 

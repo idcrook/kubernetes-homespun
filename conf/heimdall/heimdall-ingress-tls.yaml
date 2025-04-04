@@ -31,5 +31,7 @@ spec:
       services:
         - name: heimdall
           port: 80
+      middlewares:
+        - name: my-fail2ban          
   tls:
     certResolver: wildcardresolver
