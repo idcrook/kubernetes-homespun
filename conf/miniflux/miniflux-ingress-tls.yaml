@@ -30,7 +30,7 @@ spec:
       services:
         - name: miniflux
           port: 8080
-      middlewares:
-        - name: my-fail2ban          
+      # middlewares:
+      #   - name: my-fail2ban
   tls:
     certResolver: myresolver

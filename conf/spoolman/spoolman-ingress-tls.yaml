@@ -42,6 +42,6 @@ spec:
           port: 8000
       middlewares:
         - name: spoolman-auth-middleware
-        - name: my-fail2ban
+        # - name: my-fail2ban
   tls:
     certResolver: wildcardresolver

@@ -9,11 +9,10 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`ha.idcrook.dev`) 
+      match: Host(`ha.idcrook.dev`)
       services:
         - name: homeassistant-http
           port: 8123
-      middlewares:
-        - name: my-fail2ban          
+      # middlewares:
+      #   - name: my-fail2ban
   tls: {}
-

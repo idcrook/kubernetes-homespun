@@ -26,12 +26,12 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`birdnetpi.idcrook.dev`) 
+      match: Host(`birdnetpi.idcrook.dev`)
       services:
         - name: birdnetpi-http
           port: 80
-      middlewares:
-        - name: my-fail2ban          
+      # middlewares:
+      #   - name: my-fail2ban
   tls: {}
   # tls:
   #   certResolver: myresolver

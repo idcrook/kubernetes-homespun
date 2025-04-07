@@ -30,7 +30,7 @@ spec:
       services:
         - name: phantserver
           port: 8888
-      middlewares:
-        - name: my-fail2ban          
+      # middlewares:
+      #   - name: my-fail2ban
   tls:
     certResolver: myresolver
