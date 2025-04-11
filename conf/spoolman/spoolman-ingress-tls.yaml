@@ -1,15 +1,5 @@
 ---
 apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: spoolman-auth-middleware
-spec:
-  basicAuth:
-    removeHeader: true
-    secret: spoolman-auth-secret
-
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: http-redirect-spoolman
@@ -41,7 +31,8 @@ spec:
         - name: spoolman-svc
           port: 8000
       middlewares:
-        - name: spoolman-auth-middleware
+        # - name: spoolman-auth-middleware
+        - name: my-traefik-auth-with-exceptions
         # - name: my-fail2ban
   tls:
     certResolver: wildcardresolver

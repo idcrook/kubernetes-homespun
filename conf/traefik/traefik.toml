@@ -21,8 +21,13 @@
   moduleName = "github.com/tomMoulard/fail2ban"
   version = "v0.8.3"
 
-# [api]
+[experimental.plugins.traefik-auth-with-exceptions]
+  moduleName = "github.com/BrinkmannMi/traefik-auth-with-exceptions"
+  version = "v0.9.2"
+
+[api]
 #   insecure = true
+  dashboard = true
 
 # [ping]
 #   entryPoint = "http"

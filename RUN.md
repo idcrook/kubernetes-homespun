@@ -72,18 +72,24 @@ cd ~/projects/kubernetes-homespun
 # $EDITOR conf/traefik/traefik-envariable-secrets.yaml
 
 kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
+kubectl create --save-config -f conf/traefik/traefik-auth-secrets.yaml
+#kubectl create secret generic basic-auth-secret --from-file conf/traefik/basic-auth-secret
 
 # inspect
-kubectl  get secret | grep traefik
+kubectl  get secret | grep -e traefik -e auth
   kubectl get secret traefik-envariable-secrets -o yaml
   kubectl get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
+
+
 
 kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
 kubectl apply -f conf/traefik/traefik-middleware.yaml
 
 kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
+kubectl apply -f conf/traefik/traefik-auth-secrets.yaml
+
 kubectl get cm
 
 kubectl apply -f conf/traefik/traefik-service.yaml
