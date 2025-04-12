@@ -31,8 +31,6 @@ spec:
         - name: spoolman-svc
           port: 8000
       middlewares:
-        # - name: spoolman-auth-middleware
         - name: my-traefik-auth-with-exceptions
-        # - name: my-fail2ban
   tls:
     certResolver: wildcardresolver

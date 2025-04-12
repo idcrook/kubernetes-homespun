@@ -31,7 +31,7 @@ spec:
       services:
         - name: heimdall
           port: 80
-      # middlewares:
-      #   - name: my-fail2ban
+      middlewares:
+        - name: my-traefik-auth-with-exceptions
   tls:
     certResolver: wildcardresolver
