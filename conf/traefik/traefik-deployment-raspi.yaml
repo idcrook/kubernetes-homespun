@@ -23,13 +23,13 @@ spec:
         kubernetes.io/hostname: "rpif2"
         # kubernetes.io/arch: arm
       containers:
-        - image: traefik:v2.11.22
+        - image: traefik:v2.11.24
           name: traefik
           volumeMounts:
             - mountPath: "/config"
               name: "config"
             - mountPath: "/authfile"
-              name: "authfile"            
+              name: "authfile"
             - mountPath: "/acme/acme.json"
               name: "acme"
             - mountPath: "/acme/acme-wc.json"
@@ -50,6 +50,8 @@ spec:
                 secretKeyRef:
                   name: traefik-envariable-secrets
                   key: NAMECHEAP_API_KEY
+            - name: TZ
+              value: America/Denver
           args:
             - --configfile=/config/traefik.toml
       volumes:
@@ -58,7 +60,7 @@ spec:
             name: traefik-config
         - name: authfile
           configMap:
-            name: traefik-htpasswd            
+            name: traefik-htpasswd
         - name: acme
           hostPath:
             type: File
