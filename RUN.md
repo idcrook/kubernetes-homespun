@@ -150,7 +150,7 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 
 #### prometheus and grafana
 
-Adapted from <https://cyso.cloud/docs/cloud/extra/how-to-monitor-your-traefik-ingress-with-prometheus-and-grafana/#step-2-set-up-prometheus>
+Adapted from <https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/> / <https://github.com/traefik-tech-blog/traefik-sre-metrics>
 
 ```
 kubectl  apply -f conf/traefik/prometheus-rbac.yaml

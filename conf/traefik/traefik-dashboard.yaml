@@ -12,12 +12,3 @@ spec:
       kind: TraefikService
     middlewares:
       - name: my-traefik-auth-with-exceptions
-
-# ---
-# apiVersion: traefik.io/v1alpha1
-# kind: Middleware
-# metadata:
-#   name: auth
-# spec:
-#   basicAuth:
-#     secret: secretName # Kubernetes secret named "secretName"

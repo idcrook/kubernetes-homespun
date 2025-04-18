@@ -1,0 +1,15 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-metrics
+spec:
+  routes:
+  - match: Host(`metrics.idcrook.dev`) || PathPrefix(`/metrics`)
+  # - match: Host(`metrics.idcrook.dev`)
+    kind: Rule
+    services:
+    - name: prometheus@internal
+      kind: TraefikService
+    # middlewares:
+    #   - name: my-traefik-auth-with-exceptions

@@ -38,11 +38,13 @@
   # traefik v3: noColor = true
 
 [accessLog]
-  bufferingSize = 10
+  #bufferingSize = 10
+  bufferingSize = 0
 
 [metrics]
 #  addInternals = true
   [metrics.prometheus]
+    manualRouting = true
 
 [certificatesResolvers]
   [certificatesResolvers.myresolver]
