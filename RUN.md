@@ -148,6 +148,33 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 # kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
 
+#### prometheus and grafana
+
+Adapted from <https://cyso.cloud/docs/cloud/extra/how-to-monitor-your-traefik-ingress-with-prometheus-and-grafana/#step-2-set-up-prometheus>
+
+```
+kubectl  apply -f conf/traefik/prometheus-rbac.yaml
+kubectl  apply -f conf/traefik/prometheus-config.yaml
+kubectl  apply -f conf/traefik/prometheus.yaml
+```
+
+access
+
+```
+kubectl get svc | grep prometheus
+kubectl port-forward --address 127.0.0.1 service/prometheus 8080:9090
+```
+
+grafana
+
+```
+kubectl  apply -f conf/traefik/grafana-config.yaml
+kubectl  apply -f conf/traefik/grafana.yaml
+
+kubectl port-forward --address 192.168.50.17 service/grafana 3000:3000
+```
+
+
 phant
 -----
 
