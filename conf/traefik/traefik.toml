@@ -35,9 +35,14 @@
 [log]
   #level = "DEBUG"
   level = "INFO"
+  # traefik v3: noColor = true
 
 [accessLog]
-  bufferingSize = 0
+  bufferingSize = 10
+
+[metrics]
+#  addInternals = true
+  [metrics.prometheus]
 
 [certificatesResolvers]
   [certificatesResolvers.myresolver]
