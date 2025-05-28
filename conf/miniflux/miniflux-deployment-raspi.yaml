@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: miniflux
-        version: v2.2.8
+        version: v2.2.9
     spec:
       containers:
         - env:
@@ -39,7 +39,7 @@ spec:
           # - name: LOG_DATE_TIME
           #   value: "1"
           name: miniflux
-          image: miniflux/miniflux:2.2.8
+          image: miniflux/miniflux:2.2.9
           ports:
             - containerPort: 8080
               name: miniflux-http
