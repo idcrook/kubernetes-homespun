@@ -25,9 +25,9 @@
   moduleName = "github.com/BrinkmannMi/traefik-auth-with-exceptions"
   version = "v0.9.2"
 
-[api]
-#   insecure = true
-  dashboard = true
+# [api]
+# #   insecure = true
+#   dashboard = true
 
 # [ping]
 #   entryPoint = "http"
