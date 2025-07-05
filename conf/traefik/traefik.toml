@@ -41,10 +41,10 @@
   #bufferingSize = 10
   bufferingSize = 0
 
-[metrics]
-#  addInternals = true
-  [metrics.prometheus]
-    manualRouting = true
+# [metrics]
+# #  addInternals = true
+#   [metrics.prometheus]
+#     manualRouting = true
 
 [certificatesResolvers]
   [certificatesResolvers.myresolver]

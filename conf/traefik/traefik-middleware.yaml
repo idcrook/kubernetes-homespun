@@ -51,12 +51,4 @@ spec:
                   - "::1"
                   - "127.0.0.1"
                   - "192.168.50.0/23"
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: strip-prometheus-prefix
-spec:
-  stripPrefix:
-    prefixes:
-      - /prometheus
+
