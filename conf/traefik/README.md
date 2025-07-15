@@ -1,6 +1,6 @@
 # to set up Basic Auth 
 
-see the emaple to create `traefik-auth-cm.yaml`
+see the example to create `traefik-auth-cm.yaml`
 
 ```
 # htpasswd -nb user password 
@@ -19,3 +19,13 @@ data:
 
 ```
 
+# for tinyauth
+
+
+```shell
+# for secret - currently needs to be exactly 32 characters long
+echo -n 'your-generated-secret' | base64
+
+# for each username
+docker run -i -t --rm ghcr.io/steveiliop56/tinyauth:v3 user create --interactive
+```

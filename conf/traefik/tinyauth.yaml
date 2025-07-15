@@ -1,0 +1,115 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tinyauth
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tinyauth
+  labels:
+    app: tinyauth
+  namespace: tinyauth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tinyauth
+  template:
+    metadata:
+      labels:
+        app: tinyauth
+    spec:
+      containers:
+        - name: tinyauth
+          image: ghcr.io/steveiliop56/tinyauth:v3
+          ports:
+            - containerPort: 3000
+              name: tinyauth-cip
+              protocol: TCP            
+          volumeMounts:
+            - mountPath: "/authfile"
+              name: "authfile"
+          env:
+            - name: "LOG_LEVEL"
+              value: "0"
+            - name: APP_URL
+              value: "https://tinyauth.idcrook.dev"
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tinyauth-secrets
+                  key: secretKey
+            # - name: USERS
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: tinyauth-secrets
+            #       key: USERS                  
+            - name: USERS_FILE
+              value: "/authfile/users.txt"
+      volumes:
+        - name: authfile
+          configMap:
+            name: tinyauth-users-file
+
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/healthcheck
+          #     port: 3000
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/healthcheck
+          #     port: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tinyauth-svc
+  namespace: tinyauth
+spec:
+  clusterIP: 10.43.164.234
+  ports:
+    - name: tinyauth-cip
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: tinyauth
+  type: ClusterIP
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+    name: tinyauth
+    namespace: tinyauth
+spec:
+    forwardAuth:
+        address: http://10.43.164.234:3000/api/auth/traefik
+        trustForwardHeader: true
+        authResponseHeaders:
+            - remote-user
+            - remote-groups
+            - remote-email
+            - remote-name
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tinyauth
+  namespace: tinyauth
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: some-tinyauth-domain
+      http:
+        paths:
+          - backend:
+              service:
+                name: tinyauth-svc
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix

@@ -95,6 +95,18 @@ kubectl get cm
 kubectl apply -f conf/traefik/traefik-service.yaml
 grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
+
+
+kubectl  apply -f tinyauth.yaml
+kubectl  apply -f tinyauth-secrets.yaml
+
+kubectl  get secrets,cm,all --namespace tinyauth
+
+kubectl get --namespace tinyauth  secret tinyauth-secrets -o yaml
+kubectl get --namespace tinyauth  secret tinyauth-secrets -o json |\
+    jq -r '.data.secretKey' | base64 --decode
+
+
 ```
 
 in-place update configmap
