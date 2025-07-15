@@ -31,6 +31,7 @@ spec:
         - name: spoolman-svc
           port: 8000
       middlewares:
-        - name: my-traefik-auth-with-exceptions
+#        - name: my-traefik-auth-with-exceptions
+        - name: tinyauth-tinyauth@kubernetescrd
   tls:
     certResolver: wildcardresolver

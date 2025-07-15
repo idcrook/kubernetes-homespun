@@ -33,8 +33,8 @@ spec:
             - mountPath: "/authfile"
               name: "authfile"
           env:
-            - name: "LOG_LEVEL"
-              value: "0"
+            # - name: "LOG_LEVEL"
+            #   value: "0"
             - name: APP_URL
               value: "https://tinyauth.idcrook.dev"
             - name: SECRET
@@ -94,22 +94,22 @@ spec:
             - remote-groups
             - remote-email
             - remote-name
+
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: tinyauth
-  namespace: tinyauth
+  name: https-tinyauth
+
 spec:
-  ingressClassName: traefik
-  rules:
-    - host: some-tinyauth-domain
-      http:
-        paths:
-          - backend:
-              service:
-                name: tinyauth-svc
-                port:
-                  number: 3000
-            path: /
-            pathType: Prefix
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`tinyauth.idcrook.dev`)
+      services:
+        - name: tinyauth-svc
+          namespace: tinyauth
+          port: 3000
+  tls:
+    certResolver: wildcardresolver
