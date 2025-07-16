@@ -94,7 +94,8 @@ spec:
             - remote-groups
             - remote-email
             - remote-name
-
+# to use this middleware from default namespace
+#         - name: tinyauth-tinyauth@kubernetescrd
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

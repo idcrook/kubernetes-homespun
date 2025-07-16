@@ -52,3 +52,4 @@ spec:
                   - "127.0.0.1"
                   - "192.168.50.0/23"
 
+# See tinyauth.yaml for its middleware

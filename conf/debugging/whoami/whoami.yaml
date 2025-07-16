@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: containous/whoami
+          image: traefik/whoami:latest
           ports:
             - name: web
               containerPort: 80
@@ -87,5 +87,8 @@ spec:
       services:
         - name: whoami
           port: 80
+      middlewares:
+#        - name: my-traefik-auth-with-exceptions
+        - name: tinyauth-tinyauth@kubernetescrd
   tls:
     certResolver: wildcardresolver
