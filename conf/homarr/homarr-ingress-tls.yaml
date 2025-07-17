@@ -1,0 +1,37 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-homarr
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`hmr.idcrook.dev`)
+      services:
+        - name: homarr
+          port: 7575
+      middlewares:
+        - name: redirect-to-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-homarr
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`hmr.idcrook.dev`)
+      services:
+        - name: homarr
+          port: 7575
+      middlewares:
+        # - name: my-traefik-auth-with-exceptions
+        - name: tinyauth-tinyauth@kubernetescrd
+  tls:
+    certResolver: wildcardresolver

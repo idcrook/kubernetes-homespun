@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr
+
+spec:
+  ports:
+    - name: homarr-http
+      protocol: TCP
+      port: 7575
+      targetPort: 7575
+  selector:
+    app: homarr

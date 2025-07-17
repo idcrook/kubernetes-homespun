@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: homarr
+  labels:
+    app: homarr
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: homarr
+        version: v1.28.1
+    spec:
+      containers:
+        - env:
+            - name: SECRET_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homarr-secrets
+                  key: SECRET_ENCRYPTION_KEY
+          image: ghcr.io/homarr-labs/homarr:v1.28.1
+          name: homarr
+          ports:
+            - containerPort: 7575
+              name: homarr-http
+          volumeMounts:
+            - mountPath: /appdata
+              name: homarr-persistent-storage
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: homarr-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      restartPolicy: Always
+      volumes:
+        - name: homarr-persistent-storage
+          persistentVolumeClaim:
+            claimName: homarr-persistent-claim
