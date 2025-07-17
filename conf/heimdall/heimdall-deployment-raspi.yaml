@@ -18,16 +18,16 @@ spec:
     metadata:
       labels:
         app: heimdall
-        version: v2.6.3
+        version: v2.7.0
     spec:
       containers:
         - name: heimdall
-          image:  lscr.io/linuxserver/heimdall:2.6.3       
+          image:  lscr.io/linuxserver/heimdall:2.7.0
           env:
             - name: PUID
               value: "1000"
             - name: PGID
-              value: "1000"
+              value: "100"
             - name: TZ
               value: "America/Denver"   
           ports:
