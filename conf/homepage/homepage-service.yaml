@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homepage-svc
+  namespace: default
+  labels:
+    app.kubernetes.io/name: homepage
+  annotations:
+spec:
+  ports:
+    - name: homepage-http
+      port: 3000
+      targetPort: homepage-http
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: homepage

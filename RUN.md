@@ -324,6 +324,18 @@ kubectl create --save-config -f conf/homarr/homarr-pvc.yaml
 kubectl apply -f conf/homarr/homarr-deployment.yaml
 ```
 
+### homepage
+
+```shell
+kubectl  apply -f homepage-svc-acct.yaml
+kubectl  apply -f homepage-cm.yaml
+kubectl  apply -f homepage-rbac.yaml
+kubectl  apply -f homepage-service.yaml
+kubectl  apply -f homepage-deployment.yaml
+
+kubectl  get pod,svc 
+kubectl  apply -f homepage-ingress-tls.yaml
+```
 
 ### spoolman
 

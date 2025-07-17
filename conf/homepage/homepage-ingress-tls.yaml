@@ -1,0 +1,37 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-homepage
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`homepage.idcrook.dev`)
+      services:
+        - name: homepage-svc
+          port: 3000
+      middlewares:
+        - name: redirect-to-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-homepage
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`homepage.idcrook.dev`)
+      services:
+        - name: homepage-svc
+          port: 3000
+      middlewares:
+        # - name: my-traefik-auth-with-exceptions
+        - name: tinyauth-tinyauth@kubernetescrd
+  tls:
+    certResolver: wildcardresolver
