@@ -4,3 +4,5 @@
 
 # secrets files (*.example.yaml _do_ get committed)
 *-secrets.yaml
+
+RCS/
