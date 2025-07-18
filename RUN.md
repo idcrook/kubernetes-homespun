@@ -322,6 +322,15 @@ kubectl delete -f conf/homarr/homarr-pv.yaml
 kubectl create --save-config -f conf/homarr/homarr-pv.yaml
 kubectl create --save-config -f conf/homarr/homarr-pvc.yaml
 kubectl apply -f conf/homarr/homarr-deployment.yaml
+
+# break down
+kubectl delete -f conf/homarr/homarr-deployment.yaml
+kubectl delete -f conf/homarr/homarr-service.yaml
+kubectl delete -f conf/homarr/homarr-ingress-tls.yaml
+kubectl delete -f conf/homarr/homarr-pvc.yaml
+kubectl delete -f conf/homarr/homarr-pv.yaml
+kubectl delete -f conf/homarr/homarr-secrets.yaml
+
 ```
 
 ### homepage
