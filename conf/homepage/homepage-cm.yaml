@@ -11,7 +11,7 @@ data:
     mode: cluster
     traefik: true # enable traefik ingressRoute
   settings.yaml: ""
-  #settings.yaml: |
+  # settings.yaml: |
   #  providers:
   #    longhorn:
   #      url: https://longhorn.my.network

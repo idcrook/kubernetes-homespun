@@ -1,4 +1,4 @@
-An in-home kubernetes cluster network (serves to Internet)
+Homelab kubernetes cluster network in use since 2018
 
 Apps and services deployed via kubernetes:
 ------------------------------------------
@@ -10,6 +10,15 @@ Apps and services deployed via kubernetes:
 	-	https://party.crookster.org
 -	[miniflux](https://hub.docker.com/r/miniflux/miniflux) - RSS Feed aggregator and syncing
 	-	https://miniflux.crookster.org
+
+### Homelab / Internal
+
+-	[homepage](https://github.com/gethomepage/homepage) - Homepage dashboard
+	-	https://homepage
+-	[spoolman](https://github.com/Donkie/Spoolman) - Keep track of your inventory of 3D-printer filament spools.
+	-	https://spoolman
+-	[tinyauth](https://tinyauth.app/) - Homepage dashboard
+	-	https://tinyauth
 
 High-level
 ----------
@@ -27,17 +36,16 @@ High-level
 -	Raspberry Pi 4 B (4GB): Raspberry Pi OS (arm64 bullseye) : k3s worker node
 	-	"external" postgresql DB, **USB thumb drive** for db storage
 -	NAS : "external" NFS server
--	Raspberry Pi 4 B (4GB): Running BirdNET.Pi on PoE connection
 
 #### Use "external" `postgresql` db
 
 -	miniflux
--	freshrss
 
 ### Offline services (there may be others)
 
 -	[Bird Net Pi](https://github.com/mcguirepr89/BirdNET-Pi) - A realtime acoustic bird classification system
 	-	https://birdnetpi.idcrook.dev
+	-	Raspberry Pi 4 B (4GB): Running BirdNET.Pi on PoE connection
 
 ---
 
