@@ -52,6 +52,9 @@ spec:
             - mountPath: /app/config/kubernetes.yaml
               name: homepage-config
               subPath: kubernetes.yaml
+            - mountPath: /app/config/proxmox.yaml 
+              name: homepage-config
+              subPath: proxmox.yaml      
             - mountPath: /app/config/services.yaml
               name: homepage-config
               subPath: services.yaml
@@ -60,7 +63,7 @@ spec:
               subPath: settings.yaml
             - mountPath: /app/config/widgets.yaml
               name: homepage-config
-              subPath: widgets.yaml
+              subPath: widgets.yaml       
             - mountPath: /app/config/logs
               name: logs
       volumes:

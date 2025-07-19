@@ -15,6 +15,7 @@ data:
   #  providers:
   #    longhorn:
   #      url: https://longhorn.my.network
+  proxmox.yaml: ""
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
