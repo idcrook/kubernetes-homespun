@@ -53,6 +53,18 @@ sudo touch     /srv/configs/acme/acme-wc.json
 sudo chmod 600 /srv/configs/acme/acme-wc.json
 ```
 
+## helm
+
+<https://helm.sh/docs/intro/install/#from-script>
+
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm ls --all-namespaces
+```
+
 deploy
 ======
 
@@ -467,6 +479,7 @@ kubectl get po,svc,deploy,ing,ep,secret
 ```
 
 
+
 copying secrets
 ---------------
 
@@ -475,6 +488,12 @@ on donor
 ```shell
 cd ~/projects/kubernetes-homespun/conf
 
-scp traefik/traefik-envariable-secrets.yaml r64-01:projects/kubernetes-homespun/conf/traefik/
-scp miniflux/miniflux-secrets.yaml          r64-01:projects/kubernetes-homespun/conf/miniflux/
+export TARGET=hostname
+scp traefik/traefik-envariable-secrets.yaml $TARGET:projects/kubernetes-homespun/conf/traefik/
+scp traefik/tinyauth-secrets.yaml           $TARGET:projects/kubernetes-homespun/conf/traefik/
+scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/traefik/
+scp miniflux/miniflux-secrets.yaml          $TARGET:projects/kubernetes-homespun/conf/miniflux/
+scp homepage/homepage-cm-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/homepage/
 ```
+
+

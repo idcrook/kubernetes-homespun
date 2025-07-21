@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitea
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gitea
+  namespace: kube-system
+spec:
+  repo: https://dl.gitea.io/charts/
+  chart: gitea
+  targetNamespace: gitea
+  valuesContent: |-
+    # service:
+    #   type: ClusterIP
+    service:
+      http:
+        type: ClusterIP
+        port: 3000
+        clusterIP: None
+      ssh:
+        type: LoadBalancer
+        port: 2222
+        clusterIP: None
+    ingress:
+      enabled: false
+    #   hostname: www.example.com
+    # ingress:
+    #   enabled: true
+    #   hostname: www.example.com
+    gitea:
+      admin:
+        existingSecret: gitea-admin-secret
+        email: $EMAIL
+      config:
+        server:
+          SSH_DOMAIN: gitea-ssh.example.com
+        service:
+          DISABLE_REGISTRATION: true
+          SHOW_REGISTRATION_BUTTON: false    
+    metrics:
+      enabled: true
+
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  namespace: default
+  name: gitea-app
+spec:
+  targetNamespace: gitea
+  createNamespace: true
+  version: v1.2.3
+  chart: example-app
+  repo: https://dl.gitea.io/charts/
+  valuesContent: |-
+    image:
+      tag: v1.2.2
+  valuesSecrets:
+    - name: example-app-custom-values
+      ignoreUpdates: false
+      keys:
+        - someValues
+        - moreValues
