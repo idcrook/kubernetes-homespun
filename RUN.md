@@ -172,6 +172,21 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 # kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
 
+## nfs_subdir_provisioner
+
+```
+kubectl apply -f conf/nfs-subdir/rbac.yaml
+kubectl apply -f conf/nfs-subdir/deployment.yaml
+kubectl apply -f conf/nfs-subdir/class.yaml
+```
+
+test setup
+
+```
+kubectl create -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.yaml
+# should create a file 'SUCCESS'
+kubectl delete -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.yaml
+```
 
 
 phant
