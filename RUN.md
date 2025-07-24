@@ -172,7 +172,9 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 # kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
 ```
 
-## nfs_subdir_provisioner
+## External NFS provisioner
+
+<https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner>
 
 ```
 kubectl apply -f conf/nfs-subdir/rbac.yaml
