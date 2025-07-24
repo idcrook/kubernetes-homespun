@@ -18,24 +18,24 @@ spec:
     metadata:
       labels:
         app: heimdall
-        version: v2.7.0
+        version: v2.7.3
     spec:
       containers:
         - name: heimdall
-          image:  lscr.io/linuxserver/heimdall:2.7.0
+          image: lscr.io/linuxserver/heimdall:2.7.3
           env:
             - name: PUID
               value: "1000"
             - name: PGID
               value: "100"
             - name: TZ
-              value: "America/Denver"   
+              value: "America/Denver"
           ports:
             - containerPort: 80
               name: heimdall-http
           volumeMounts:
             - mountPath: /config/
-              name: heimdall-persistent-storage          
+              name: heimdall-persistent-storage
           # livenessProbe:
           #   httpGet:
           #     path: /healthcheck
