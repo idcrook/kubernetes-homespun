@@ -32,7 +32,7 @@ spec:
         - name: trillium-svc
           port: 8080
       middlewares:
-#        - name: my-traefik-auth-with-exceptions
-        - name: tinyauth-tinyauth@kubernetescrd
+        - name: my-traefik-auth-with-exceptions
+#        - name: tinyauth-tinyauth@kubernetescrd
   tls:
     certResolver: wildcardresolver
