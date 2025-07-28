@@ -180,6 +180,8 @@ kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/nfs-subdir/rbac.yaml
 kubectl apply -f conf/nfs-subdir/deployment.yaml
 kubectl apply -f conf/nfs-subdir/class.yaml
+
+kubectl  get sc
 ```
 
 test setup
@@ -229,6 +231,28 @@ kubectl create --save-config -f conf/phant/phantserver-pv.yaml
 kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
 kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 ```
+
+trillium
+-----
+
+trilium actually only one "l", but I put two everywhere
+
+```shell
+cd ~/projects/kubernetes-homespun/
+kubectl create --save-config -f conf/trillium/trillium-pv.yaml
+kubectl create --save-config -f conf/trillium/trillium-pvc.yaml
+kubectl get pv trillium-persistent-volume
+kubectl get pvc trillium-persistent-claim
+grep v0. conf/trillium/trillium-deployment.yaml
+kubectl apply -f conf/trillium/trillium-deployment.yaml
+kubectl apply -f conf/trillium/trillium-service.yaml
+kubectl apply -f conf/trillium/trillium-ingress-tls.yaml
+kubectl get po,svc,ep,ingressroutes -o wide
+
+kubectl get pods -o wide
+kubectl describe pod trillium-
+```
+
 
 lighttpd static server
 ----------------------

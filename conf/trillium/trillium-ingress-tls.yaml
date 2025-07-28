@@ -1,0 +1,38 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-trillium
+  # namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`notes.idcrook.dev`)
+      services:
+        - name: trillium-svc
+          port: 8080
+      middlewares:
+        - name: redirect-to-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-trillium
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`notes.idcrook.dev`)
+      services:
+        - name: trillium-svc
+          port: 8080
+      middlewares:
+#        - name: my-traefik-auth-with-exceptions
+        - name: tinyauth-tinyauth@kubernetescrd
+  tls:
+    certResolver: wildcardresolver

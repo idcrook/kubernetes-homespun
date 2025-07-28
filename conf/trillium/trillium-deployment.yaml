@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: trillium
+  labels:
+    app: trillium
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trillium
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: trillium
+        version: v0.97.1
+    spec:
+      containers:
+        - name: trillium
+          image: triliumnext/trilium:v0.97.1
+          env:
+            - name: TRILIUM_DATA_DIR
+              value: "/home/node/trilium-data"
+            - name: USER_UID
+              value: "1000"
+            - name: USER_GID
+              value: "1000"
+            - name: TZ
+              value: "America/Denver"
+            # - name: TRILIUM_NETWORK_TRUSTEDREVERSEPROXY
+            #   value: "true"
+          ports:
+            - containerPort: 8080
+              name: trillium-http
+          volumeMounts:
+            - name: trillium-persistent-storage
+              mountPath: /home/node/trilium-data
+            # - name: timezone-data
+            #   mountPath: /etc/localtime
+            #   subPath: localtime               
+      restartPolicy: Always
+      volumes:
+        - name: trillium-persistent-storage
+          persistentVolumeClaim:
+            claimName: trillium-persistent-claim
+        # - name: timezone-data
+        #   hostPath:
+        #     path: /etc/localtime # or /usr/share/zoneinfo/Asia/Shanghai
+        #     type: File
