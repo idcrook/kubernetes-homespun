@@ -1,0 +1,18 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-karakeep-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`keep.idcrook.dev`)
+      services:
+        - name: karakeep-http
+          port: 3001
+      # middlewares:
+      #   - name: my-fail2ban
+  tls: {}
