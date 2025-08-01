@@ -1,0 +1,16 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-pocketid-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`pocketid.idcrook.dev`)
+      services:
+        - name: pocketid-http
+          port: 1411
+  tls: {}

@@ -1,0 +1,12 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "pocketid-http"
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 1411
+      targetPort: 1411
+      name: "pocketid"
