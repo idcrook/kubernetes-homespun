@@ -25,6 +25,10 @@
   moduleName = "github.com/BrinkmannMi/traefik-auth-with-exceptions"
   version = "v0.9.2"
 
+[experimental.plugins.traefik-oidc-auth]
+  moduleName = "github.com/sevensolutions/traefik-oidc-auth"
+  version = "v0.13.0"
+
 # [api]
 # #   insecure = true
 #   dashboard = true

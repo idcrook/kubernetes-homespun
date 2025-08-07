@@ -20,8 +20,7 @@ spec:
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       nodeSelector:
-        kubernetes.io/hostname: "rpif2"
-        # kubernetes.io/arch: arm
+        kubernetes.io/hostname: "rpiv1"
       containers:
         - image: traefik:v2.11.28
           name: traefik

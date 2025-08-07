@@ -42,6 +42,26 @@ spec:
                 secretKeyRef:
                   name: tinyauth-secrets
                   key: secretKey
+            - name: GENERIC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: tinyauth-secrets
+                  key: genericClientID
+            - name: GENERIC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tinyauth-secrets
+                  key: genericClientSecret
+            - name:  GENERIC_AUTH_URL
+              value: https://pocketid.idcrook.dev/authorize
+            - name:  GENERIC_TOKEN_URL
+              value: https://pocketid.idcrook.dev/api/oidc/token
+            - name:  GENERIC_USER_URL
+              value: https://pocketid.idcrook.dev/api/oidc/userinfo
+            - name:  GENERIC_SCOPES
+              value: "openid email profile"
+            - name:  GENERIC_NAME
+              value: Pocket ID
             # - name: USERS
             #   valueFrom:
             #     secretKeyRef:

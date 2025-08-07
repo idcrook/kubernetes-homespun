@@ -24,7 +24,7 @@ k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.31 INSTALL_K3S_EXEC="--disable=traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.33 INSTALL_K3S_EXEC="--disable=traefik" sh -
 
 
 # get info for other nodes
@@ -33,7 +33,7 @@ IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
 # run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.31  K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.33  K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
 kubectl taint node rpif4 node-role.kubernetes.io/master=effect:NoSchedule
@@ -42,7 +42,7 @@ kubectl taint node rpif4 node-role.kubernetes.io/master=effect:NoSchedule
 traefik
 -------
 
-ssh to `rpif2` (which will be our ingress)
+ssh to `rpiv1` (which will be our ingress)
 
 ```
 # traefik lets encrypt storage
@@ -108,9 +108,10 @@ kubectl apply -f conf/traefik/traefik-service.yaml
 grep v2  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 
+# W0807 15:31:41.231717       1 warnings.go:70] v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
 
-kubectl  apply -f tinyauth.yaml
-kubectl  apply -f tinyauth-secrets.yaml
+kubectl  apply -f conf/traefik/tinyauth.yaml
+kubectl  apply -f conf/traefik/tinyauth-secrets.yaml
 
 kubectl  get secrets,cm,all --namespace tinyauth
 
@@ -142,7 +143,7 @@ kubectl get services
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 
-IP_ADDR=192.168.50.9
+IP_ADDR=192.168.50.5
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
