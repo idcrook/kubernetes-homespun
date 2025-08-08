@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: "pocketid-http"
+  name: "pocketid-svc"
 spec:
   type: ClusterIP
   ports:

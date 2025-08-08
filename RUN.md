@@ -419,13 +419,13 @@ below is run on control node (via `kubectl`\)
 ```shell
 cd ~/projects/kubernetes-homespun
 
-kubectl apply -f conf/external-services/postgresql-service.yaml
-kubectl apply -f conf/external-services/postgresql-endpoint.yaml
+kubectl apply -f conf/external-services/postgresql-serviceslice.yaml
+kubectl apply -f conf/external-services/postgresql-endpointslice.yaml
 
 kubectl get svc,ep
 kubectl get svc,ep | grep postgres
 
-kubectl delete -f conf/external-services/postgresql-endpoint.yaml
+kubectl delete -f conf/external-services/postgresql-endpointslice.yaml
 kubectl delete -f conf/external-services/postgresql-service.yaml
 
 ```

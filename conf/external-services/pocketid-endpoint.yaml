@@ -1,11 +1,11 @@
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-  name: "pocketid-http"
-subsets:
-  - addresses:
-      - ip: "192.168.50.13"
-    ports:
-      - port: 1411
-        name: "pocketid"
+# ---
+# kind: Endpoints
+# apiVersion: v1
+# metadata:
+#   name: "pocketid-http"
+# subsets:
+#   - addresses:
+#       - ip: "192.168.50.13"
+#     ports:
+#       - port: 1411
+#         name: "pocketid"

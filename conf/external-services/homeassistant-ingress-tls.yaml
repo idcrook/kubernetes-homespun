@@ -11,7 +11,7 @@ spec:
     - kind: Rule
       match: Host(`ha.idcrook.dev`)
       services:
-        - name: homeassistant-http
+        - name: homeassistant-svc
           port: 8123
       # middlewares:
       #   - name: my-fail2ban

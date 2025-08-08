@@ -11,6 +11,6 @@ spec:
     - kind: Rule
       match: Host(`pocketid.idcrook.dev`)
       services:
-        - name: pocketid-http
+        - name: pocketid-svc
           port: 1411
   tls: {}

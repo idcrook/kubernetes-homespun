@@ -2,11 +2,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: "karakeep-http"
+  name: "karakeep-svc"
 spec:
   type: ClusterIP
   ports:
-    - protocol: "TCP"
+    - protocol: TCP
       port: 3001
       targetPort: 3001
       name: "karakeep"

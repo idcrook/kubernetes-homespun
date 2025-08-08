@@ -1,11 +1,11 @@
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-  name: "postgresql-db"
-subsets:
-  - addresses:
-      - ip: "192.168.50.9"
-    ports:
-      - port: 5432
-        name: "postgresql"
+# ---
+# kind: Endpoints
+# apiVersion: v1
+# metadata:
+#   name: "postgresql-db"
+# subsets:
+#   - addresses:
+#       - ip: "192.168.50.9"
+#     ports:
+#       - port: 5432
+#         name: "postgresql"

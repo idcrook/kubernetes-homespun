@@ -1,0 +1,18 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: pocketid-svc-1
+  labels:
+    kubernetes.io/service-name: pocketid-svc
+    endpointslice.kubernetes.io/managed-by: cluster-admin
+addressType: IPv4
+endpoints:
+  - addresses:
+      - "192.168.50.13"
+    # nodeName: rpiv2
+    conditions:
+      ready: true    
+ports:
+  - port: 1411
+    name: pocketid

@@ -1,0 +1,16 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: "postgresql-db"
+  labels:
+    kubernetes.io/service-name: "postgresql-db"
+addressType: IPv4
+endpoints:
+  - addresses:
+      - 192.168.50.9
+    nodeName: rpif2
+ports:
+  - name: postgresql
+    protocol: TCP
+    port: 5432
