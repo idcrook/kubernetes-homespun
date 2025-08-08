@@ -210,7 +210,7 @@ grep 0.1 conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 kubectl apply -f conf/phant/phantserver-service.yaml
 kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod phantserver-
@@ -222,7 +222,7 @@ Delete
 kubectl delete -f conf/phant/phantserver-ingress-tls.yaml
 kubectl delete -f conf/phant/phantserver-service.yaml
 kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
-kubectl get po,svc,ep,ingressroutes
+kubectl get po,svc,endpointslice,ingressroutes
 
 # if NFS server changes
 kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
@@ -249,7 +249,7 @@ grep v0. conf/trillium/trillium-deployment.yaml
 kubectl apply -f conf/trillium/trillium-deployment.yaml
 kubectl apply -f conf/trillium/trillium-service.yaml
 kubectl apply -f conf/trillium/trillium-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod trillium-
@@ -273,7 +273,7 @@ kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
 
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f conf/webstatic/lighttpd-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod lighttpd-
@@ -286,7 +286,7 @@ Delete
 kubectl delete -f  conf/webstatic/lighttpd-ingress-tls.yaml
 kubectl delete -f conf/webstatic/lighttpd-service.yaml
 kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 # if NFS server changes
 kubectl delete -f conf/webstatic/lighttpd-deployment-raspi.yaml
@@ -311,7 +311,7 @@ kubectl apply -f conf/partytime/partytime-deployment-raspi.yaml
 
 kubectl apply -f conf/partytime/partytime-service.yaml
 kubectl apply -f conf/partytime/partytime-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod partytime-
@@ -337,7 +337,7 @@ kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 
 kubectl apply -f conf/heimdall/heimdall-service.yaml
 kubectl apply -f conf/heimdall/heimdall-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod heimdall-
@@ -385,7 +385,7 @@ kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
 
 kubectl apply -f conf/spoolman/spoolman-service.yaml
 kubectl apply -f conf/spoolman/spoolman-ingress-tls.yaml
-kubectl get po,svc,ep,ingressroutes -o wide
+kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod spoolman-
@@ -443,7 +443,7 @@ kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
 kubectl apply -f conf/external-services/birdnetpi-ingress-tls.yaml
 
 kubectl get svc,ep
-kubectl get svc,ep,ingressroute | grep birdnetpi
+kubectl get svc,endpointslice,ingressroute | grep birdnetpi
 
 kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
 kubectl delete -f conf/external-services/birdnetpi-service.yaml
@@ -464,7 +464,7 @@ kubectl apply -f conf/external-services/homeassistant-endpointslice.yaml
 kubectl apply -f conf/external-services/homeassistant-ingress-tls.yaml
 
 kubectl get svc,ep
-kubectl get svc,ep,ingressroute | grep homeassistant
+kubectl get svc,endpointslice,ingressroute | grep homeassistant
 
 #kubectl delete -f conf/external-services/homeassistant-endpoint.yaml
 kubectl delete -f conf/external-services/homeassistant-endpointslice.yaml
@@ -484,7 +484,7 @@ kubectl apply -f conf/external-services/karakeep-endpointslice.yaml
 kubectl apply -f conf/external-services/karakeep-ingress-tls.yaml
 
 kubectl get svc,ep
-kubectl get svc,ep,ingressroute | grep karakeep
+kubectl get svc,endpointslice,ingressroute | grep karakeep
 
 #kubectl delete -f conf/external-services/karakeep-endpoint.yaml
 kubectl delete -f conf/external-services/karakeep-endpointslice.yaml
@@ -525,8 +525,8 @@ kubectl get secret | grep miniflux
     jq -r '.data.DATABASE_URL' | base64 --decode
 
 
-kubectl get svc,ep,ingressroutes
-kubectl get po,svc,deploy,ingressroutes,ep,secret
+kubectl get svc,endpointslice,ingressroutes
+kubectl get po,svc,deploy,ingressroutes,endpointslice,secret
 ```
 
 break down miniflux
@@ -540,7 +540,7 @@ kubectl delete -f conf/miniflux/miniflux-service.yaml
 # kubectl delete -f conf/miniflux/miniflux-secrets.yaml
 
 kubectl get svc,ep
-kubectl get po,svc,deploy,ing,ep,secret
+kubectl get po,svc,deploy,ing,endpointslice,secret
 ```
 
 
