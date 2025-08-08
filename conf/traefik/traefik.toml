@@ -2,6 +2,9 @@
   checkNewVersion = true
   sendAnonymousUsage = true
 
+[core]
+    defaultRuleSyntax="v2"
+
 [entryPoints]
 
 [entryPoints.web]
@@ -53,16 +56,16 @@
 [certificatesResolvers]
   [certificatesResolvers.myresolver]
     [certificatesResolvers.myresolver.acme]
-    email = "david.crook@gmail.com"
-    storage = "/acme/acme.json"
+      email = "david.crook@gmail.com"
+      storage = "/acme/acme.json"
 
       [certificatesResolvers.myresolver.acme.httpChallenge]
         entryPoint = "web"
 
   [certificatesResolvers.wildcardresolver]
     [certificatesResolvers.wildcardresolver.acme]
-    email = "david.crook@gmail.com"
-    storage = "/acme/acme-wc.json"
+      email = "david.crook@gmail.com"
+      storage = "/acme/acme-wc.json"
 
       [certificatesResolvers.wildcardresolver.acme.dnsChallenge]
         provider = "namecheap"

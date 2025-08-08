@@ -93,19 +93,20 @@ kubectl  get secret | grep -e traefik -e auth
   kubectl get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
+kubectl apply -f conf/traefik/traefik-crd.yaml
+kubectl apply -f conf/traefik/traefik-rbac.yaml
 
-
-kubectl apply -f conf/traefik/traefik-crd-rbac.yaml
 kubectl apply -f conf/traefik/traefik-middleware.yaml
 
 kubectl create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
-kubectl apply -f conf/traefik/traefik-auth-secrets.yaml
+
+# kubectl apply -f conf/traefik/traefik-auth-secrets.yaml
 
 kubectl get cm
 
 kubectl apply -f conf/traefik/traefik-service.yaml
-grep v2  conf/traefik/traefik-deployment-raspi.yaml
+grep v3  conf/traefik/traefik-deployment-raspi.yaml
 kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
 
 # W0807 15:31:41.231717       1 warnings.go:70] v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
@@ -354,14 +355,15 @@ kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 ### homepage
 
 ```shell
-kubectl  apply -f homepage-svc-acct.yaml
-kubectl  apply -f homepage-cm.yaml
-kubectl  apply -f homepage-rbac.yaml
-kubectl  apply -f homepage-service.yaml
-kubectl  apply -f homepage-deployment.yaml
+kubectl  apply -f conf/homepage/homepage-cm-secrets.yaml
+kubectl  apply -f conf/homepage/homepage-svc-acct.yaml
+kubectl  apply -f conf/homepage/homepage-cm.yaml
+kubectl  apply -f conf/homepage/homepage-rbac.yaml
+kubectl  apply -f conf/homepage/homepage-service.yaml
+kubectl  apply -f conf/homepage/homepage-deployment.yaml
 
 kubectl  get pod,svc 
-kubectl  apply -f homepage-ingress-tls.yaml
+kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 ```
 
 ### spoolman
@@ -468,6 +470,23 @@ kubectl delete -f conf/external-services/homeassistant-service.yaml
 kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
 ```
 
+karakeep (external service)
+-----------------------------
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/karakeep-service.yaml
+kubectl apply -f conf/external-services/karakeep-endpoint.yaml
+kubectl apply -f conf/external-services/karakeep-ingress-tls.yaml
+
+kubectl get svc,ep
+kubectl get svc,ep,ingressroute | grep karakeep
+
+kubectl delete -f conf/external-services/karakeep-endpoint.yaml
+kubectl delete -f conf/external-services/karakeep-service.yaml
+kubectl delete -f conf/external-services/karakeep-ingress-tls.yaml
+```
 
 
 miniflux rss aggregator
