@@ -1,26 +1,23 @@
-Bring up applications on kubernetes
-===================================
+# Bring up applications on kubernetes
 
 `k3s` for kubernetes implementation
 
--	traefik - ingress with Lets Encrypt support
--	phant - IoT datalogging (node.js)
--	lighttpd - Static webserving
-	-	webstatic
-	-	(_offline_) partytime
--	miniflux - feed reader
-	-	external postgresql
--	(_offline_) freshrss - feed reader
-	-	external postgresql
--	(_offline_) wikijs - markdown writing and sharing
-	-	external postgresql
-- (_offline_) BirdNET Pi - record and analyze bird song
+* traefik - ingress with Lets Encrypt support
+* phant - IoT datalogging (node.js)
+* lighttpd - Static webserving
+  * webstatic
+  * (*offline*) partytime
+* miniflux - feed reader
+  * external postgresql
+* (*offline*) freshrss - feed reader
+  * external postgresql
+* (*offline*) wikijs - markdown writing and sharing
+  * external postgresql
+* (*offline*) BirdNET Pi - record and analyze bird song
 
-setup
-=====
+# setup
 
-k3s kubernetes cluster
--------
+## k3s kubernetes cluster
 
 ```shell
 # install role=master without the traefik
@@ -39,8 +36,7 @@ echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.33  K3S_URL="${K3S_U
 kubectl taint node rpif4 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
-traefik
--------
+## traefik
 
 ssh to `rpiv1` (which will be our ingress)
 
@@ -65,15 +61,13 @@ chmod 700 get_helm.sh
 KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm ls --all-namespaces
 ```
 
-deploy
-======
+# deploy
 
 https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables
 
-traefik
--------
+## traefik
 
-run on control plane node (via `kubectl`\)
+run on control plane node (via `kubectl`)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -196,7 +190,6 @@ kubectl delete -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.ya
 
 
 phant
------
 
 https://hub.docker.com/r/dpcrook/phant_server-docker/
 
@@ -234,8 +227,7 @@ kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
 kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
 ```
 
-trillium
------
+## trillium
 
 trilium actually only one "l", but I put two everywhere
 
@@ -257,7 +249,6 @@ kubectl describe pod trillium-
 
 
 lighttpd static server
-----------------------
 
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
 
@@ -277,7 +268,6 @@ kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
 kubectl describe pod lighttpd-
-
 ```
 
 Delete
@@ -362,7 +352,7 @@ kubectl  apply -f conf/homepage/homepage-rbac.yaml
 kubectl  apply -f conf/homepage/homepage-service.yaml
 kubectl  apply -f conf/homepage/homepage-deployment.yaml
 
-kubectl  get pod,svc 
+kubectl  get pod,svc
 kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 ```
 
@@ -399,6 +389,25 @@ kubectl create --save-config -f conf/spoolman/spoolman-pvc.yaml
 kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
 ```
 
+## open-webui
+
+<https://docs.openwebui.com>
+
+```bash
+kubectl apply -f conf/open-webui/open-webui.yaml
+kubectl apply -f conf/open-webui/ollama-service.yaml
+kubectl apply -f conf/open-webui/ollama-statefulset.yaml
+kubectl apply -f conf/open-webui/webui-deployment.yaml
+kubectl apply -f conf/open-webui/webui-service.yaml
+kubectl apply -f conf/open-webui/webui-ingress.yaml
+kubectl apply -f conf/open-webui/webui-pvc.yaml
+
+kubectl get all --namespace open-webui
+kubectl --namespace open-webui logs pod/ollama-0
+kubectl --namespace open-webui logs pod/open-webui-deployment-
+kubectl --namespace open-webui describe ingressroutes.traefik.io
+```
+
 ### Debugging
 
 Get a bash shell and look at logs
@@ -411,10 +420,9 @@ tail -f /var/log/lighttpd/access.log
 exit
 ```
 
-postgresql (external service)
------------------------------
+## postgresql (external service)
 
-below is run on control node (via `kubectl`\)
+below is run on control node (via `kubectl`)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -427,13 +435,11 @@ kubectl get svc,ep | grep postgres
 
 kubectl delete -f conf/external-services/postgresql-endpointslice.yaml
 kubectl delete -f conf/external-services/postgresql-service.yaml
-
 ```
 
-BirdNET Pi (external service)
------------------------------
+## BirdNET Pi (external service)
 
-below is run on control node (via `kubectl`\)
+below is run on control node (via `kubectl`)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -450,10 +456,9 @@ kubectl delete -f conf/external-services/birdnetpi-service.yaml
 kubectl delete -f conf/external-services/birdnetpi-ingress-tls.yaml
 ```
 
-Home Assistant (external service)
------------------------------
+## Home Assistant (external service)
 
-below is run on control node (via `kubectl`\)
+below is run on control node (via `kubectl`)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -472,8 +477,7 @@ kubectl delete -f conf/external-services/homeassistant-service.yaml
 kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
 ```
 
-karakeep (external service)
------------------------------
+## karakeep (external service)
 
 ```shell
 cd ~/projects/kubernetes-homespun
@@ -494,7 +498,6 @@ kubectl delete -f conf/external-services/karakeep-ingress-tls.yaml
 
 
 miniflux rss aggregator
------------------------
 
 <https://hub.docker.com/r/miniflux/miniflux>
 
@@ -546,7 +549,6 @@ kubectl get po,svc,deploy,ing,endpointslice,secret
 
 
 copying secrets
----------------
 
 on donor
 
@@ -560,5 +562,3 @@ scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun
 scp miniflux/miniflux-secrets.yaml          $TARGET:projects/kubernetes-homespun/conf/miniflux/
 scp homepage/homepage-cm-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/homepage/
 ```
-
-

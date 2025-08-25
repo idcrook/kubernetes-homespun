@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: open-webui
+  name: open-webui-pvc
+  namespace: open-webui
+  annotations:
+    nfs.io/storage-path: open-webui
+spec:
+  storageClassName: nfs-client
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+
+
