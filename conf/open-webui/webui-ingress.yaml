@@ -53,7 +53,7 @@ spec:
       services:
         - name: open-webui-service
           port: 8080
-      middlewares:
+#      middlewares:
 #        - name: my-traefik-auth-with-exceptions
 #        - name: tinyauth-tinyauth@kubernetescrd
   tls:
