@@ -18,8 +18,7 @@ spec:
     spec:
       containers:
       - name: open-webui
-        # FIXME: should specify version number, v0.6.25
-        image: ghcr.io/open-webui/open-webui:v0.6.26
+        image: ghcr.io/open-webui/open-webui:v0.6.27
         ports:
         - containerPort: 8080
         resources:
