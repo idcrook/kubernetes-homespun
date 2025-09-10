@@ -37,6 +37,7 @@ spec:
           port: 8080
       middlewares:
         - name: redirect-to-https
+          namespace: default
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
