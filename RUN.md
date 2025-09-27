@@ -427,7 +427,7 @@ below is run on control node (via `kubectl`)
 ```shell
 cd ~/projects/kubernetes-homespun
 
-kubectl apply -f conf/external-services/postgresql-serviceslice.yaml
+kubectl apply -f conf/external-services/postgresql-service.yaml
 kubectl apply -f conf/external-services/postgresql-endpointslice.yaml
 
 kubectl get svc,ep
@@ -562,3 +562,5 @@ scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun
 scp miniflux/miniflux-secrets.yaml          $TARGET:projects/kubernetes-homespun/conf/miniflux/
 scp homepage/homepage-cm-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/homepage/
 ```
+
+
