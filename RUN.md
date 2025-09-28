@@ -100,8 +100,8 @@ kubectl create configmap traefik-config \
 kubectl get cm
 
 kubectl apply -f conf/traefik/traefik-service.yaml
-grep v3  conf/traefik/traefik-deployment-raspi.yaml
-kubectl apply -f conf/traefik/traefik-deployment-raspi.yaml
+grep v3  conf/traefik/traefik-deployment.yaml
+kubectl apply -f conf/traefik/traefik-deployment.yaml
 
 # W0807 15:31:41.231717       1 warnings.go:70] v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
 
@@ -199,8 +199,8 @@ kubectl create --save-config -f conf/phant/phantserver-pv.yaml
 kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
 kubectl get pv phantserver-persistent-volume
 kubectl get pvc phantserver-persistent-claim
-grep 0.1 conf/phant/phantserver-deployment-raspi.yaml
-kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
+grep 0.2 conf/phant/phantserver-deployment.yaml
+kubectl apply -f conf/phant/phantserver-deployment.yaml
 kubectl apply -f conf/phant/phantserver-service.yaml
 kubectl apply -f conf/phant/phantserver-ingress-tls.yaml
 kubectl get po,svc,endpointslice,ingressroutes -o wide
@@ -214,17 +214,17 @@ Delete
 ```shell
 kubectl delete -f conf/phant/phantserver-ingress-tls.yaml
 kubectl delete -f conf/phant/phantserver-service.yaml
-kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
+kubectl delete -f conf/phant/phantserver-deployment.yaml
 kubectl get po,svc,endpointslice,ingressroutes
 
 # if NFS server changes
-kubectl delete -f conf/phant/phantserver-deployment-raspi.yaml
+kubectl delete -f conf/phant/phantserver-deployment.yaml
 kubectl delete -f conf/phant/phantserver-pvc.yaml
 kubectl delete -f conf/phant/phantserver-pv.yaml
 
 kubectl create --save-config -f conf/phant/phantserver-pv.yaml
 kubectl create --save-config -f conf/phant/phantserver-pvc.yaml
-kubectl apply -f conf/phant/phantserver-deployment-raspi.yaml
+kubectl apply -f conf/phant/phantserver-deployment.yaml
 ```
 
 ## trillium
@@ -259,8 +259,8 @@ kubectl create --save-config -f conf/webstatic/lighttpd-pv.yaml
 kubectl create --save-config -f conf/webstatic/lighttpd-pvc.yaml
 kubectl get pv,pvc -o wide
 
-grep image conf/webstatic/lighttpd-deployment-raspi.yaml
-kubectl apply -f conf/webstatic/lighttpd-deployment-raspi.yaml
+grep image conf/webstatic/lighttpd-deployment.yaml
+kubectl apply -f conf/webstatic/lighttpd-deployment.yaml
 
 kubectl apply -f conf/webstatic/lighttpd-service.yaml
 kubectl apply -f conf/webstatic/lighttpd-ingress-tls.yaml
@@ -296,8 +296,8 @@ kubectl create --save-config -f conf/partytime/partytime-pv.yaml
 kubectl create --save-config -f conf/partytime/partytime-pvc.yaml
 kubectl get pv,pvc -o wide
 
-grep 0.1 conf/partytime/partytime-deployment-raspi.yaml
-kubectl apply -f conf/partytime/partytime-deployment-raspi.yaml
+grep 0.1 conf/partytime/partytime-deployment.yaml
+kubectl apply -f conf/partytime/partytime-deployment.yaml
 
 kubectl apply -f conf/partytime/partytime-service.yaml
 kubectl apply -f conf/partytime/partytime-ingress-tls.yaml
@@ -307,12 +307,12 @@ kubectl get pods -o wide
 kubectl describe pod partytime-
 
 # if NFS server changes, e.g.
-kubectl delete -f conf/partytime/partytime-deployment-raspi.yaml
+kubectl delete -f conf/partytime/partytime-deployment.yaml
 kubectl delete -f conf/partytime/partytime-pvc.yaml
 kubectl delete -f conf/partytime/partytime-pv.yaml
 kubectl create --save-config -f conf/partytime/partytime-pv.yaml
 kubectl create --save-config -f conf/partytime/partytime-pvc.yaml
-kubectl apply -f conf/partytime/partytime-deployment-raspi.yaml
+kubectl apply -f conf/partytime/partytime-deployment.yaml
 ```
 
 ### heimdall
@@ -322,8 +322,8 @@ kubectl create --save-config -f conf/heimdall/heimdall-pv.yaml
 kubectl create --save-config -f conf/heimdall/heimdall-pvc.yaml
 kubectl get pv,pvc -o wide
 
-grep v2 conf/heimdall/heimdall-deployment-raspi.yaml
-kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
+grep v2 conf/heimdall/heimdall-deployment.yaml
+kubectl apply -f conf/heimdall/heimdall-deployment.yaml
 
 kubectl apply -f conf/heimdall/heimdall-service.yaml
 kubectl apply -f conf/heimdall/heimdall-ingress-tls.yaml
@@ -362,16 +362,15 @@ see [spoolman README](conf/spoolman/README.md)
 
 ```shell
 
-kubectl create secret generic spoolman-auth-secret --from-file conf/spoolman/spoolman-auth-secret
-
-kubectl  get secret | grep spoolman
+# kubectl create secret generic spoolman-auth-secret --from-file conf/spoolman/spoolman-auth-secret
+# kubectl  get secret | grep spoolman
 
 kubectl create --save-config -f conf/spoolman/spoolman-pv.yaml
 kubectl create --save-config -f conf/spoolman/spoolman-pvc.yaml
 kubectl get pv,pvc -o wide
 
-grep v0 conf/spoolman/spoolman-deployment-raspi.yaml
-kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
+grep v0 conf/spoolman/spoolman-deployment.yaml
+kubectl apply -f conf/spoolman/spoolman-deployment.yaml
 
 kubectl apply -f conf/spoolman/spoolman-service.yaml
 kubectl apply -f conf/spoolman/spoolman-ingress-tls.yaml
@@ -381,12 +380,12 @@ kubectl get pods -o wide
 kubectl describe pod spoolman-
 
 # if NFS server changes, e.g.
-kubectl delete -f conf/spoolman/spoolman-deployment-raspi.yaml
+kubectl delete -f conf/spoolman/spoolman-deployment.yaml
 kubectl delete -f conf/spoolman/spoolman-pvc.yaml
 kubectl delete -f conf/spoolman/spoolman-pv.yaml
 kubectl create --save-config -f conf/spoolman/spoolman-pv.yaml
 kubectl create --save-config -f conf/spoolman/spoolman-pvc.yaml
-kubectl apply -f conf/spoolman/spoolman-deployment-raspi.yaml
+kubectl apply -f conf/spoolman/spoolman-deployment.yaml
 ```
 
 ## open-webui
@@ -511,8 +510,8 @@ cd ~/projects/kubernetes-homespun
 # $EDITOR conf/miniflux/miniflux-secrets.yaml
 
 kubectl create -f conf/miniflux/miniflux-secrets.yaml
-kubectl apply -f conf/miniflux/miniflux-deployment-raspi.yaml
-grep image       conf/miniflux/miniflux-deployment-raspi.yaml
+grep image       conf/miniflux/miniflux-deployment.yaml
+kubectl apply -f conf/miniflux/miniflux-deployment.yaml
 kubectl apply -f conf/miniflux/miniflux-service.yaml
 kubectl apply -f conf/miniflux/miniflux-ingress-tls.yaml
 
