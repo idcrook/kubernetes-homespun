@@ -429,8 +429,8 @@ cd ~/projects/kubernetes-homespun
 kubectl apply -f conf/external-services/postgresql-service.yaml
 kubectl apply -f conf/external-services/postgresql-endpointslice.yaml
 
-kubectl get svc,ep
-kubectl get svc,ep | grep postgres
+kubectl get svc,EndpointSlice
+kubectl get svc,EndpointSlice | grep postgres
 
 kubectl delete -f conf/external-services/postgresql-endpointslice.yaml
 kubectl delete -f conf/external-services/postgresql-service.yaml
@@ -447,7 +447,7 @@ kubectl apply -f conf/external-services/birdnetpi-service.yaml
 kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
 kubectl apply -f conf/external-services/birdnetpi-ingress-tls.yaml
 
-kubectl get svc,ep
+kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep birdnetpi
 
 kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
@@ -467,7 +467,7 @@ kubectl apply -f conf/external-services/homeassistant-service.yaml
 kubectl apply -f conf/external-services/homeassistant-endpointslice.yaml
 kubectl apply -f conf/external-services/homeassistant-ingress-tls.yaml
 
-kubectl get svc,ep
+kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep homeassistant
 
 #kubectl delete -f conf/external-services/homeassistant-endpoint.yaml
@@ -486,7 +486,7 @@ kubectl apply -f conf/external-services/karakeep-service.yaml
 kubectl apply -f conf/external-services/karakeep-endpointslice.yaml
 kubectl apply -f conf/external-services/karakeep-ingress-tls.yaml
 
-kubectl get svc,ep
+kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep karakeep
 
 #kubectl delete -f conf/external-services/karakeep-endpoint.yaml
@@ -541,7 +541,7 @@ kubectl delete -f conf/miniflux/miniflux-ingress-tls.yaml
 kubectl delete -f conf/miniflux/miniflux-service.yaml
 # kubectl delete -f conf/miniflux/miniflux-secrets.yaml
 
-kubectl get svc,ep
+kubectl get svc,endpointslice
 kubectl get po,svc,deploy,ing,endpointslice,secret
 ```
 
