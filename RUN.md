@@ -347,12 +347,11 @@ kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 ```shell
 kubectl  apply -f conf/homepage/homepage-cm-secrets.yaml
 kubectl  apply -f conf/homepage/homepage-svc-acct.yaml
-kubectl  apply -f conf/homepage/homepage-cm.yaml
 kubectl  apply -f conf/homepage/homepage-rbac.yaml
 kubectl  apply -f conf/homepage/homepage-service.yaml
 kubectl  apply -f conf/homepage/homepage-deployment.yaml
 
-kubectl  get pod,svc
+kubectl  get pod,svc,cm
 kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 ```
 
