@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: miniflux
-        version: v2.2.13
+        version: v2.2.14
     spec:
       containers:
         - env:
