@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: homepage
-        version: v1.5.0
+        version: v1.6.1
     spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
@@ -27,7 +27,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: homepage
-          image: "ghcr.io/gethomepage/homepage:v1.5.0"
+          image: "ghcr.io/gethomepage/homepage:v1.6.1"
           imagePullPolicy: Always
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
