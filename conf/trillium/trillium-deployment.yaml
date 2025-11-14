@@ -18,11 +18,11 @@ spec:
     metadata:
       labels:
         app: trillium
-        version: v0.99.3
+        version: v0.99.5
     spec:
       containers:
         - name: trillium
-          image: triliumnext/trilium:v0.99.3
+          image: triliumnext/trilium:v0.99.5
           env:
             - name: TRILIUM_DATA_DIR
               value: "/home/node/trilium-data"
