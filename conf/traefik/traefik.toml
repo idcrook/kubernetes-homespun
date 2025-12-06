@@ -14,6 +14,11 @@
   address = ":443"
   [entryPoints.websecure.http]
     [entryPoints.websecure.http.tls]
+    # needed for trilium since Traefik 3.6.4
+    [entryPoints.websecure.http.encodedCharacters]
+      allowEncodedSlash = true
+      # allowEncodedPercent = true
+      allowEncodedHash = true
 
 [providers]
   [providers.kubernetesCRD]
