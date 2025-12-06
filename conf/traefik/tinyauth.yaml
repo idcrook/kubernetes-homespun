@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tinyauth
-          image: ghcr.io/steveiliop56/tinyauth:v3
+          image: ghcr.io/steveiliop56/tinyauth:v4.1.0
           ports:
             - containerPort: 3000
               name: tinyauth-cip
@@ -32,6 +32,8 @@ spec:
           volumeMounts:
             - mountPath: "/authfile"
               name: "authfile"
+            - mountPath: "/data"
+              name: "session-db"
           env:
             # - name: "LOG_LEVEL"
             #   value: "0"
@@ -42,26 +44,26 @@ spec:
                 secretKeyRef:
                   name: tinyauth-secrets
                   key: secretKey
-            - name: GENERIC_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: tinyauth-secrets
-                  key: genericClientID
-            - name: GENERIC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: tinyauth-secrets
-                  key: genericClientSecret
-            - name:  GENERIC_AUTH_URL
-              value: https://pocketid.idcrook.dev/authorize
-            - name:  GENERIC_TOKEN_URL
-              value: https://pocketid.idcrook.dev/api/oidc/token
-            - name:  GENERIC_USER_URL
-              value: https://pocketid.idcrook.dev/api/oidc/userinfo
-            - name:  GENERIC_SCOPES
-              value: "openid email profile"
-            - name:  GENERIC_NAME
-              value: Pocket ID
+            # - name: GENERIC_CLIENT_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: tinyauth-secrets
+            #       key: genericClientID
+            # - name: GENERIC_CLIENT_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: tinyauth-secrets
+            #       key: genericClientSecret
+            # - name:  GENERIC_AUTH_URL
+            #   value: https://pocketid.idcrook.dev/authorize
+            # - name:  GENERIC_TOKEN_URL
+            #   value: https://pocketid.idcrook.dev/api/oidc/token
+            # - name:  GENERIC_USER_URL
+            #   value: https://pocketid.idcrook.dev/api/oidc/userinfo
+            # - name:  GENERIC_SCOPES
+            #   value: "openid email profile"
+            # - name:  GENERIC_NAME
+            #   value: Pocket ID
             # - name: USERS
             #   valueFrom:
             #     secretKeyRef:
@@ -69,19 +71,22 @@ spec:
             #       key: USERS                  
             - name: USERS_FILE
               value: "/authfile/users.txt"
-      volumes:
-        - name: authfile
-          configMap:
-            name: tinyauth-users-file
-
           # livenessProbe:
           #   httpGet:
-          #     path: /api/healthcheck
+          #     path: /api/healthz
           #     port: 3000
           # readinessProbe:
           #   httpGet:
-          #     path: /api/healthcheck
+          #     path: /api/healthz
           #     port: 3000
+      volumes:
+          - name: authfile
+            configMap:
+              name: tinyauth-users-file
+          - name: session-db
+            # effectively: resets each restart
+            emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
