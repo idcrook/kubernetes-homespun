@@ -8,8 +8,8 @@ metadata:
 addressType: IPv4
 endpoints:
   - addresses:
-      - 192.168.50.5
-    nodeName: rpif2
+      - 192.168.50.6
+    nodeName: rpiv6
 ports:
   - name: postgresql
     protocol: TCP

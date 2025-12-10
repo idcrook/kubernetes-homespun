@@ -35,8 +35,9 @@ spec:
             - mountPath: "/data"
               name: "session-db"
           env:
+            # Log level (trace, debug, info, warn, error, fatal, panic)
             # - name: "LOG_LEVEL"
-            #   value: "0"
+            #   value: "info"
             - name: APP_URL
               value: "https://tinyauth.idcrook.dev"
             - name: SECRET
@@ -74,11 +75,11 @@ spec:
           # livenessProbe:
           #   httpGet:
           #     path: /api/healthz
-          #     port: 3000
+          #     port: tinyauth-cip
           # readinessProbe:
           #   httpGet:
           #     path: /api/healthz
-          #     port: 3000
+          #     port: tinyauth-cip
       volumes:
           - name: authfile
             configMap:

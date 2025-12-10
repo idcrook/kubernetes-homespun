@@ -6,7 +6,6 @@ metadata:
   name: spoolman
   labels:
     app: spoolman
-
 spec:
   replicas: 1
   selector:
