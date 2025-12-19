@@ -31,7 +31,8 @@ spec:
         - name: spoolman-svc
           port: 8000
       middlewares:
+        - name: my-cloudflarewarp
 #        - name: my-traefik-auth-with-exceptions
-        - name: tinyauth-tinyauth@kubernetescrd
+#        - name: tinyauth-tinyauth@kubernetescrd
   tls:
     certResolver: wildcardresolver

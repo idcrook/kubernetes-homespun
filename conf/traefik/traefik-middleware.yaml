@@ -52,4 +52,22 @@ spec:
                   - "127.0.0.1"
                   - "192.168.50.0/23"
 
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+    name: my-cloudflarewarp
+    # namespace: my-namespace
+spec:
+    plugin:
+        cloudflarewarp:
+            disableDefault: "true"
+            trustip:
+                - 10.0.0.0/8
+#                - 172.16.0.0/12
+                - 192.168.50.0/23
+#                - 2400:cb00::/32
+
+# https://github.com/YouKyi/cloudflarewarp
+
 # See tinyauth.yaml for its middleware
