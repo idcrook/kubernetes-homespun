@@ -17,11 +17,11 @@ spec:
     metadata:
       labels:
         app: partytime
-        version: v14.82.0
+        version: v14.82.1
     spec:
       containers:
         - name: lighttpd
-          image: dpcrook/alpine-lighttpd-static:14.82.0-arm64v8
+          image: dpcrook/alpine-lighttpd-static:14.82.1-arm64v8
           imagePullPolicy: Always
           #resources:
           #  requests:
