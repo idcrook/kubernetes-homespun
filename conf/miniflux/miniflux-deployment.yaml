@@ -22,22 +22,22 @@ spec:
     spec:
       containers:
         - env:
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: miniflux-secret
-                key: DATABASE_URL
-          # (60/5) * 30 = 360 feeds every hour
-          - name: POLLING_FREQUENCY
-            value: "5"
-          - name: BATCH_SIZE
-            value: "30"
-          - name: RUN_MIGRATIONS
-            value: "1"
-          # - name: DEBUG
-          #   value: "1"
-          # - name: LOG_DATE_TIME
-          #   value: "1"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-secret
+                  key: DATABASE_URL
+            # (60/5) * 30 = 360 feeds every hour
+            - name: POLLING_FREQUENCY
+              value: "5"
+            - name: BATCH_SIZE
+              value: "30"
+            - name: RUN_MIGRATIONS
+              value: "1"
+            # - name: DEBUG
+            #   value: "1"
+            # - name: LOG_DATE_TIME
+            #   value: "1"
           name: miniflux
           image: miniflux/miniflux:2.2.16
           ports:
