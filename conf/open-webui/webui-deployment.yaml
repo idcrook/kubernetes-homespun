@@ -35,7 +35,7 @@ spec:
           volumeMounts:
             - name: webui-volume
               mountPath: /app/backend/data
-    volumes:
-      - name: webui-volume
-        persistentVolumeClaim:
-          claimName: open-webui-pvc
+      volumes:
+        - name: webui-volume
+          persistentVolumeClaim:
+            claimName: open-webui-pvc
