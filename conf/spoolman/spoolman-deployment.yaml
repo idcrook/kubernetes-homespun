@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: spoolman
-          image:  ghcr.io/donkie/spoolman:0.22.1
+          image: ghcr.io/donkie/spoolman:0.22.1
           env:
             - name: TZ
               value: "America/Denver"
