@@ -23,6 +23,9 @@ spec:
     - protocol: TCP
       port: 443
       name: websecure
+    - protocol: TCP
+      port: 2222
+      name: ssh
 # ---
 # apiVersion: v1
 # kind: Service

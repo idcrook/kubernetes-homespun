@@ -38,6 +38,8 @@ spec:
               containerPort: 80
             - name: websecure
               containerPort: 443
+            - name: ssh
+              containerPort: 2222
           env:
             - name: NAMECHEAP_API_USER
               valueFrom:

@@ -1,0 +1,86 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: forgejo
+  labels:
+    app: forgejo
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forgejo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: forgejo
+        version: 14.0.1
+    spec:
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 100
+      #   fsGroup: 100
+      # nodeSelector:
+      #   kubernetes.io/hostname: rpivN
+      containers:
+        - env:
+            - name: FORGEJO__database__PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: forgejo-secret
+                  key: FORGEJO__database__PASSWD
+            - name: FORGEJO__database__DB_TYPE
+              value: postgres
+            - name: FORGEJO__database__HOST
+              value: postgresql-db
+            - name: FORGEJO__database__NAME
+              value: forgejodb
+            - name: FORGEJO__database__USER
+              value: forgejo
+            - name: FORGEJO__database__SSL_MODE
+              value: disable
+            - name: USER_UID
+              value: "1000"
+            - name: USER_GID
+              value: "100"
+            - name: TZ
+              value: "America/Denver"
+            - name: APP_NAME
+              value: "Homelab Git"
+            # - name: APP_SLOGAN
+            #   value: "Personal Code, Mirrors, and More"
+          name: forgejo
+          image: codeberg.org/forgejo/forgejo:14.0.1
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+              name: forgejo-http
+            - containerPort: 22
+              protocol: TCP
+              name: forgejo-ssh
+          volumeMounts:
+            # - name: tz-config
+            #   mountPath: /etc/localtime
+            #   readOnly: true # Mount as read-only for safety
+            #   subPath: localtime
+            - name: forgejo-volume
+              mountPath: /data
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: forgejo-http
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+      restartPolicy: Always
+      volumes:
+        - name: forgejo-volume
+          persistentVolumeClaim:
+            claimName: forgejo-pvc
+        # - name: tz-config
+        #   hostPath:
+        #     path: /etc/localtime
+        #     type: FileOrCreate # Optional type, good practice

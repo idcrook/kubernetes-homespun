@@ -20,6 +20,9 @@
       # allowEncodedPercent = true
       allowEncodedHash = true
 
+[entryPoints.ssh]
+    address = ":2222"
+
 [providers]
   [providers.kubernetesCRD]
     allowCrossNamespace = true

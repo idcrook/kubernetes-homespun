@@ -188,8 +188,7 @@ kubectl create -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.ya
 kubectl delete -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.yaml
 ```
 
-
-phant
+## phant
 
 https://hub.docker.com/r/dpcrook/phant_server-docker/
 
@@ -247,8 +246,30 @@ kubectl get pods -o wide
 kubectl describe pod trillium-
 ```
 
+## forgejo
 
-lighttpd static server
+```shell
+cd ~/projects/kubernetes-homespun/
+
+# cp -i conf/forgejo/forgejo-secrets.example.yaml \
+#       conf/forgejo/forgejo-secrets.yaml
+# $EDITOR conf/forgejo/forgejo-secrets.yaml
+
+kubectl create -f conf/forgejo/forgejo-secrets.yaml
+
+kubectl create --save-config -f conf/forgejo/forgejo-pvc.yaml
+kubectl get pvc forgejo-pvc
+grep image: conf/forgejo/forgejo-deployment.yaml
+kubectl apply -f conf/forgejo/forgejo-deployment.yaml
+kubectl apply -f conf/forgejo/forgejo-service.yaml
+kubectl apply -f conf/forgejo/forgejo-ingress-tls.yaml
+kubectl get po,svc,endpointslice,ingressroutes -o wide
+
+kubectl get pods -o wide
+kubectl describe pod forgejo-
+```
+
+## lighttpd static server
 
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/
 
@@ -342,7 +363,7 @@ kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 ```
 
 
-### homepage
+## homepage
 
 ```shell
 kubectl  apply -f conf/homepage/homepage-cm-secrets.yaml
@@ -355,7 +376,7 @@ kubectl  get pod,svc,cm
 kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 ```
 
-### spoolman
+## spoolman
 
 see [spoolman README](conf/spoolman/README.md)
 
@@ -494,8 +515,7 @@ kubectl delete -f conf/external-services/karakeep-service.yaml
 kubectl delete -f conf/external-services/karakeep-ingress-tls.yaml
 ```
 
-
-miniflux rss aggregator
+## miniflux rss aggregator
 
 <https://hub.docker.com/r/miniflux/miniflux>
 
@@ -544,9 +564,7 @@ kubectl get svc,endpointslice
 kubectl get po,svc,deploy,ing,endpointslice,secret
 ```
 
-
-
-copying secrets
+## copying secrets
 
 on donor
 
@@ -560,5 +578,3 @@ scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun
 scp miniflux/miniflux-secrets.yaml          $TARGET:projects/kubernetes-homespun/conf/miniflux/
 scp homepage/homepage-cm-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/homepage/
 ```
-
-
