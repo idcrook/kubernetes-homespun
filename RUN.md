@@ -255,7 +255,7 @@ cd ~/projects/kubernetes-homespun/
 #       conf/forgejo/forgejo-secrets.yaml
 # $EDITOR conf/forgejo/forgejo-secrets.yaml
 
-kubectl create -f conf/forgejo/forgejo-secrets.yaml
+kubectl create --save-config -f conf/forgejo/forgejo-secrets.yaml
 
 kubectl create --save-config -f conf/forgejo/forgejo-pvc.yaml
 kubectl get pvc forgejo-pvc
