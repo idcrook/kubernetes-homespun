@@ -43,6 +43,33 @@ spec:
               value: forgejo
             - name: FORGEJO__database__SSL_MODE
               value: disable
+            # - name: FORGEJO__mailer__ENABLED
+            #   value: "false"
+            # - name: FORGEJO__mailer__PROTOCOL
+            #   value: "smtps" # Use "smtp" for 587, "smtps" for 465
+            # - name: FORGEJO__mailer__SMTP_ADDR
+            #   value: "mail.example.com"
+            # - name: FORGEJO__mailer__SMTP_PORT
+            #   value: "465"
+            # - name: FORGEJO__mailer__FROM
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: forgejo-secret
+            #       key: FORGEJO__mailer__FROM
+            #   value: "forgejo@example.com"
+            # - name: FORGEJO__mailer__USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: forgejo-secret
+            #       key: FORGEJO__mailer__USER
+            #   value: "forgejo@example.com"
+            # - name: FORGEJO__mailer__PASSWD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: forgejo-secret
+            #       key: FORGEJO__mailer__PASSWD
+            # - name: FORGEJO__service__ENABLE_NOTIFY_MAIL
+            #   value: "false"
             - name: USER_UID
               value: "1000"
             - name: USER_GID
