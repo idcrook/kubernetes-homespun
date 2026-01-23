@@ -77,6 +77,8 @@ spec:
                   key: FORGEJO__mailer__PASSWD
             - name: FORGEJO__service__ENABLE_NOTIFY_MAIL
               value: "true"
+            # - name: FORGEJO__migrations__ALLOW_LOCALNETWORKS
+            #   value: "true"
             - name: USER_UID
               value: "1000"
             - name: USER_GID
