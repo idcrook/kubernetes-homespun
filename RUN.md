@@ -269,6 +269,32 @@ kubectl get pods -o wide
 kubectl describe pod forgejo-
 ```
 
+## ntfy
+
+<https://docs.ntfy.sh>
+
+```shell
+cd ~/projects/kubernetes-homespun/
+
+# cp -i conf/ntfy/ntfy-cm.example.yaml \
+#       conf/ntfy/ntfy-cm.yaml
+# $EDITOR conf/ntfy/ntfy-cm.yaml
+
+kubectl create --save-config -f conf/ntfy/ntfy-cm.yaml
+
+kubectl create --save-config -f conf/ntfy/ntfy-pvc.yaml
+kubectl get pvc ntfy-pvc
+grep image: conf/ntfy/ntfy-deployment.yaml
+kubectl apply -f conf/ntfy/ntfy-deployment.yaml
+kubectl apply -f conf/ntfy/ntfy-service.yaml
+kubectl apply -f conf/ntfy/ntfy-ingress-tls.yaml
+kubectl get po,svc,endpointslice,ingressroutes -o wide
+
+kubectl get pods -o wide
+kubectl describe pod forgejo-
+```
+
+
 ## lighttpd static server
 
 https://hub.docker.com/r/dpcrook/alpine-lighttpd-static/

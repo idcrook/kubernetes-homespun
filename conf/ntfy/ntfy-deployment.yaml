@@ -1,0 +1,51 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: ntfy
+  labels:
+    app: ntfy
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ntfy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ntfy
+        version: v2.16.0
+    spec:
+      containers:
+        - name: ntfy
+          image: binwiederhier/ntfy:v2.16.0
+          args: ["serve"]
+          env:
+            - name: TZ # set timezone
+              value: "America/Denver"
+            - name: NTFY_DEBUG # enable/disable debug
+              value: "false"
+            - name: NTFY_LOG_LEVEL # adjust log level
+              value: INFO
+          ports:
+            - containerPort: 80
+              protocol: TCP
+              name: ntfy-http
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/ntfy
+              subPath: server.yaml
+            - name: cache-volume
+              mountPath: /var/cache/ntfy
+      restartPolicy: Always
+      volumes:
+        - name: cache-volume
+          persistentVolumeClaim:
+            claimName: ntfy-pvc
+        - name: config-volume
+          configMap:
+            name: ntfy-config

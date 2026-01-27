@@ -1,0 +1,12 @@
+---  # -*- yaml -*-
+# echo    conf/ntfy/ntfy-secrets.yaml >> .git/info/exclude
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ntfy-config
+data:
+  server.yml: |
+    # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
+    base-url: https://ntfy.sh
+    cache-file: "/var/cache/ntfy/cache.db"
+    attachment-cache-dir: "/var/cache/ntfy/attachments"
