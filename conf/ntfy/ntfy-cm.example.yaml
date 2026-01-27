@@ -8,5 +8,10 @@ data:
   server.yml: |
     # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
     base-url: https://ntfy.sh
+    # auth-file: "/var/lib/ntfy/user.db"
     cache-file: "/var/cache/ntfy/cache.db"
     attachment-cache-dir: "/var/cache/ntfy/attachments"
+    auth-default-access: "deny-all"
+    enable-login: true
+    enable-signup: false
+    behind-proxy: true

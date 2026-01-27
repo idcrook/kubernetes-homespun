@@ -24,13 +24,46 @@ spec:
         - name: ntfy
           image: binwiederhier/ntfy:v2.16.0
           args: ["serve"]
+          # args: ["serve", "--enable-signup", "--enable-login",  "--auth-file=/var/cache/ntfy/user.db"]
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
           env:
             - name: TZ # set timezone
               value: "America/Denver"
             - name: NTFY_DEBUG # enable/disable debug
+              # value: "true"
               value: "false"
             - name: NTFY_LOG_LEVEL # adjust log level
+              # value: TRACE
               value: INFO
+            - name: NTFY_BASE_URL
+              value: "https://ntfy.idcrook.dev"
+            - name: NTFY_AUTH_FILE
+              value: "/var/cache/ntfy/user.db"
+            - name: NTFY_CACHE_FILE
+              value: "/var/cache/ntfy/cache.db"
+            - name: NTFY_ATTACHMENT_CACHE_DIR
+              value: "/var/cache/ntfy/attachments"
+            - name: NTFY_AUTH_DEFAULT_ACCESS
+              value: "deny-all"
+            - name: NTFY_ENABLE_LOGIN
+              value: "true"
+            - name: NTFY_ENABLE_SIGNUP
+              value: "false"
+            - name: NTFY_BEHIND_PROXY
+              value: "true"
+            - name: NTFY_AUTH_USERS
+              valueFrom:
+                secretKeyRef:
+                  name: ntfy-secret
+                  key: AUTH_USERS
+            # - name: NTFY_AUTH_ACCESS
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: ntfy-secret
+            #       key: AUTH_ACCESS
           ports:
             - containerPort: 80
               protocol: TCP

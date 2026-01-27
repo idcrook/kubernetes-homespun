@@ -276,9 +276,18 @@ kubectl describe pod forgejo-
 ```shell
 cd ~/projects/kubernetes-homespun/
 
+# cp -i conf/ntfy/ntfy-secrets.example.yaml \
+#       conf/ntfy/ntfy-secrets.yaml
+# $EDITOR conf/ntfy/ntfy-secrets.yaml
+
 # cp -i conf/ntfy/ntfy-cm.example.yaml \
 #       conf/ntfy/ntfy-cm.yaml
 # $EDITOR conf/ntfy/ntfy-cm.yaml
+
+kubectl create --save-config -f conf/ntfy/ntfy-secrets.yaml
+
+  kubectl get --namespace default  secret ntfy-secret -o json |\
+    jq -r '.data.AUTH_USERS' | base64 --decode
 
 kubectl create --save-config -f conf/ntfy/ntfy-cm.yaml
 
@@ -291,7 +300,7 @@ kubectl apply -f conf/ntfy/ntfy-ingress-tls.yaml
 kubectl get po,svc,endpointslice,ingressroutes -o wide
 
 kubectl get pods -o wide
-kubectl describe pod forgejo-
+kubectl describe pod ntfy-
 ```
 
 
