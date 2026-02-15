@@ -18,11 +18,11 @@ spec:
     metadata:
       labels:
         app: ntfy
-        version: v2.16.0
+        version: v2.17.0
     spec:
       containers:
         - name: ntfy
-          image: binwiederhier/ntfy:v2.16.0
+          image: binwiederhier/ntfy:v2.17.0
           args: ["serve"]
           # args: ["serve", "--enable-signup", "--enable-login",  "--auth-file=/var/cache/ntfy/user.db"]
           resources:
@@ -54,6 +54,8 @@ spec:
               value: "false"
             - name: NTFY_BEHIND_PROXY
               value: "true"
+            - name: NTFY_VISITOR_REQUEST_LIMIT_EXEMPT_HOSTS
+              value: "127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.50.0/23"
             - name: NTFY_AUTH_USERS
               valueFrom:
                 secretKeyRef:
