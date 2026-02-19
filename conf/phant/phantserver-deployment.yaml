@@ -18,15 +18,13 @@ spec:
     metadata:
       labels:
         app: phant
-        version: v0.2.1
+        version: v0.3.21
     spec:
       nodeSelector:
-        # kubernetes.io/arch: arm
-        # kubernetes.io/hostname: "rpif2"  
-        # kubernetes.io/hostname: "rpiv1"  
+        # kubernetes.io/arch: arm64
       containers:
         - name: phant
-          image: dpcrook/phant_server-docker:0.2.1-arm64
+          image: dpcrook/phant_server-docker:0.3.21-arm64
           #imagePullPolicy: Always
           #resources:
           #  requests:
