@@ -114,6 +114,7 @@ metadata:
 spec:
     forwardAuth:
         address: http://10.43.164.234:3000/api/auth/traefik
+        maxResponseBodySize: 1048576
         trustForwardHeader: true
         authResponseHeaders:
             - remote-user
