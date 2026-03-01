@@ -18,11 +18,11 @@ spec:
     metadata:
       labels:
         app: trillium
-        version: v0.101.3
+        version: v0.102.0
     spec:
       containers:
         - name: trillium
-          image: triliumnext/trilium:v0.101.3
+          image: triliumnext/trilium:v0.102.0
           env:
             - name: TRILIUM_DATA_DIR
               value: "/home/node/trilium-data"
@@ -42,7 +42,7 @@ spec:
               mountPath: /home/node/trilium-data
             # - name: timezone-data
             #   mountPath: /etc/localtime
-            #   subPath: localtime               
+            #   subPath: localtime
       restartPolicy: Always
       volumes:
         - name: trillium-persistent-storage
