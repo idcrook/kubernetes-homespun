@@ -37,19 +37,20 @@ spec:
           env:
             # Log level (trace, debug, info, warn, error, fatal, panic)
             - name: "TINYAUTH_LOG_LEVEL"
-              value: "info"
+              value: "trace"
+              # value: "info"
             - name: TINYAUTH_APPURL
               value: "https://tinyauth.idcrook.dev"
             - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
-          livenessProbe:
-            httpGet:
-              path: /api/healthz
-              port: tinyauth-cip
-          readinessProbe:
-            httpGet:
-              path: /api/healthz
-              port: tinyauth-cip
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/healthz
+          #     port: tinyauth-cip
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/healthz
+          #     port: tinyauth-cip
       volumes:
           - name: authfile
             configMap:
@@ -74,6 +75,20 @@ spec:
   selector:
     app: tinyauth
   type: ClusterIP
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: tinyauth-svc
+#   namespace: tinyauth
+# spec:
+#   selector:
+#     app: tinyauth
+#   ports:
+#     - name: tinyauth-cip
+#       port: 3000
+#       targetPort: 3000
+#       protocol: TCP      
+#   type: ClusterIP  
 
 ---
 apiVersion: traefik.io/v1alpha1
@@ -82,10 +97,16 @@ metadata:
     name: tinyauth
     namespace: tinyauth
 spec:
+    # forwardAuth:
+    #     address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
+    #     maxResponseBodySize: 1048576
+    #     trustForwardHeader: true
+    #     authResponseHeaders:
+    #         - "X-Forwarded-User" 
     forwardAuth:
         address: http://10.43.164.234:3000/api/auth/traefik
         maxResponseBodySize: 1048576
-        trustForwardHeader: true
+        trustForwardHeader: true 
         authResponseHeaders:
             - remote-user
             - remote-groups
