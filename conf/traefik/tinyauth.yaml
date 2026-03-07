@@ -88,7 +88,7 @@ spec:
 #       port: 3000
 #       targetPort: 3000
 #       protocol: TCP      
-#   type: ClusterIP  
+# #   type: ClusterIP  
 
 ---
 apiVersion: traefik.io/v1alpha1
