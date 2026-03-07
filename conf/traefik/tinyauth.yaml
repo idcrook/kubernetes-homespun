@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tinyauth
-          image: ghcr.io/steveiliop56/tinyauth:v4.1.0
+          image: ghcr.io/steveiliop56/tinyauth:v5.0.1
           ports:
             - containerPort: 3000
               name: tinyauth-cip
@@ -36,50 +36,20 @@ spec:
               name: "session-db"
           env:
             # Log level (trace, debug, info, warn, error, fatal, panic)
-            # - name: "LOG_LEVEL"
-            #   value: "info"
-            - name: APP_URL
+            - name: "TINYAUTH_LOG_LEVEL"
+              value: "info"
+            - name: TINYAUTH_APPURL
               value: "https://tinyauth.idcrook.dev"
-            - name: SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: tinyauth-secrets
-                  key: secretKey
-            # - name: GENERIC_CLIENT_ID
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: tinyauth-secrets
-            #       key: genericClientID
-            # - name: GENERIC_CLIENT_SECRET
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: tinyauth-secrets
-            #       key: genericClientSecret
-            # - name:  GENERIC_AUTH_URL
-            #   value: https://pocketid.idcrook.dev/authorize
-            # - name:  GENERIC_TOKEN_URL
-            #   value: https://pocketid.idcrook.dev/api/oidc/token
-            # - name:  GENERIC_USER_URL
-            #   value: https://pocketid.idcrook.dev/api/oidc/userinfo
-            # - name:  GENERIC_SCOPES
-            #   value: "openid email profile"
-            # - name:  GENERIC_NAME
-            #   value: Pocket ID
-            # - name: USERS
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: tinyauth-secrets
-            #       key: USERS                  
-            - name: USERS_FILE
+            - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
-          # livenessProbe:
-          #   httpGet:
-          #     path: /api/healthz
-          #     port: tinyauth-cip
-          # readinessProbe:
-          #   httpGet:
-          #     path: /api/healthz
-          #     port: tinyauth-cip
+          livenessProbe:
+            httpGet:
+              path: /api/healthz
+              port: tinyauth-cip
+          readinessProbe:
+            httpGet:
+              path: /api/healthz
+              port: tinyauth-cip
       volumes:
           - name: authfile
             configMap:
