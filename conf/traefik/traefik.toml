@@ -2,8 +2,10 @@
   checkNewVersion = true
   sendAnonymousUsage = true
 
-[core]
-    defaultRuleSyntax="v2"
+# [core]
+#     # deprecated in Traefik v3: defaultRuleSyntax = "v3" is now the only supported syntax
+#     # so redundant now that have migrated rules
+#     defaultRuleSyntax="v3"
 
 [entryPoints]
 
@@ -14,11 +16,19 @@
   address = ":443"
   [entryPoints.websecure.http]
     [entryPoints.websecure.http.tls]
-    # needed for trilium since Traefik 3.6.4
+    # https://doc.traefik.io/traefik/v3.6/migrate/v3/#encoded-characters-configuration-default-values
+    # updated since  `true` is now the default in Traefik 3.6.7
+    # added for trilium at Traefik 3.6.4
     [entryPoints.websecure.http.encodedCharacters]
       allowEncodedSlash = true
-      # allowEncodedPercent = true
+      allowEncodedBackslash = false
+      allowEncodedNullCharacter = false   
+      allowEncodedSemicolon = false   
+      allowEncodedPercent = false
+      allowEncodedQuestionMark = false      
       allowEncodedHash = true
+
+
 
 [entryPoints.ssh]
     address = ":2222"
