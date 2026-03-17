@@ -18,11 +18,11 @@ spec:
     metadata:
       labels:
         app: ntfy
-        version: v2.19.1
+        version: v2.19.2
     spec:
       containers:
         - name: ntfy
-          image: binwiederhier/ntfy:v2.19.1
+          image: binwiederhier/ntfy:v2.19.2
           args: ["serve"]
           # args: ["serve", "--enable-signup", "--enable-login",  "--auth-file=/var/cache/ntfy/user.db"]
           resources:
