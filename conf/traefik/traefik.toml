@@ -51,8 +51,9 @@
   version = "v0.13.0"
 
 [experimental.plugins.cloudflarewarp]
-  moduleName = "github.com/YouKyi/cloudflarewarp"
+  moduleName = "github.com/fma965/cloudflarewarp"
   version = "v1.0.0"
+
 
 # [api]
 # #   insecure = true

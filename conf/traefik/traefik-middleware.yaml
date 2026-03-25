@@ -57,7 +57,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
     name: my-cloudflarewarp
-    # namespace: my-namespace
 spec:
     plugin:
         cloudflarewarp:
@@ -68,6 +67,8 @@ spec:
                 - 192.168.50.0/23
 #                - 2400:cb00::/32
 
+# https://github.com/fma965/cloudflarewarp
+# https://github.com/l4rm4nd/traefik-warp
 # https://github.com/YouKyi/cloudflarewarp
 
 # See tinyauth.yaml for its middleware
