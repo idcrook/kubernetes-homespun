@@ -22,7 +22,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: "rpiv1"
       containers:
-        - image: traefik:v3.6.11
+        - image: traefik:v3.6.12
           name: traefik
           volumeMounts:
             - mountPath: "/config"
