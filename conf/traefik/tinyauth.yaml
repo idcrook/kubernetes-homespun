@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tinyauth
-          image: ghcr.io/steveiliop56/tinyauth:v5.0.1
+          image: ghcr.io/steveiliop56/tinyauth:v5.0.4
           ports:
             - containerPort: 3000
               name: tinyauth-cip
