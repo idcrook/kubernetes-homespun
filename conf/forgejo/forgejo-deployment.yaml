@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: forgejo
-        version: 15.0.0
+        version: 15.0.1
     spec:
       # securityContext:
       #   runAsUser: 1000
@@ -92,7 +92,7 @@ spec:
             # - name: APP_SLOGAN
             #   value: "Personal Code, Mirrors, and More"
           name: forgejo
-          image: codeberg.org/forgejo/forgejo:15.0.0
+          image: codeberg.org/forgejo/forgejo:15.0.1
           ports:
             - containerPort: 3000
               protocol: TCP
