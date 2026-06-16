@@ -7,6 +7,7 @@
 * lighttpd - Static webserving
   * webstatic
   * (*offline*) partytime
+  * muzcal
 * miniflux - feed reader
   * external postgresql
 * (*offline*) freshrss - feed reader
@@ -370,6 +371,34 @@ kubectl create --save-config -f conf/partytime/partytime-pv.yaml
 kubectl create --save-config -f conf/partytime/partytime-pvc.yaml
 kubectl apply -f conf/partytime/partytime-deployment.yaml
 ```
+
+### muzcal
+
+```shell
+kubectl create --save-config -f conf/muzcal/muzcal-pv.yaml
+kubectl create --save-config -f conf/muzcal/muzcal-pvc.yaml
+kubectl get pv,pvc -o wide
+
+grep 0.1 conf/muzcal/muzcal-deployment.yaml
+kubectl apply -f conf/muzcal/muzcal-deployment.yaml
+
+kubectl apply -f conf/muzcal/muzcal-service.yaml
+kubectl apply -f conf/muzcal/muzcal-ingress-tls.yaml
+kubectl get po,svc,endpointslice,ingressroutes -o wide
+
+kubectl get pods -o wide
+kubectl describe pod muzcal-
+
+# if NFS server changes, e.g.
+kubectl delete -f conf/muzcal/muzcal-deployment.yaml
+kubectl delete -f conf/muzcal/muzcal-pvc.yaml
+kubectl delete -f conf/muzcal/muzcal-pv.yaml
+kubectl create --save-config -f conf/muzcal/muzcal-pv.yaml
+kubectl create --save-config -f conf/muzcal/muzcal-pvc.yaml
+kubectl apply -f conf/muzcal/muzcal-deployment.yaml
+```
+
+
 
 ### heimdall
 

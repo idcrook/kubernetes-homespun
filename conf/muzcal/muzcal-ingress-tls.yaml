@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http-redirect-muzcal
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`summer-music.idcrook.dev`)
+      services:
+        - name: muzcal
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-muzcal
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`summer-music.idcrook.dev`)
+      services:
+        - name: muzcal
+          port: 80
+      # middlewares:
+      #   - name: my-fail2ban
+  tls:
+    certResolver: wildcardresolver

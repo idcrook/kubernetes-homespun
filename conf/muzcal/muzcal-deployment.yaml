@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: muzcal
+  labels:
+    app: muzcal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: muzcal
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: muzcal
+        version: v14.82.1
+    spec:
+      containers:
+        - name: lighttpd
+          image: dpcrook/alpine-lighttpd-static:14.82.1-arm64v8
+          imagePullPolicy: Always
+          #resources:
+          #  requests:
+          #    cpu: 100m
+          #    memory: 50Mi
+          #  limits:
+          #    cpu: 100m
+          #    memory: 50Mi
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /var/www/htdocs/
+              name: muzcal-persistent-storage
+      restartPolicy: Always
+      volumes:
+        - name: muzcal-persistent-storage
+          persistentVolumeClaim:
+            claimName: muzcal-persistent-claim
