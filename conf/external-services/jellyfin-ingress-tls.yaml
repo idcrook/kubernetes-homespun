@@ -1,0 +1,18 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-jellyfin-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`jellyfin.idcrook.dev`)
+      services:
+        - name: jellyfin-svc
+          port: 8096
+      # middlewares:
+      #   - name: my-fail2ban
+  tls: {}

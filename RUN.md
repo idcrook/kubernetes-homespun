@@ -528,13 +528,15 @@ below is run on control node (via `kubectl`)
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/external-services/birdnetpi-service.yaml
-kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
+#kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
+kubectl apply -f conf/external-services/birdnetpi-endpointslice.yaml
 kubectl apply -f conf/external-services/birdnetpi-ingress-tls.yaml
 
 kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep birdnetpi
 
-kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
+#kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
+kubectl delete -f conf/external-services/birdnetpi-endpointslice.yaml
 kubectl delete -f conf/external-services/birdnetpi-service.yaml
 kubectl delete -f conf/external-services/birdnetpi-ingress-tls.yaml
 ```
@@ -547,14 +549,12 @@ below is run on control node (via `kubectl`)
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/external-services/homeassistant-service.yaml
-#kubectl apply -f conf/external-services/homeassistant-endpoint.yaml
 kubectl apply -f conf/external-services/homeassistant-endpointslice.yaml
 kubectl apply -f conf/external-services/homeassistant-ingress-tls.yaml
 
 kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep homeassistant
 
-#kubectl delete -f conf/external-services/homeassistant-endpoint.yaml
 kubectl delete -f conf/external-services/homeassistant-endpointslice.yaml
 kubectl delete -f conf/external-services/homeassistant-service.yaml
 kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
@@ -566,17 +566,32 @@ kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
 cd ~/projects/kubernetes-homespun
 
 kubectl apply -f conf/external-services/karakeep-service.yaml
-#kubectl apply -f conf/external-services/karakeep-endpoint.yaml
 kubectl apply -f conf/external-services/karakeep-endpointslice.yaml
 kubectl apply -f conf/external-services/karakeep-ingress-tls.yaml
 
 kubectl get svc,endpointslice
 kubectl get svc,endpointslice,ingressroute | grep karakeep
 
-#kubectl delete -f conf/external-services/karakeep-endpoint.yaml
 kubectl delete -f conf/external-services/karakeep-endpointslice.yaml
 kubectl delete -f conf/external-services/karakeep-service.yaml
 kubectl delete -f conf/external-services/karakeep-ingress-tls.yaml
+```
+
+## jellyfin (external service)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/jellyfin-service.yaml
+kubectl apply -f conf/external-services/jellyfin-endpointslice.yaml
+kubectl apply -f conf/external-services/jellyfin-ingress-tls.yaml
+
+kubectl get svc,endpointslice
+kubectl get svc,endpointslice,ingressroute | grep jellyfin
+
+kubectl delete -f conf/external-services/jellyfin-endpointslice.yaml
+kubectl delete -f conf/external-services/jellyfin-service.yaml
+kubectl delete -f conf/external-services/jellyfin-ingress-tls.yaml
 ```
 
 ## miniflux rss aggregator
