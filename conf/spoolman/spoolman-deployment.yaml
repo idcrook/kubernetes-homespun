@@ -17,11 +17,11 @@ spec:
     metadata:
       labels:
         app: spoolman
-        version: v0.23.1
+        version: v0.24.0
     spec:
       containers:
         - name: spoolman
-          image: donkieyo/spoolman:0.23.1
+          image: donkieyo/spoolman:0.24.0
           env:
             - name: TZ
               value: "America/Denver"
