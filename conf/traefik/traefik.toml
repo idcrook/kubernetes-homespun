@@ -92,4 +92,6 @@
 
       [certificatesResolvers.wildcardresolver.acme.dnsChallenge]
         provider = "namecheap"
-        delayBeforeCheck = 0
+        delayBeforeCheck = 10
+        resolvers = ["1.1.1.1:53", "8.8.8.8:53"]
+        # resolvers = ["dns1.registrar-servers.com:53", "dns2.registrar-servers.com:53"]
