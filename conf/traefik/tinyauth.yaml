@@ -1,8 +1,8 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: tinyauth
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: tinyauth
 
 ---
 apiVersion: apps/v1
@@ -11,7 +11,7 @@ metadata:
   name: tinyauth
   labels:
     app: tinyauth
-  namespace: tinyauth
+  #namespace: tinyauth
 spec:
   replicas: 1
   selector:
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tinyauth
-          image: ghcr.io/steveiliop56/tinyauth:v5.0.7
+          image: ghcr.io/tinyauthapp/tinyauth:v5.0.7
           ports:
             - containerPort: 3000
               name: tinyauth-cip
@@ -43,6 +43,8 @@ spec:
               value: "https://tinyauth.idcrook.dev"
             - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
+            # - name: TINYAUTH_AUTH_TRUSTEDPROXIES
+            #   value: "172.17.0.0/16"
           # livenessProbe:
           #   httpGet:
           #     path: /api/healthz
@@ -64,7 +66,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tinyauth-svc
-  namespace: tinyauth
+  #namespace: tinyauth
 spec:
   clusterIP: 10.43.164.234
   ports:
@@ -95,7 +97,7 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
     name: tinyauth
-    namespace: tinyauth
+    #namespace: tinyauth
 spec:
     # forwardAuth:
     #     address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
@@ -104,6 +106,9 @@ spec:
     #     authResponseHeaders:
     #         - "X-Forwarded-User" 
     forwardAuth:
+        # 
+        #address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
+        #address: http://tinyauth-svc:3000/api/auth/traefik
         address: http://10.43.164.234:3000/api/auth/traefik
         maxResponseBodySize: 1048576
         trustForwardHeader: true 
@@ -113,7 +118,7 @@ spec:
             - remote-email
             - remote-name
 # to use this middleware from default namespace
-#         - name: tinyauth-tinyauth@kubernetescrd
+#         - name: default-tinyauth@kubernetescrd
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -128,7 +133,7 @@ spec:
       match: Host(`tinyauth.idcrook.dev`)
       services:
         - name: tinyauth-svc
-          namespace: tinyauth
+          #namespace: tinyauth
           port: 3000
   tls:
     certResolver: wildcardresolver
