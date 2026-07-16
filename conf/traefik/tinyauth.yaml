@@ -22,11 +22,12 @@ spec:
       labels:
         app: tinyauth
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      # hostNetwork: true
+      # dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tinyauth
-          image: ghcr.io/tinyauthapp/tinyauth:v5.0.7
+          #image: ghcr.io/tinyauthapp/tinyauth:v5.1.0
+          image: ghcr.io/tinyauthapp/tinyauth:v5.1.1-rc.1
           ports:
             - containerPort: 3000
               name: tinyauth-cip
@@ -45,8 +46,8 @@ spec:
               value: "https://tinyauth.idcrook.dev"
             - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
-            - name: TINYAUTH_AUTH_TRUSTEDPROXIES
-              value: "192.168.50.9,10.43.0.0/16"
+            # - name: TINYAUTH_AUTH_TRUSTEDPROXIES
+            #   value: "192.168.50.9,10.43.0.0/16"
           # livenessProbe:
           #   httpGet:
           #     path: /api/healthz
