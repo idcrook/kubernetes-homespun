@@ -22,6 +22,8 @@ spec:
       labels:
         app: tinyauth
     spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tinyauth
           image: ghcr.io/tinyauthapp/tinyauth:v5.0.7
@@ -43,8 +45,8 @@ spec:
               value: "https://tinyauth.idcrook.dev"
             - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
-            # - name: TINYAUTH_AUTH_TRUSTEDPROXIES
-            #   value: "172.17.0.0/16"
+            - name: TINYAUTH_AUTH_TRUSTEDPROXIES
+              value: "192.168.50.9,10.43.0.0/16"
           # livenessProbe:
           #   httpGet:
           #     path: /api/healthz
@@ -68,7 +70,7 @@ metadata:
   name: tinyauth-svc
   #namespace: tinyauth
 spec:
-  clusterIP: 10.43.164.234
+  #clusterIP: 10.43.164.234
   ports:
     - name: tinyauth-cip
       port: 3000
@@ -77,48 +79,30 @@ spec:
   selector:
     app: tinyauth
   type: ClusterIP
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: tinyauth-svc
-#   namespace: tinyauth
-# spec:
-#   selector:
-#     app: tinyauth
-#   ports:
-#     - name: tinyauth-cip
-#       port: 3000
-#       targetPort: 3000
-#       protocol: TCP      
-# #   type: ClusterIP  
 
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-    name: tinyauth
+    name: tinyauth-middleware
     #namespace: tinyauth
 spec:
-    # forwardAuth:
-    #     address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
-    #     maxResponseBodySize: 1048576
-    #     trustForwardHeader: true
-    #     authResponseHeaders:
-    #         - "X-Forwarded-User" 
     forwardAuth:
         # 
-        #address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
-        #address: http://tinyauth-svc:3000/api/auth/traefik
-        address: http://10.43.164.234:3000/api/auth/traefik
+        #address: http://tinyauth-svc.default.svc.cluster.local:3000/api/auth/traefik
+        address: http://tinyauth-svc:3000/api/auth/traefik
+        #address: http://10.43.164.234:3000/api/auth/traefik
         maxResponseBodySize: 1048576
         trustForwardHeader: true 
         authResponseHeaders:
+            # - Authorization
+            # - X-Forwarded-User        
             - remote-user
             - remote-groups
             - remote-email
             - remote-name
 # to use this middleware from default namespace
-#         - name: default-tinyauth@kubernetescrd
+#         - name: tinyauth-middleware
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute

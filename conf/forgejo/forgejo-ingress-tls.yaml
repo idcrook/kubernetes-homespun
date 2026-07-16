@@ -33,7 +33,7 @@ spec:
           port: 3000
       middlewares:
 #        - name: my-traefik-auth-with-exceptions
-#        - name: default-tinyauth@kubernetescrd
+#        - name: tinyauth-middleware
   tls:
     certResolver: wildcardresolver
 
@@ -53,6 +53,6 @@ spec:
           port: 2222
       # middlewares:
 #        - name: my-traefik-auth-with-exceptions
-#        - name: default-tinyauth@kubernetescrd
+#        - name: tinyauth-middleware
   # tls:
   #   certResolver: wildcardresolver

@@ -89,6 +89,6 @@ spec:
           port: 80
       middlewares:
 #        - name: my-traefik-auth-with-exceptions
-        - name: default-tinyauth@kubernetescrd
+        - name: tinyauth-middleware
   tls:
     certResolver: wildcardresolver

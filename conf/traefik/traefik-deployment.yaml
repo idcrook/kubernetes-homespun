@@ -19,6 +19,7 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet      
       nodeSelector:
         kubernetes.io/hostname: "rpiv1"
       containers:
