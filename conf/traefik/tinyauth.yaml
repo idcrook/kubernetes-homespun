@@ -59,9 +59,7 @@ spec:
       serviceAccountName: tinyauth-sa
       containers:
         - name: tinyauth
-          #image: ghcr.io/tinyauthapp/tinyauth:v5.1.0
-          # https://github.com/tinyauthapp/tinyauth/issues/1011
-          image: ghcr.io/tinyauthapp/tinyauth:v5.1.1-rc.1
+          image: ghcr.io/tinyauthapp/tinyauth:v5.1.1
           ports:
             - containerPort: 3000
               name: tinyauth-cip
