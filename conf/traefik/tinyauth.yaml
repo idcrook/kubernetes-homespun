@@ -1,8 +1,41 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tinyauth
+
 # ---
 # apiVersion: v1
-# kind: Namespace
+# kind: ServiceAccount
 # metadata:
-#   name: tinyauth
+#   name: tinyauth-sa
+#   namespace: tinyauth
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: tinyauth-ingress
+rules:
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tinyauth-ingress
+  namespace: tinyauth
+
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: tinyauth
+roleRef:
+  kind: ClusterRole
+  name: tinyauth-ingress
+  apiGroup: rbac.authorization.k8s.io
 
 ---
 apiVersion: apps/v1
@@ -11,7 +44,7 @@ metadata:
   name: tinyauth
   labels:
     app: tinyauth
-  #namespace: tinyauth
+  namespace: tinyauth
 spec:
   replicas: 1
   selector:
@@ -22,8 +55,6 @@ spec:
       labels:
         app: tinyauth
     spec:
-      # hostNetwork: true
-      # dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tinyauth
           #image: ghcr.io/tinyauthapp/tinyauth:v5.1.0
@@ -49,14 +80,14 @@ spec:
               value: "/authfile/users.txt"
             # - name: TINYAUTH_AUTH_TRUSTEDPROXIES
             #   value: "192.168.50.9,10.43.0.0/16"
-          # livenessProbe:
-          #   httpGet:
-          #     path: /api/healthz
-          #     port: tinyauth-cip
-          # readinessProbe:
-          #   httpGet:
-          #     path: /api/healthz
-          #     port: tinyauth-cip
+          livenessProbe:
+            httpGet:
+              path: /api/healthz
+              port: tinyauth-cip
+          readinessProbe:
+            httpGet:
+              path: /api/healthz
+              port: tinyauth-cip
       volumes:
           - name: authfile
             configMap:
@@ -70,9 +101,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tinyauth-svc
-  #namespace: tinyauth
+  namespace: tinyauth
 spec:
-  #clusterIP: 10.43.164.234
   ports:
     - name: tinyauth-cip
       port: 3000
@@ -87,13 +117,11 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
     name: tinyauth-middleware
-    #namespace: tinyauth
+    namespace: tinyauth
 spec:
     forwardAuth:
-        # 
-        #address: http://tinyauth-svc.default.svc.cluster.local:3000/api/auth/traefik
-        address: http://tinyauth-svc:3000/api/auth/traefik
-        #address: http://10.43.164.234:3000/api/auth/traefik
+        address: http://tinyauth-svc.tinyauth.svc.cluster.local:3000/api/auth/traefik
+        #address: http://tinyauth-svc:3000/api/auth/traefik
         maxResponseBodySize: 1048576
         trustForwardHeader: true 
         authResponseHeaders:
@@ -104,13 +132,15 @@ spec:
             - remote-email
             - remote-name
 # to use this middleware from default namespace
-#         - name: tinyauth-middleware
+#         - name: tinyauth-tinyauth-middleware@kubernetescrd
+
+
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: https-tinyauth
-
+  # this is in default namespace for traefik
 spec:
   entryPoints:
     - websecure
@@ -119,7 +149,7 @@ spec:
       match: Host(`tinyauth.idcrook.dev`)
       services:
         - name: tinyauth-svc
-          #namespace: tinyauth
+          namespace: tinyauth
           port: 3000
   tls:
     certResolver: wildcardresolver
