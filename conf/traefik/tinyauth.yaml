@@ -4,12 +4,12 @@ kind: Namespace
 metadata:
   name: tinyauth
 
-# ---
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: tinyauth-sa
-#   namespace: tinyauth
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tinyauth-sa
+  namespace: tinyauth
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -30,7 +30,8 @@ metadata:
 
 subjects:
   - kind: ServiceAccount
-    name: default
+    name: tinyauth-sa
+    #name: default
     namespace: tinyauth
 roleRef:
   kind: ClusterRole
@@ -55,6 +56,7 @@ spec:
       labels:
         app: tinyauth
     spec:
+      serviceAccountName: tinyauth-sa
       containers:
         - name: tinyauth
           #image: ghcr.io/tinyauthapp/tinyauth:v5.1.0
