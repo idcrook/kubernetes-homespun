@@ -27,8 +27,8 @@
       allowEncodedPercent = false
       allowEncodedQuestionMark = false      
       allowEncodedHash = true
-
-
+  # [entryPoints.websecure.forwardedHeaders]
+  #   trustedIPs = ["10.42.1.1"]
 
 [entryPoints.ssh]
     address = ":2222"
