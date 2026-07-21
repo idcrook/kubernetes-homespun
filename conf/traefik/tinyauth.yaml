@@ -126,8 +126,8 @@ spec:
         maxResponseBodySize: 1048576
         trustForwardHeader: true 
         authResponseHeaders:
-            # - Authorization
-            # - X-Forwarded-User        
+            - authorization
+            - X-Forwarded-User        
             - remote-user
             - remote-groups
             - remote-email
