@@ -78,8 +78,9 @@ spec:
               value: "https://tinyauth.idcrook.dev"
             - name: TINYAUTH_AUTH_USERSFILE
               value: "/authfile/users.txt"
-            # - name: TINYAUTH_AUTH_TRUSTEDPROXIES
-            #   value: "192.168.50.9,10.43.0.0/16"
+            - name: TINYAUTH_AUTH_TRUSTEDPROXIES
+              value: "192.168.50.9"
+              #value: "192.168.50.9,10.43.0.0/16"
           livenessProbe:
             httpGet:
               path: /api/healthz
@@ -135,21 +136,44 @@ spec:
 #         - name: tinyauth-tinyauth-middleware@kubernetescrd
 
 
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: https-tinyauth
+#   # this is in default namespace for traefik
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - kind: Rule
+#       match: Host(`tinyauth.idcrook.dev`)
+#       services:
+#         - name: tinyauth-svc
+#           namespace: tinyauth
+#           port: 3000
+#   tls:
+#     certResolver: wildcardresolver
+
+--- 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: https-tinyauth
-  # this is in default namespace for traefik
+  name: tinyauth-ingress
+  namespace: tinyauth
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
+
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`tinyauth.idcrook.dev`)
-      services:
-        - name: tinyauth-svc
-          namespace: tinyauth
-          port: 3000
-  tls:
-    certResolver: wildcardresolver
+  rules:
+    - host: tinyauth.idcrook.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: tinyauth-svc
+                port:
+                  number: 3000
