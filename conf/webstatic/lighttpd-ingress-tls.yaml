@@ -60,3 +60,25 @@ spec:
       - main: idcrook.dev
         sans:
           -  "*.idcrook.dev"
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: idcrook-dev-wildcard-fallback-router
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    # - match: "HostRegexp(`{subdomain:[a-z0-9-]+}\\.idcrook\\.dev`)"
+    - match: Host(`*.idcrook.dev`) 
+      kind: Rule
+      priority: 1
+      services: # dummy service to satisfy the requirement of at least one service
+        - name: lighttpd
+          port: 80
+      middlewares:
+        - name: idcrook-dev-wildcard-fallback-redirect
+  tls:
+    certResolver: wildcardresolver

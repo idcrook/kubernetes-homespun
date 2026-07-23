@@ -17,31 +17,12 @@ spec:
     - protocol: TCP
       port: 80
       name: web
-    - protocol: TCP
-      name: admin
-      port: 8080
+    # - protocol: TCP
+    #   name: admin
+    #   port: 8080
     - protocol: TCP
       port: 443
       name: websecure
     - protocol: TCP
       port: 2222
       name: ssh
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: traefik-ingress-service
-
-# spec:
-#   ports:
-#     - protocol: TCP
-#       name: web
-#       port: 8000
-#     - protocol: TCP
-#       name: admin
-#       port: 8080
-#     - protocol: TCP
-#       name: websecure
-#       port: 4443
-#   selector:
-#     app: traefik

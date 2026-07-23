@@ -71,4 +71,20 @@ spec:
 # https://github.com/l4rm4nd/traefik-warp
 # https://github.com/YouKyi/cloudflarewarp
 
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: idcrook-dev-wildcard-fallback-redirect
+  # namespace: default
+spec:
+  redirectRegex:
+    # Captures everything before the apex domain to ensure it drops the subdomain
+    regex: "^https?://([^.]+)\\.idcrook\\.dev(.*)"
+    # Redirects to the main apex www subdomain
+    replacement: "https://www.idcrook.dev${2}"
+    permanent: false
+
+
 # See tinyauth.yaml for its middleware
