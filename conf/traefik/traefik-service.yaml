@@ -11,6 +11,8 @@ metadata:
   name: traefik-ingress-service
   namespace: default
 spec:
+  type: NodePort
+  externalTrafficPolicy: Local
   selector:
     app: traefik
   ports:

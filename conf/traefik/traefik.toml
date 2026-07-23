@@ -28,7 +28,8 @@
       allowEncodedQuestionMark = false      
       allowEncodedHash = true
   # [entryPoints.websecure.forwardedHeaders]
-  #   trustedIPs = ["10.42.1.1"]
+  #   # trustedIPs = ["192.168.50.0/23"]
+  #   insecure = true
 
 [entryPoints.ssh]
     address = ":2222"
@@ -68,8 +69,23 @@
   # traefik v3: noColor = true
 
 [accessLog]
+  #format = "json"
   #bufferingSize = 10
   bufferingSize = 0
+
+  # [accessLog.fields]
+  #   defaultMode = "keep"
+
+  #   [accessLog.fields.names]
+  #     ServiceURL = "keep"
+  #     ClientAddr = "keep"
+
+  #   [accessLog.fields.headers]
+  #     defaultMode = "keep"
+
+      # [accessLog.fields.headers.names]
+      #   User-Agent = "redact"
+      #   Authorization = "drop"
 
 # [metrics]
 # #  addInternals = true

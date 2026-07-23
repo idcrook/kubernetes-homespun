@@ -69,6 +69,7 @@ metadata:
   namespace: default
 spec:
   entryPoints:
+    # - web
     - websecure
   routes:
     # - match: "HostRegexp(`{subdomain:[a-z0-9-]+}\\.idcrook\\.dev`)"
@@ -78,7 +79,14 @@ spec:
       services: # dummy service to satisfy the requirement of at least one service
         - name: lighttpd
           port: 80
+      # observability:
+      #   accessLogs: true
+      #   # metrics: true
+      #   tracing: true          
+      #   traceVerbosity: detailed
       middlewares:
         - name: idcrook-dev-wildcard-fallback-redirect
+        # - name: redirect-to-https
+
   tls:
     certResolver: wildcardresolver
