@@ -135,6 +135,23 @@ spec:
 # to use this middleware from default namespace
 #         - name: tinyauth-tinyauth-middleware@kubernetescrd
 
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: http-redirect-tinyauth
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - kind: Rule
+#       match: Host(`tinyauth.idcrook.dev`)
+#       services:
+#         - name: tinyauth-svc
+#           namespace: tinyauth
+#           port: 3000
+#       middlewares:
+#         - name: redirect-to-https
 
 # ---
 # apiVersion: traefik.io/v1alpha1
@@ -162,10 +179,13 @@ metadata:
   name: tinyauth-ingress
   namespace: tinyauth
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-to-https@kubernetescrd
+    # kubernetes.io/ingress.class: traefik  
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: |
+      default-redirect-to-https@kubernetescrd  
 
 spec:
+  # ingressClassName: traefik
   rules:
     - host: tinyauth.idcrook.dev
       http:

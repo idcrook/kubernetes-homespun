@@ -3,7 +3,6 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: http-redirect-forgejo
-  # namespace: default
 spec:
   entryPoints:
     - web
@@ -32,9 +31,7 @@ spec:
         - name: forgejo-svc
           port: 3000
       middlewares:
-        - name: kube-system-my-traefik-auth-with-exceptions@kubernetescrd
-
-#        - name: my-traefik-auth-with-exceptions
+#        - name: kube-system-my-traefik-auth-with-exceptions@kubernetescrd
 #        - name: tinyauth-tinyauth-middleware@kubernetescrd
   tls:
     certResolver: wildcardresolver

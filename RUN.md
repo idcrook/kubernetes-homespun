@@ -55,7 +55,7 @@ sudo chmod 600 /srv/configs/acme/acme-wc.json
 <https://helm.sh/docs/intro/install/#from-script>
 
 ```
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4
 chmod 700 get_helm.sh
 ./get_helm.sh
 
@@ -79,7 +79,7 @@ cd ~/projects/kubernetes-homespun
 # $EDITOR conf/traefik/traefik-envariable-secrets.yaml
 
 kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
-kubectl create --save-config -f conf/traefik/traefik-auth-secrets.yaml
+#kubectl create --save-config -f conf/traefik/traefik-auth-secrets.yaml
 #kubectl create secret generic basic-auth-secret --from-file conf/traefik/basic-auth-secret
 
 # inspect

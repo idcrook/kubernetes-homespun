@@ -33,31 +33,6 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-    name: my-traefik-auth-with-exceptions
-    namespace: kube-system
-    # namespace: default
-
-spec:
-    plugin:
-        traefik-auth-with-exceptions:
-            authExtraTime: 300ms
-            basicAuth:
-                # users:
-                #     - user:{SHA}Et6pb+wgWTVmq3VpLJlJWWgzrck=
-                usersFile: "/authfile/htpasswd.txt"
-            exceptions:
-                # hostList:
-                #     - example.com
-                hostUpdateInterval: 30m
-                ipList:
-                  - "::1"
-                  - "127.0.0.1"
-                  - "192.168.50.0/23"
-
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
     name: my-cloudflarewarp
 spec:
     plugin:
