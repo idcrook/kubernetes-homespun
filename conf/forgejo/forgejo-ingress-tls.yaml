@@ -32,6 +32,8 @@ spec:
         - name: forgejo-svc
           port: 3000
       middlewares:
+        - name: kube-system-my-traefik-auth-with-exceptions@kubernetescrd
+
 #        - name: my-traefik-auth-with-exceptions
 #        - name: tinyauth-tinyauth-middleware@kubernetescrd
   tls:
@@ -51,8 +53,4 @@ spec:
       services:
         - name: forgejo-svc
           port: 2222
-      # middlewares:
-#        - name: my-traefik-auth-with-exceptions
-#        - name: tinyauth-tinyauth-middleware@kubernetescrd
-  # tls:
-  #   certResolver: wildcardresolver
+

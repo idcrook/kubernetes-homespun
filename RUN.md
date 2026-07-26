@@ -88,21 +88,21 @@ kubectl  get secret | grep -e traefik -e auth
   kubectl get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
-kubectl apply -f conf/traefik/traefik-crd.yaml
-kubectl apply -f conf/traefik/traefik-rbac.yaml
+# kubectl apply -f conf/traefik/traefik-crd.yaml
+# kubectl apply -f conf/traefik/traefik-rbac.yaml
 
 kubectl apply -f conf/traefik/traefik-middleware.yaml
 
-kubectl create configmap traefik-config \
-    --from-file=conf/traefik/traefik.toml
+# kubectl create configmap traefik-config \
+#     --from-file=conf/traefik/traefik.toml
 
-# kubectl apply -f conf/traefik/traefik-auth-secrets.yaml
+# # kubectl apply -f conf/traefik/traefik-auth-secrets.yaml
 
-kubectl get cm
+# kubectl get cm
 
-kubectl apply -f conf/traefik/traefik-service.yaml
-grep v3  conf/traefik/traefik-deployment.yaml
-kubectl apply -f conf/traefik/traefik-deployment.yaml
+# kubectl apply -f conf/traefik/traefik-service.yaml
+# grep v3  conf/traefik/traefik-deployment.yaml
+# kubectl apply -f conf/traefik/traefik-deployment.yaml
 
 # W0807 15:31:41.231717       1 warnings.go:70] v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
 
