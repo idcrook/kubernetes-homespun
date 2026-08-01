@@ -560,6 +560,15 @@ kubectl delete -f conf/external-services/homeassistant-service.yaml
 kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
 ```
 
+## obsidian livesync couchdb (external service)
+
+```shell
+cd ~/projects/kubernetes-homespun
+kubectl  apply -f conf/external-services/obsidian-livesync.yaml
+
+```
+
+
 ## karakeep (external service)
 
 ```shell

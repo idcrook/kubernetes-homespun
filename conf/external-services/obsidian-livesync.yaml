@@ -1,0 +1,74 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "obsidian-livesync-svc"
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5984
+      targetPort: 5984
+      name: obsidian-livesync-http
+
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: obsidian-livesync-svc-1
+  labels:
+    kubernetes.io/service-name: obsidian-livesync-svc
+    endpointslice.kubernetes.io/managed-by: cluster-admin
+addressType: IPv4
+endpoints:
+  - addresses:
+      - "192.168.50.41"
+    conditions:
+      ready: true    
+ports:
+  - port: 5984
+    name: obsidian-livesync-http
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: obsidiancors
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "PUT"
+      - "POST"
+      - "HEAD"
+      - "DELETE"
+    accessControlAllowHeaders:
+      - "accept"
+      - "authorization"
+      - "content-type"
+      - "origin"
+      - "referer"
+    accessControlAllowOriginList:
+      - "app://obsidian.md"
+      - "capacitor://localhost"
+      - "http://localhost"
+    accessControlMaxAge: 3600
+    addVaryHeader: true
+    accessControlAllowCredentials: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-obsidian-livesync
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`obsidian-livesync.idcrook.dev`)
+      kind: Rule
+      middlewares:
+        - name: obsidiancors
+      services:
+        - name: obsidian-livesync-svc
+          port: 5984
+  tls: {}
