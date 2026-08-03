@@ -4,13 +4,26 @@
 
 * traefik - ingress with Lets Encrypt support
 * phant - IoT datalogging (node.js)
+* miniflux - feed reader
+  * external postgresql
+* trilium - notes
+* forgejo - Git repos
+* ntfy - Notifications
+* heimdall - Homepage
+* homepage - Homepage
+* spoolman - Filament tracking
+* open-webui - AI client
 * lighttpd - Static webserving
   * webstatic
   * (*offline*) partytime
   * muzcal
-* miniflux - feed reader
-  * external postgresql
-* BirdNET Pi - record and analyze bird song
+
+* External 
+  * BirdNET Pi - record and analyze bird song
+  * karakeep - bookmarking
+  * obsidian-livesync - Obsidian self-hosted syncing
+  * home assistant - Home automation
+  * jellyfin - Media streaming
 
 # setup
 
@@ -141,7 +154,6 @@ kubectl --namespace=kube-system get pods -o wide
 kubectl --namespace=kube-system get services
 
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
-# LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
 
 IP_ADDR=192.168.50.5
 curl -i ${IP_ADDR}:80
