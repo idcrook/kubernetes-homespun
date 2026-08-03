@@ -1,0 +1,49 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: jellyfin-svc-1
+  labels:
+    kubernetes.io/service-name: jellyfin-svc
+    endpointslice.kubernetes.io/managed-by: cluster-admin
+addressType: IPv4
+endpoints:
+  - addresses:
+      - "192.168.50.13"
+    conditions:
+      ready: true    
+ports:
+  - port: 8096
+    name: jellyfin
+    
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-jellyfin-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`jellyfin.idcrook.dev`)
+      services:
+        - name: jellyfin-svc
+          port: 8096
+      # middlewares:
+      #   - name: my-fail2ban
+  tls: {}
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "jellyfin-svc"
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8096
+      targetPort: 8096
+      name: "jellyfin"

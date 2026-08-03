@@ -10,31 +10,26 @@
   * muzcal
 * miniflux - feed reader
   * external postgresql
-* (*offline*) freshrss - feed reader
-  * external postgresql
-* (*offline*) wikijs - markdown writing and sharing
-  * external postgresql
-* (*offline*) BirdNET Pi - record and analyze bird song
+* BirdNET Pi - record and analyze bird song
 
 # setup
 
 ## k3s kubernetes cluster
 
 ```shell
-# install role=master without the traefik
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.33 INSTALL_K3S_EXEC="--disable=traefik" sh -
-
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=stable \
+  K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="server" \
+  sh -s - 
 
 # get info for other nodes
 K3S_TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
 IP_ADDR=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 K3S_URL=https://"$IP_ADDR":6443
 
-# run the command OUTPUT HERE on other nodes
-echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=v1.33  K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
+echo curl -sfL https://get.k3s.io \| INSTALL_K3S_CHANNEL=stable K3S_URL="${K3S_URL}" K3S_TOKEN="${K3S_TOKEN}"  sh -
 
 # once cluster up, may taint the control node so things don't get scheduled onto it
-kubectl taint node rpif4 node-role.kubernetes.io/master=effect:NoSchedule
+kubectl taint node rpiv3 node-role.kubernetes.io/master=effect:NoSchedule
 ```
 
 ## traefik
@@ -114,11 +109,9 @@ kubectl  get secrets,cm,all --namespace tinyauth
 kubectl get --namespace tinyauth  secret tinyauth-secrets -o yaml
 kubectl get --namespace tinyauth  secret tinyauth-secrets -o json |\
     jq -r '.data.secretKey' | base64 --decode
-
-
 ```
 
-in-place update configmap
+<!-- in-place update configmap
 
 ```shell
 kubectl create configmap traefik-config \
@@ -126,15 +119,26 @@ kubectl create configmap traefik-config \
 | kubectl replace -f -
 
 kubectl get cm traefik-config -o yaml
+``` 
+-->
+
+### configuring k3s helm-provisioned traefik
+
+```shell
+cd ~/projects/kubernetes-secret-lair
+sudo cp k3s/traefik-config.yaml /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+
+kubectl kubectl --namespace=kube-system get all
 ```
+
 
 #### Debugging kubernetes and traefik helpers
 
 ```shell
-kubectl get pods | grep traefik
-kubectl describe pod traefik
-kubectl get pods -o wide
-kubectl get services
+kubectl --namespace=kube-system get pods | grep traefik
+kubectl --namespace=kube-system describe pod traefik
+kubectl --namespace=kube-system get pods -o wide
+kubectl --namespace=kube-system get services
 
 # IP_ADDR=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 # LAN IP for nodeSelector kubernetes.io/hostname in conf/traefik/traefik-deployment-raspi.yaml
@@ -143,37 +147,35 @@ IP_ADDR=192.168.50.5
 curl -i ${IP_ADDR}:80
 # 404 page not found
 
-kubectl describe pods \
+kubectl --namespace=kube-system describe pods \
   traefik-
 
-kubectl logs \
+kubectl --namespace=kube-system logs \
   traefik-
 
 # update config file after changing (see above for "in-place")
-kubectl get configmaps
-kubectl delete configmaps traefik-config
-kubectl create configmap traefik-config \
+kubectl --namespace=kube-system get configmaps
+kubectl --namespace=kube-system delete configmaps traefik-config
+kubectl --namespace=kube-system create configmap traefik-config \
     --from-file=conf/traefik/traefik.toml
 
-kubectl get pods | grep traefik
-kubectl logs traefik-
+kubectl --namespace=kube-system get pods | grep traefik
+kubectl --namespace=kube-system logs traefik-
 ```
 
-Delete deployment and restart
+Delete secrets configmap
 
-```
+```shell
 cd ~/projects/kubernetes-homespun/
-kubectl delete -f conf/traefik/traefik-deployment-raspi.yaml
-kubectl apply  -f conf/traefik/traefik-deployment-raspi.yaml
+kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
+``` 
 
-# kubectl delete -f conf/traefik/traefik-envariable-secrets.yaml
-```
 
 ## External NFS provisioner
 
 <https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner>
 
-```
+```shell
 kubectl apply -f conf/nfs-subdir/rbac.yaml
 kubectl apply -f conf/nfs-subdir/deployment.yaml
 kubectl apply -f conf/nfs-subdir/class.yaml
@@ -183,7 +185,7 @@ kubectl  get sc
 
 test setup
 
-```
+```shell
 kubectl create -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.yaml
 # should create a file 'SUCCESS'
 kubectl delete -f conf/nfs-subdir/test-claim.yaml -f conf/nfs-subdir/test-pod.yaml
@@ -398,9 +400,7 @@ kubectl create --save-config -f conf/muzcal/muzcal-pvc.yaml
 kubectl apply -f conf/muzcal/muzcal-deployment.yaml
 ```
 
-
-
-### heimdall
+## heimdall
 
 ```shell
 kubectl create --save-config -f conf/heimdall/heimdall-pv.yaml
@@ -425,7 +425,6 @@ kubectl create --save-config -f conf/heimdall/heimdall-pv.yaml
 kubectl create --save-config -f conf/heimdall/heimdall-pvc.yaml
 kubectl apply -f conf/heimdall/heimdall-deployment-raspi.yaml
 ```
-
 
 ## homepage
 
@@ -503,106 +502,6 @@ tail -f /var/log/lighttpd/access.log
 exit
 ```
 
-## postgresql (external service)
-
-below is run on control node (via `kubectl`)
-
-```shell
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/external-services/postgresql-service.yaml
-kubectl apply -f conf/external-services/postgresql-endpointslice.yaml
-
-kubectl get svc,EndpointSlice
-kubectl get svc,EndpointSlice | grep postgres
-
-kubectl delete -f conf/external-services/postgresql-endpointslice.yaml
-kubectl delete -f conf/external-services/postgresql-service.yaml
-```
-
-## BirdNET Pi (external service)
-
-below is run on control node (via `kubectl`)
-
-```shell
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/external-services/birdnetpi-service.yaml
-#kubectl apply -f conf/external-services/birdnetpi-endpoint.yaml
-kubectl apply -f conf/external-services/birdnetpi-endpointslice.yaml
-kubectl apply -f conf/external-services/birdnetpi-ingress-tls.yaml
-
-kubectl get svc,endpointslice
-kubectl get svc,endpointslice,ingressroute | grep birdnetpi
-
-#kubectl delete -f conf/external-services/birdnetpi-endpoint.yaml
-kubectl delete -f conf/external-services/birdnetpi-endpointslice.yaml
-kubectl delete -f conf/external-services/birdnetpi-service.yaml
-kubectl delete -f conf/external-services/birdnetpi-ingress-tls.yaml
-```
-
-## Home Assistant (external service)
-
-below is run on control node (via `kubectl`)
-
-```shell
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/external-services/homeassistant-service.yaml
-kubectl apply -f conf/external-services/homeassistant-endpointslice.yaml
-kubectl apply -f conf/external-services/homeassistant-ingress-tls.yaml
-
-kubectl get svc,endpointslice
-kubectl get svc,endpointslice,ingressroute | grep homeassistant
-
-kubectl delete -f conf/external-services/homeassistant-endpointslice.yaml
-kubectl delete -f conf/external-services/homeassistant-service.yaml
-kubectl delete -f conf/external-services/homeassistant-ingress-tls.yaml
-```
-
-## obsidian livesync couchdb (external service)
-
-```shell
-cd ~/projects/kubernetes-homespun
-kubectl  apply -f conf/external-services/obsidian-livesync.yaml
-
-```
-
-
-## karakeep (external service)
-
-```shell
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/external-services/karakeep-service.yaml
-kubectl apply -f conf/external-services/karakeep-endpointslice.yaml
-kubectl apply -f conf/external-services/karakeep-ingress-tls.yaml
-
-kubectl get svc,endpointslice
-kubectl get svc,endpointslice,ingressroute | grep karakeep
-
-kubectl delete -f conf/external-services/karakeep-endpointslice.yaml
-kubectl delete -f conf/external-services/karakeep-service.yaml
-kubectl delete -f conf/external-services/karakeep-ingress-tls.yaml
-```
-
-## jellyfin (external service)
-
-```shell
-cd ~/projects/kubernetes-homespun
-
-kubectl apply -f conf/external-services/jellyfin-service.yaml
-kubectl apply -f conf/external-services/jellyfin-endpointslice.yaml
-kubectl apply -f conf/external-services/jellyfin-ingress-tls.yaml
-
-kubectl get svc,endpointslice
-kubectl get svc,endpointslice,ingressroute | grep jellyfin
-
-kubectl delete -f conf/external-services/jellyfin-endpointslice.yaml
-kubectl delete -f conf/external-services/jellyfin-service.yaml
-kubectl delete -f conf/external-services/jellyfin-ingress-tls.yaml
-```
-
 ## miniflux rss aggregator
 
 <https://hub.docker.com/r/miniflux/miniflux>
@@ -652,7 +551,88 @@ kubectl get svc,endpointslice
 kubectl get po,svc,deploy,ing,endpointslice,secret
 ```
 
-## copying secrets
+# External services
+
+## postgresql (external service)
+
+below is run on control node (via `kubectl`)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/postgresqlyaml
+
+kubectl get svc,EndpointSlice | grep postgres
+
+kubectl delete -f conf/external-services/postgresqlyaml
+```
+
+## BirdNET Pi (external service)
+
+below is run on control node (via `kubectl`)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/birdnetpi.yaml
+
+kubectl get svc,endpointslice
+kubectl get svc,endpointslice,ingressroute | grep birdnetpi
+
+kubectl delete -f conf/external-services/birdnetpi.yaml
+```
+
+## Home Assistant (external service)
+
+below is run on control node (via `kubectl`)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/homeassistant.yaml
+
+kubectl get svc,endpointslice
+kubectl get svc,endpointslice,ingressroute | grep homeassistant
+
+kubectl delete -f conf/external-services/homeassistant.yaml
+```
+
+## obsidian livesync couchdb (external service)
+
+```shell
+cd ~/projects/kubernetes-homespun
+kubectl  apply -f conf/external-services/obsidian-livesync.yaml
+
+kubectl delete -f conf/external-services/obsidian-livesync.yaml
+```
+
+## karakeep (external service)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/karakeep.yaml
+
+kubectl get svc,endpointslice
+kubectl get svc,endpointslice,ingressroute | grep karakeep
+
+kubectl delete -f conf/external-services/karakeep.yaml
+```
+
+## jellyfin (external service)
+
+```shell
+cd ~/projects/kubernetes-homespun
+
+kubectl apply -f conf/external-services/jellyfin.yaml
+
+kubectl get svc,endpointslice
+kubectl get svc,endpointslice,ingressroute | grep jellyfin
+
+kubectl delete -f conf/external-services/jellyfin.yaml
+```
+
+# copying secrets
 
 on donor
 
@@ -662,7 +642,7 @@ cd ~/projects/kubernetes-homespun/conf
 export TARGET=hostname
 scp traefik/traefik-envariable-secrets.yaml $TARGET:projects/kubernetes-homespun/conf/traefik/
 scp traefik/tinyauth-secrets.yaml           $TARGET:projects/kubernetes-homespun/conf/traefik/
-scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/traefik/
+# scp traefik/traefik-auth-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/traefik/
 scp miniflux/miniflux-secrets.yaml          $TARGET:projects/kubernetes-homespun/conf/miniflux/
 scp homepage/homepage-cm-secrets.yaml       $TARGET:projects/kubernetes-homespun/conf/homepage/
 ```

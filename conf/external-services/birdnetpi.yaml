@@ -1,0 +1,85 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: "birdnetpi-http"
+  labels:
+    kubernetes.io/service-name: "birdnetpi-http"
+addressType: IPv4
+endpoints:
+  - addresses:
+      - 192.168.50.8
+    #nodeName: rpif1
+ports:
+  - name: birdnetpi
+    protocol: TCP
+    port: 80
+
+# ---    
+# kind: Endpoints
+# apiVersion: v1
+# metadata:
+#   name: "birdnetpi-http"
+# subsets:
+#   - addresses:
+#       - ip: "192.168.50.8"
+#     ports:
+#       - port: 80
+#         name: "birdnetpi"
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: http-redirect-birdnetpi-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - kind: Rule
+#       # .dev domains are now pre-loaded HSTS in most browsers so no redirect is done
+#       match: Host(`birdnetpi.idcrook.dev`)
+#       services:
+#         - name: birdnetpi-http
+#           port: 80
+#       middlewares:
+#         - name: redirect-to-https
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-birdnetpi-http
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`birdnetpi.idcrook.dev`)
+      services:
+        - name: birdnetpi-http
+          port: 80
+      # middlewares:
+      #   - name: my-fail2ban
+  tls: {}
+  # tls:
+  #   certResolver: myresolver
+  # tls:
+  #   certResolver: wildcardresolver
+  #   domains:
+  #     - main: idcrook.dev
+  #       sans:
+  #         -  "*.idcrook.dev"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: "birdnetpi-http"
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 80
+      name: "birdnetpi"
