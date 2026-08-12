@@ -18,11 +18,11 @@ spec:
     metadata:
       labels:
         app: heimdall
-        version: v2.8.1
+        version: v2.8.2
     spec:
       containers:
         - name: heimdall
-          image: lscr.io/linuxserver/heimdall:2.8.1
+          image: lscr.io/linuxserver/heimdall:2.8.2
           env:
             - name: PUID
               value: "1000"
