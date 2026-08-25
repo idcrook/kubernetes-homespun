@@ -60,9 +60,9 @@ spec:
       - main: idcrook.dev
         sans:
           -  "*.idcrook.dev"
-      - main: internal.idcrook.dev
-        sans:
-          -  "*.internal.idcrook.dev"          
+      # - main: internal.idcrook.dev
+      #   sans:
+      #     -  "*.internal.idcrook.dev"          
 
 ---
 apiVersion: traefik.io/v1alpha1

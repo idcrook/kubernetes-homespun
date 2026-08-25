@@ -8,6 +8,7 @@ spec:
   redirectScheme:
     scheme: https
     permanent: true
+
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -33,21 +34,21 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-    name: my-cloudflarewarp
+    name: my-traefik-warp
 spec:
     plugin:
-        cloudflarewarp:
-            disableDefault: "true"
-            trustip:
-                - 10.0.0.0/8
-#                - 172.16.0.0/12
-                - 192.168.50.0/23
-#                - 2400:cb00::/32
+        traefik-warp:
+            provider: auto
+            autoRefresh: true
+            refreshInterval: 24h
+            debug: false
+            # trustIp:                # optional: extend allow-lists
+            #   cloudflare:
+            #     - "198.51.100.0/24"
+            #   cloudfront:
+            #     - "203.0.113.0/24"
 
-# https://github.com/fma965/cloudflarewarp
 # https://github.com/l4rm4nd/traefik-warp
-# https://github.com/YouKyi/cloudflarewarp
-
 
 ---
 apiVersion: traefik.io/v1alpha1

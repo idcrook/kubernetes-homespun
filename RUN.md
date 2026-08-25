@@ -93,7 +93,7 @@ kubectl create -f conf/traefik/traefik-envariable-secrets.yaml
 # inspect
 kubectl  get secret | grep -e traefik -e auth
   kubectl get secret traefik-envariable-secrets -o yaml
-  kubectl get secret traefik-envariable-secrets -o json |\
+  kubectl --namespace=kube-system get secret traefik-envariable-secrets -o json |\
     jq -r '.data.NAMECHEAP_API_USER' | base64 --decode
 
 # kubectl apply -f conf/traefik/traefik-crd.yaml
@@ -446,9 +446,9 @@ kubectl  apply -f conf/homepage/homepage-svc-acct.yaml
 kubectl  apply -f conf/homepage/homepage-rbac.yaml
 kubectl  apply -f conf/homepage/homepage-service.yaml
 kubectl  apply -f conf/homepage/homepage-deployment.yaml
+kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 
 kubectl  get pod,svc,cm
-kubectl  apply -f conf/homepage/homepage-ingress-tls.yaml
 ```
 
 ## spoolman
@@ -572,11 +572,11 @@ below is run on control node (via `kubectl`)
 ```shell
 cd ~/projects/kubernetes-homespun
 
-kubectl apply -f conf/external-services/postgresqlyaml
+kubectl apply -f conf/external-services/postgresql.yaml
 
 kubectl get svc,EndpointSlice | grep postgres
 
-kubectl delete -f conf/external-services/postgresqlyaml
+kubectl delete -f conf/external-services/postgresql.yaml
 ```
 
 ## BirdNET Pi (external service)
