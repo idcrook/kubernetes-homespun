@@ -489,15 +489,15 @@ kubectl apply -f conf/spoolman/spoolman-deployment.yaml
 
 ```bash
 kubectl apply -f conf/open-webui/open-webui.yaml
-kubectl apply -f conf/open-webui/ollama-service.yaml
-kubectl apply -f conf/open-webui/ollama-statefulset.yaml
+# kubectl apply -f conf/open-webui/ollama-service.yaml
+# kubectl apply -f conf/open-webui/ollama-statefulset.yaml
 kubectl apply -f conf/open-webui/webui-deployment.yaml
 kubectl apply -f conf/open-webui/webui-service.yaml
 kubectl apply -f conf/open-webui/webui-ingress.yaml
 kubectl apply -f conf/open-webui/webui-pvc.yaml
 
 kubectl get all --namespace open-webui
-kubectl --namespace open-webui logs pod/ollama-0
+# kubectl --namespace open-webui logs pod/ollama-0
 kubectl --namespace open-webui logs pod/open-webui-deployment-
 kubectl --namespace open-webui describe ingressroutes.traefik.io
 ```

@@ -18,11 +18,13 @@ spec:
     spec:
       containers:
         - env:
-            - name: OLLAMA_BASE_URL
-              value: "http://ollama-service.open-webui.svc.cluster.local:11434"
+            - name: ENABLE_OLLAMA_API
+              value: "False"
+            # - name: OLLAMA_BASE_URL
+            #   value: "http://ollama-service.open-webui.svc.cluster.local:11434"
           name: open-webui
           
-          image: ghcr.io/open-webui/open-webui:v0.13.3
+          image: ghcr.io/open-webui/open-webui:v0.13.3-slim
           ports:
             - containerPort: 8080
           resources:
